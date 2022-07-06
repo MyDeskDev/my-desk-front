@@ -10,7 +10,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>My Desk</main>
+      <main>Home</main>
     </div>
   );
 };

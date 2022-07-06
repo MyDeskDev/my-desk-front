@@ -1,7 +1,17 @@
 import type { NextPage } from 'next';
 
+import TitleBox from '@/components/CreateDesk/TitleBox';
+import CreateGuide from '@/components/CreateDesk/CreateGuide';
+
 const InviteCreateDesk: NextPage = () => {
-  return <div>익명 유저 데스크 등록</div>;
+  return (
+    <div>
+      <main>
+        <TitleBox />
+        <CreateGuide />
+      </main>
+    </div>
+  );
 };
 
 export default InviteCreateDesk;

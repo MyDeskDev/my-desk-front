@@ -1,11 +1,11 @@
-import { Input, Box, FormLabel } from '@chakra-ui/react';
+import { Input, Box } from '@chakra-ui/react';
 import ImageIcon from '@/icons/image-icon.svg';
 
-//TODO: 스타일 리팩토링
 const ImageInput = () => {
   return (
     <Box display="inline-block" w="150px" h="150px">
-      <FormLabel
+      <Box
+        role="button"
         pos="relative"
         width="100%"
         height="100%"
@@ -13,7 +13,6 @@ const ImageInput = () => {
         alignItems="center"
         justifyContent="center"
         backgroundColor="#F3F3F3"
-        cursor="pointer"
       >
         <ImageIcon />
         <Input
@@ -24,8 +23,10 @@ const ImageInput = () => {
           right="0"
           bottom="0"
           left="0"
+          h="100%"
+          cursor="pointer"
         />
-      </FormLabel>
+      </Box>
     </Box>
   );
 };

@@ -17,6 +17,9 @@ const theme = extendTheme({
         color: 'black',
         fontSize: '1.4rem',
       },
+      '#__next': {
+        height: '100%',
+      },
     },
   },
   colors: {
@@ -25,7 +28,7 @@ const theme = extendTheme({
     },
   },
   breakpoints: {
-    sm: '576px',
+    sm: '320px',
     md: '768px',
     lg: '1024px',
     xl: '1200px',

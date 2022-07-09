@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { Box } from '@chakra-ui/react';
+import { Box, InputGroup } from '@chakra-ui/react';
 
 import TitleBox from '@/components/CreateDesk/TitleBox';
 import CreateGuide from '@/components/CreateDesk/CreateGuide';
@@ -12,13 +12,20 @@ const InviteCreateDesk: NextPage = () => {
       <main>
         <TitleBox />
         <CreateGuide />
-        <InputBox
-          label="프로필"
-          detailExplanation="자신을 나타낼 수 있는 사진,캐릭터,이모지 등"
-          required
-        >
-          <ImageInput />
-        </InputBox>
+
+        <form>
+          <Box p="12px 16px 12px 18px">
+            <InputGroup flexDir="column">
+              <InputBox
+                label="프로필"
+                helperText="자신을 나타낼 수 있는 사진,캐릭터,이모지 등"
+                isRequired
+              >
+                <ImageInput />
+              </InputBox>
+            </InputGroup>
+          </Box>
+        </form>
       </main>
     </Box>
   );

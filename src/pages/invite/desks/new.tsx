@@ -5,6 +5,7 @@ import TitleBox from '@/components/CreateDesk/TitleBox';
 import CreateGuide from '@/components/CreateDesk/CreateGuide';
 import ImageInput from '@/components/CreateDesk/ImageInput';
 import InputBox from '@/components/CreateDesk/InputBox';
+import TextInput from '@/components/CreateDesk/TextInput';
 
 const InviteCreateDesk: NextPage = () => {
   return (
@@ -14,7 +15,7 @@ const InviteCreateDesk: NextPage = () => {
         <CreateGuide />
 
         <form>
-          <Box p="12px 16px 12px 18px">
+          <Box p="7px 16px 7px 18px">
             <InputGroup flexDir="column">
               <InputBox
                 label="프로필"
@@ -22,6 +23,13 @@ const InviteCreateDesk: NextPage = () => {
                 isRequired
               >
                 <ImageInput />
+              </InputBox>
+              <InputBox
+                label="이름"
+                helperText="서비스에 노출되지 않습니다."
+                isRequired
+              >
+                <TextInput placeholder="입력" />
               </InputBox>
             </InputGroup>
           </Box>

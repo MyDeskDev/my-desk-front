@@ -22,7 +22,7 @@ interface Props {
 
 const InputBox = (props: Props) => {
   return (
-    <FormControl isRequired>
+    <FormControl isRequired p="5px 0">
       <Flex h="3rem" alignItems="center" justifyContent="space-between">
         <FormLabel
           htmlFor={props.for}

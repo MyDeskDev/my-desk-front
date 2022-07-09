@@ -1,11 +1,47 @@
 import type { NextPage } from 'next';
-import { Box, InputGroup } from '@chakra-ui/react';
+import { Box, InputGroup, FormLabel, FormHelperText } from '@chakra-ui/react';
+
+import type { InputGroupProps } from '@chakra-ui/react';
 
 import TitleBox from '@/components/CreateDesk/TitleBox';
 import CreateGuide from '@/components/CreateDesk/CreateGuide';
 import ImageInput from '@/components/CreateDesk/ImageInput';
 import InputBox from '@/components/CreateDesk/InputBox';
 import TextInput from '@/components/CreateDesk/TextInput';
+
+const DeskInputGroup = (props: Omit<InputGroupProps, 'flexDir'>) => {
+  return (
+    <InputGroup
+      {...props}
+      flexDir="column"
+      mb="30px"
+      sx={{
+        '& + &': {
+          pt: '30px',
+          borderTop: '2px solid #F1F1F1',
+        },
+      }}
+    />
+  );
+};
+
+interface FormSectionLabelProps {
+  label: string;
+  helperText?: string;
+}
+
+const FormSectionLabel = (props: FormSectionLabelProps) => {
+  return (
+    <Box mb="28px">
+      <FormLabel m="0" color="orange.500" fontSize="2.6rem" fontWeight="700">
+        {props.label}
+      </FormLabel>
+      {props.helperText && (
+        <FormHelperText mt="10px">{props.helperText}</FormHelperText>
+      )}
+    </Box>
+  );
+};
 
 const InviteCreateDesk: NextPage = () => {
   return (
@@ -16,7 +52,7 @@ const InviteCreateDesk: NextPage = () => {
 
         <form>
           <Box p="7px 16px 7px 18px">
-            <InputGroup flexDir="column">
+            <DeskInputGroup>
               <InputBox
                 label="프로필"
                 helperText="자신을 나타낼 수 있는 사진,캐릭터,이모지 등"
@@ -48,7 +84,13 @@ const InviteCreateDesk: NextPage = () => {
               <InputBox label="공간 형태" isRequired>
                 <TextInput placeholder="예) 소형,대형 사무실,공용오피스,내방,기타 등" />
               </InputBox>
-            </InputGroup>
+            </DeskInputGroup>
+            <DeskInputGroup>
+              <FormSectionLabel label="프로필 작성" />
+              <InputBox label="성별" isRequired>
+                <TextInput placeholder="예) 소형,대형 사무실,공용오피스,내방,기타 등" />
+              </InputBox>
+            </DeskInputGroup>
           </Box>
         </form>
       </main>

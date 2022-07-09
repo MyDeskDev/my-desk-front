@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import { Box } from '@chakra-ui/react';
 
 import TitleBox from '@/components/CreateDesk/TitleBox';
 import CreateGuide from '@/components/CreateDesk/CreateGuide';
@@ -7,7 +8,7 @@ import InputBox from '@/components/CreateDesk/InputBox';
 
 const InviteCreateDesk: NextPage = () => {
   return (
-    <div>
+    <Box maxW="800px" minW="280px" margin="0 auto">
       <main>
         <TitleBox />
         <CreateGuide />
@@ -19,7 +20,7 @@ const InviteCreateDesk: NextPage = () => {
           <ImageInput />
         </InputBox>
       </main>
-    </div>
+    </Box>
   );
 };
 

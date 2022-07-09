@@ -15,6 +15,12 @@ const TextInput = (props: Props) => {
       border="0"
       borderRadius="0"
       backgroundColor="#F3F3F3"
+      sx={{
+        '&::placeholder': {
+          overflow: 'visible',
+          color: '#C4C4C4',
+        },
+      }}
     />
   );
 };

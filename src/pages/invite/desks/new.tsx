@@ -31,6 +31,23 @@ const InviteCreateDesk: NextPage = () => {
               >
                 <TextInput placeholder="입력" />
               </InputBox>
+              <InputBox
+                label="닉네임"
+                helperText="서비스에 보여지는 닉네임 입니다."
+                isRequired
+              >
+                <TextInput placeholder="입력" />
+              </InputBox>
+              <InputBox
+                label="이메일 주소"
+                helperText="책상이야기 승인을 하기 위함이며, 노출은 안됩니다."
+                isRequired
+              >
+                <TextInput placeholder="입력" />
+              </InputBox>
+              <InputBox label="공간 형태" isRequired>
+                <TextInput placeholder="예) 소형,대형 사무실,공용오피스,내방,기타 등" />
+              </InputBox>
             </InputGroup>
           </Box>
         </form>

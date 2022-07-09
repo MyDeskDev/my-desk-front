@@ -31,7 +31,9 @@ const InputBox = (props: Props) => {
           requiredIndicator={<></>}
         >
           {props.isRequired && (
-            <RequiredIndicator m="0 4px 0 0">*</RequiredIndicator>
+            <RequiredIndicator m="0 4px 0 0" color="orange.500">
+              *
+            </RequiredIndicator>
           )}
           {props.label}
         </FormLabel>

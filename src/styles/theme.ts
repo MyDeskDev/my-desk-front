@@ -6,6 +6,29 @@ const theme = extendTheme({
     heading:
       'Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;',
   },
+  styles: {
+    global: {
+      html: {
+        fontSize: '67.5%',
+      },
+      body: {
+        color: 'black',
+        fontSize: '1.4rem',
+      },
+    },
+  },
+  colors: {
+    orange: {
+      500: '#FF6712',
+    },
+  },
+  breakpoints: {
+    sm: '320px',
+    md: '768px',
+    lg: '960px',
+    xl: '1200px',
+    '2xl': '1536px',
+  },
 });
 
 export default theme;

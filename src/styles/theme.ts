@@ -9,9 +9,11 @@ const theme = extendTheme({
   styles: {
     global: {
       html: {
+        height: '100%',
         fontSize: '67.5%',
       },
       body: {
+        height: '100%',
         color: 'black',
         fontSize: '1.4rem',
       },

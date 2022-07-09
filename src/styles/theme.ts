@@ -16,6 +16,7 @@ const theme = extendTheme({
         height: '100%',
         color: 'black',
         fontSize: '1.4rem',
+        lineHeight: 1,
       },
       '#__next': {
         height: '100%',

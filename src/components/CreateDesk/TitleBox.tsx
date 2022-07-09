@@ -14,7 +14,13 @@ const TitleBox = () => {
       backgroundSize="cover"
       backgroundPosition="50% 0"
     >
-      <Heading as="h2" color="white" fontSize="2.6rem" lineHeight="2.6rem">
+      <Heading
+        as="h2"
+        color="white"
+        fontSize="2.6rem"
+        lineHeight="2.6rem"
+        wordBreak="keep-all"
+      >
         <Text as="span" color="orange.500">
           마이데스크
         </Text>{' '}

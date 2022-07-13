@@ -131,6 +131,14 @@ const InviteCreateDesk: NextPage = () => {
                   <option value="unique">유니크</option>
                 </Select>
               </InputBox>
+              <InputBox label="혈액형">
+                <Select placeholder="선택">
+                  <option value="A">A형</option>
+                  <option value="B">B형</option>
+                  <option value="O">O형</option>
+                  <option value="AB">AB형</option>
+                </Select>
+              </InputBox>
             </DeskInputSection>
           </Box>
         </form>

@@ -116,6 +116,21 @@ const InviteCreateDesk: NextPage = () => {
                   <option value="student">학생</option>
                 </Select>
               </InputBox>
+              <InputBox label="컨셉스타일" isRequired>
+                <Select placeholder="선택">
+                  <option value="natural">네추럴</option>
+                  <option value="modern">모던</option>
+                  <option value="north_europe">북유럽</option>
+                  <option value="vintage">빈티지&amp;레트로</option>
+                  <option value="minimal">미니멀&amp;심플</option>
+                  <option value="lovely">러블리&amp;로맨틱</option>
+                  <option value="classic">클래식&amp;엔틱</option>
+                  <option value="french">프렌치&amp;프로방스</option>
+                  <option value="industrial">인더스트리얼</option>
+                  <option value="korean">한국&amp;아시아</option>
+                  <option value="unique">유니크</option>
+                </Select>
+              </InputBox>
             </DeskInputSection>
           </Box>
         </form>

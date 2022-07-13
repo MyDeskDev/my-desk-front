@@ -139,6 +139,26 @@ const InviteCreateDesk: NextPage = () => {
                   <option value="AB">AB형</option>
                 </Select>
               </InputBox>
+              <InputBox label="MBTI">
+                <Select placeholder="선택">
+                  <option value="INTJ">INTJ</option>
+                  <option value="INTP">INTP</option>
+                  <option value="ENTJ">ENTJ</option>
+                  <option value="ENTP">ENTP</option>
+                  <option value="INFJ">INFJ</option>
+                  <option value="INFP">INFP</option>
+                  <option value="ENFJ">ENFJ</option>
+                  <option value="ENFP">ENFP</option>
+                  <option value="ISTJ">ISTJ</option>
+                  <option value="ISFJ">ISFJ</option>
+                  <option value="ESTJ">ESTJ</option>
+                  <option value="ESFJ">ESFJ</option>
+                  <option value="ISTP">ISTP</option>
+                  <option value="ISFP">ISFP</option>
+                  <option value="ESTP">ESTP</option>
+                  <option value="ESFP">ESFP</option>
+                </Select>
+              </InputBox>
             </DeskInputSection>
           </Box>
         </form>

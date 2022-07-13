@@ -8,6 +8,7 @@ import InputBox from '@/components/CreateDesk/InputBox';
 import TextInput from '@/components/CreateDesk/TextInput';
 import SquareRadio from '@/components/CreateDesk/SquareRadio';
 import SquareRadioGroup from '@/components/CreateDesk/SquareRadioGroup';
+import Select from '@/components/CreateDesk/Select';
 
 const DeskInputSection = (props: { children: React.ReactNode }) => {
   return (
@@ -101,6 +102,11 @@ const InviteCreateDesk: NextPage = () => {
                   <SquareRadio value="40">40대</SquareRadio>
                   <SquareRadio value="50">50대</SquareRadio>
                 </SquareRadioGroup>
+              </InputBox>
+              <InputBox label="거주지 국가" isRequired>
+                <Select placeholder="선택">
+                  <option value="KR">한국</option>
+                </Select>
               </InputBox>
             </DeskInputSection>
           </Box>

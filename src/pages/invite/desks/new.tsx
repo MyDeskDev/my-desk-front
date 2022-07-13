@@ -1,18 +1,17 @@
 import type { NextPage } from 'next';
-import { Box, InputGroup, FormLabel, FormHelperText } from '@chakra-ui/react';
-
-import type { InputGroupProps } from '@chakra-ui/react';
+import { Box, Flex, FormLabel, FormHelperText } from '@chakra-ui/react';
 
 import TitleBox from '@/components/CreateDesk/TitleBox';
 import CreateGuide from '@/components/CreateDesk/CreateGuide';
 import ImageInput from '@/components/CreateDesk/ImageInput';
 import InputBox from '@/components/CreateDesk/InputBox';
 import TextInput from '@/components/CreateDesk/TextInput';
+import SquareRadio from '@/components/CreateDesk/SquareRadio';
+import SquareRadioGroup from '@/components/CreateDesk/SquareRadioGroup';
 
-const DeskInputGroup = (props: Omit<InputGroupProps, 'flexDir'>) => {
+const DeskInputSection = (props: { children: React.ReactNode }) => {
   return (
-    <InputGroup
-      {...props}
+    <Flex
       flexDir="column"
       mb="30px"
       sx={{
@@ -21,7 +20,9 @@ const DeskInputGroup = (props: Omit<InputGroupProps, 'flexDir'>) => {
           borderTop: '2px solid #F1F1F1',
         },
       }}
-    />
+    >
+      {props.children}
+    </Flex>
   );
 };
 
@@ -52,7 +53,7 @@ const InviteCreateDesk: NextPage = () => {
 
         <form>
           <Box p="7px 16px 7px 18px">
-            <DeskInputGroup>
+            <DeskInputSection>
               <InputBox
                 label="프로필"
                 helperText="자신을 나타낼 수 있는 사진,캐릭터,이모지 등"
@@ -84,13 +85,16 @@ const InviteCreateDesk: NextPage = () => {
               <InputBox label="공간 형태" isRequired>
                 <TextInput placeholder="예) 소형,대형 사무실,공용오피스,내방,기타 등" />
               </InputBox>
-            </DeskInputGroup>
-            <DeskInputGroup>
+            </DeskInputSection>
+            <DeskInputSection>
               <FormSectionLabel label="프로필 작성" />
               <InputBox label="성별" isRequired>
-                <TextInput placeholder="예) 소형,대형 사무실,공용오피스,내방,기타 등" />
+                <SquareRadioGroup name="gender">
+                  <SquareRadio value="male">남자</SquareRadio>
+                  <SquareRadio value="female">여자</SquareRadio>
+                </SquareRadioGroup>
               </InputBox>
-            </DeskInputGroup>
+            </DeskInputSection>
           </Box>
         </form>
       </main>

@@ -108,6 +108,14 @@ const InviteCreateDesk: NextPage = () => {
                   <option value="KR">한국</option>
                 </Select>
               </InputBox>
+              <InputBox label="직업" isRequired>
+                <Select placeholder="선택">
+                  <option value="developer">개발자</option>
+                  <option value="designer">디자이너</option>
+                  <option value="freelancer">프리랜서</option>
+                  <option value="student">학생</option>
+                </Select>
+              </InputBox>
             </DeskInputSection>
           </Box>
         </form>

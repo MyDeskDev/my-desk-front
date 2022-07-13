@@ -1,9 +1,7 @@
 import { Box, Flex, useRadio } from '@chakra-ui/react';
+import { RadioProps } from '@chakra-ui/react';
 
-export interface SquareRadioProps {
-  value?: string | number;
-  children?: React.ReactNode;
-}
+export type SquareRadioProps = Pick<RadioProps, 'value' | 'children'>;
 
 const SquareRadio = (props: SquareRadioProps) => {
   const { getInputProps, getCheckboxProps } = useRadio(props);
@@ -20,7 +18,8 @@ const SquareRadio = (props: SquareRadioProps) => {
         border="2px solid #C6C6C6"
         justify="center"
         align="center"
-        p="13px 20px"
+        h="50px"
+        p="13px 0"
         fontSize="1.6rem"
         lineHeight="2.4rem"
         _checked={{

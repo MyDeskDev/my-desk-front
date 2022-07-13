@@ -94,6 +94,14 @@ const InviteCreateDesk: NextPage = () => {
                   <SquareRadio value="female">여자</SquareRadio>
                 </SquareRadioGroup>
               </InputBox>
+              <InputBox label="연령대" isRequired>
+                <SquareRadioGroup name="ageGroup">
+                  <SquareRadio value="20">20대</SquareRadio>
+                  <SquareRadio value="30">30대</SquareRadio>
+                  <SquareRadio value="40">40대</SquareRadio>
+                  <SquareRadio value="50">50대</SquareRadio>
+                </SquareRadioGroup>
+              </InputBox>
             </DeskInputSection>
           </Box>
         </form>

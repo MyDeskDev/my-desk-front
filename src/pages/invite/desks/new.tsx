@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { Box, Flex, FormLabel, FormHelperText } from '@chakra-ui/react';
+import { Box, Flex, FormLabel, FormHelperText, HStack } from '@chakra-ui/react';
 
 import TitleBox from '@/components/CreateDesk/TitleBox';
 import CreateGuide from '@/components/CreateDesk/CreateGuide';
@@ -9,6 +9,8 @@ import TextInput from '@/components/CreateDesk/TextInput';
 import SquareRadio from '@/components/CreateDesk/SquareRadio';
 import SquareRadioGroup from '@/components/CreateDesk/SquareRadioGroup';
 import Select from '@/components/CreateDesk/Select';
+import Textarea from '@/components/CreateDesk/Textarea';
+import ActionButton from '@/components/CreateDesk/ActionButton';
 
 const DeskInputSection = (props: { children: React.ReactNode }) => {
   return (
@@ -182,6 +184,19 @@ const InviteCreateDesk: NextPage = () => {
                   <option value="50+">50만원 이상</option>
                 </Select>
               </InputBox>
+            </DeskInputSection>
+            <DeskInputSection>
+              <FormSectionLabel label="책상 이야기" />
+              <InputBox label="내용" isRequired>
+                <Textarea placeholder="예) 안녕하세요. 저는 마이데스크를 운영하고 있는 기미테디입니다. 저의 책상을 이렇게 소개하는게 쑥스럽네요 ^^" />
+              </InputBox>
+              <InputBox label="사진" isRequired>
+                <ImageInput />
+              </InputBox>
+              <HStack spacing="4px">
+                <ActionButton>텍스트 추가</ActionButton>
+                <ActionButton>사진 추가</ActionButton>
+              </HStack>
             </DeskInputSection>
           </Box>
         </form>

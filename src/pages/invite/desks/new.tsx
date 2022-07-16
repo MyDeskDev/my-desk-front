@@ -242,6 +242,12 @@ const InviteCreateDesk: NextPage = () => {
                 <ActionButton>아이템 추가</ActionButton>
               </HStack>
             </DeskInputSection>
+            <HStack spacing="4px" mt="31px">
+              <ActionButton h="60px">미리보기</ActionButton>
+              <ActionButton h="60px" bgColor="orange.500">
+                보내기
+              </ActionButton>
+            </HStack>
           </Box>
         </form>
       </main>

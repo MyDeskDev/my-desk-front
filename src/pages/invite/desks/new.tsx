@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { Box, Flex, FormLabel, FormHelperText, HStack } from '@chakra-ui/react';
+import { Box, Flex, FormLabel, Text, HStack } from '@chakra-ui/react';
 
 import TitleBox from '@/components/CreateDesk/TitleBox';
 import CreateGuide from '@/components/CreateDesk/CreateGuide';
@@ -41,7 +41,9 @@ const FormSectionLabel = (props: FormSectionLabelProps) => {
         {props.label}
       </FormLabel>
       {props.helperText && (
-        <FormHelperText mt="10px">{props.helperText}</FormHelperText>
+        <Text mt="10px" color="#6C6C6C" fontSize="1.6rem" lineHeight="2.4rem">
+          {props.helperText}
+        </Text>
       )}
     </Box>
   );
@@ -193,9 +195,30 @@ const InviteCreateDesk: NextPage = () => {
               <InputBox label="사진" isRequired>
                 <ImageInput />
               </InputBox>
-              <HStack spacing="4px">
+              <HStack spacing="4px" mt="10px">
                 <ActionButton>텍스트 추가</ActionButton>
                 <ActionButton>사진 추가</ActionButton>
+              </HStack>
+            </DeskInputSection>
+            <DeskInputSection>
+              <FormSectionLabel
+                label="추천 아이템"
+                helperText="사용자에게 추천 하고 싶은 아이템"
+              />
+              <InputBox label="추천 이유" isRequired>
+                <Textarea placeholder="예) 제가 이 아이템을 추천하는 이유는..." />
+              </InputBox>
+              <InputBox label="아이템명" isRequired>
+                <TextInput placeholder="예) 애플 매직 키보드" />
+              </InputBox>
+              <InputBox label="사진" isRequired>
+                <ImageInput />
+              </InputBox>
+              <InputBox label="구매처 링크">
+                <TextInput placeholder="구매하셨던 사이트 링크를 입력해 주세요." />
+              </InputBox>
+              <HStack spacing="4px" mt="10px">
+                <ActionButton>아이템 추가</ActionButton>
               </HStack>
             </DeskInputSection>
           </Box>

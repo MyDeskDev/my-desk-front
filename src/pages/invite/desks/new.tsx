@@ -221,6 +221,27 @@ const InviteCreateDesk: NextPage = () => {
                 <ActionButton>아이템 추가</ActionButton>
               </HStack>
             </DeskInputSection>
+            <DeskInputSection>
+              <FormSectionLabel
+                label="애장 아이템"
+                helperText="추억이 있거나, 소중하게 생각하는 아이템"
+              />
+              <InputBox label="아이템과 관련된 사연" isRequired>
+                <Textarea placeholder="예) 제가 이 아이템을 애장하는 이유는..." />
+              </InputBox>
+              <InputBox label="아이템명" isRequired>
+                <TextInput placeholder="예) 애플 매직 키보드" />
+              </InputBox>
+              <InputBox label="사진" isRequired>
+                <ImageInput />
+              </InputBox>
+              <InputBox label="구매처 링크">
+                <TextInput placeholder="구매하셨던 사이트 링크를 입력해 주세요." />
+              </InputBox>
+              <HStack spacing="4px" mt="10px">
+                <ActionButton>아이템 추가</ActionButton>
+              </HStack>
+            </DeskInputSection>
           </Box>
         </form>
       </main>

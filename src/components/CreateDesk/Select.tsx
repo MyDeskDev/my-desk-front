@@ -5,6 +5,7 @@ interface Props {
   placeholder?: string;
   name?: string;
   children: React.ReactNode;
+  onChange?: React.ChangeEventHandler<HTMLSelectElement>;
 }
 
 const CustomSelect = React.forwardRef<HTMLSelectElement, Props>(
@@ -30,6 +31,7 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, Props>(
           color: 'black',
           fontSize: '2rem',
         }}
+        onChange={props.onChange}
         ref={ref}
       >
         {props.children}

@@ -1,7 +1,10 @@
 import { Button } from '@chakra-ui/react';
 import type { ButtonProps } from '@chakra-ui/react';
 
-type Props = Pick<ButtonProps, 'h' | 'bgColor' | 'fontSize' | 'children'>;
+type Props = Pick<
+  ButtonProps,
+  'h' | 'bgColor' | 'fontSize' | 'children' | 'onClick' | 'type'
+>;
 
 const ActionButton = (props: Props) => {
   const { h = '50px', bgColor = 'black', fontSize = '1.8rem' } = props;

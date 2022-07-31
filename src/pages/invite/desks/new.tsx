@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import { Box, Flex, FormLabel, Text, HStack } from '@chakra-ui/react';
+import { useForm, Controller } from 'react-hook-form';
 
 import TitleBox from '@/components/CreateDesk/TitleBox';
 import CreateGuide from '@/components/CreateDesk/CreateGuide';
@@ -50,13 +51,19 @@ const FormSectionLabel = (props: FormSectionLabelProps) => {
 };
 
 const InviteCreateDesk: NextPage = () => {
+  const { register, handleSubmit, control } = useForm();
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
   return (
     <Box maxW="800px" minW="280px" margin="0 auto">
       <main>
         <TitleBox />
         <CreateGuide />
 
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Box p="7px 16px 7px 18px">
             <DeskInputSection>
               <InputBox
@@ -71,49 +78,68 @@ const InviteCreateDesk: NextPage = () => {
                 helperText="서비스에 노출되지 않습니다."
                 isRequired
               >
-                <TextInput placeholder="입력" />
+                <TextInput {...register('name')} placeholder="입력" />
               </InputBox>
               <InputBox
                 label="닉네임"
                 helperText="서비스에 보여지는 닉네임 입니다."
                 isRequired
               >
-                <TextInput placeholder="입력" />
+                <TextInput {...register('nickname')} placeholder="입력" />
               </InputBox>
               <InputBox
                 label="이메일 주소"
                 helperText="책상이야기 승인을 하기 위함이며, 노출은 안됩니다."
                 isRequired
               >
-                <TextInput placeholder="입력" />
+                <TextInput {...register('email')} placeholder="입력" />
               </InputBox>
               <InputBox label="공간 형태" isRequired>
-                <TextInput placeholder="예) 소형,대형 사무실,공용오피스,내방,기타 등" />
+                <TextInput
+                  {...register('roomType')}
+                  placeholder="예) 소형,대형 사무실,공용오피스,내방,기타 등"
+                />
               </InputBox>
             </DeskInputSection>
             <DeskInputSection>
               <FormSectionLabel label="프로필 작성" />
               <InputBox label="성별" isRequired>
-                <SquareRadioGroup name="gender">
-                  <SquareRadio value="male">남자</SquareRadio>
-                  <SquareRadio value="female">여자</SquareRadio>
-                </SquareRadioGroup>
+                <Controller
+                  control={control}
+                  name="gender"
+                  render={({ field: { onChange, value } }) => (
+                    <SquareRadioGroup onChange={onChange} value={value}>
+                      <SquareRadio value="male" name="gender">
+                        남자
+                      </SquareRadio>
+                      <SquareRadio value="female" name="gender">
+                        여자
+                      </SquareRadio>
+                    </SquareRadioGroup>
+                  )}
+                />
               </InputBox>
               <InputBox label="연령대" isRequired>
-                <SquareRadioGroup name="ageGroup">
-                  <SquareRadio value="20">20대</SquareRadio>
-                  <SquareRadio value="30">30대</SquareRadio>
-                  <SquareRadio value="40">40대</SquareRadio>
-                  <SquareRadio value="50">50대</SquareRadio>
-                </SquareRadioGroup>
+                <Controller
+                  control={control}
+                  name="ageGroup"
+                  render={({ field: { onChange, value } }) => (
+                    <SquareRadioGroup onChange={onChange} value={value}>
+                      <SquareRadio value="20">20대</SquareRadio>
+                      <SquareRadio value="30">30대</SquareRadio>
+                      <SquareRadio value="40">40대</SquareRadio>
+                      <SquareRadio value="50">50대</SquareRadio>
+                    </SquareRadioGroup>
+                  )}
+                />
               </InputBox>
               <InputBox label="거주지 국가" isRequired>
-                <Select placeholder="선택">
+                <Select {...register('country')} placeholder="선택">
                   <option value="KR">한국</option>
                 </Select>
               </InputBox>
               <InputBox label="직업" isRequired>
-                <Select placeholder="선택">
+                <Select {...register('job')} placeholder="선택">
                   <option value="developer">개발자</option>
                   <option value="designer">디자이너</option>
                   <option value="freelancer">프리랜서</option>
@@ -121,7 +147,7 @@ const InviteCreateDesk: NextPage = () => {
                 </Select>
               </InputBox>
               <InputBox label="컨셉스타일" isRequired>
-                <Select placeholder="선택">
+                <Select {...register('deskConcept')} placeholder="선택">
                   <option value="natural">네추럴</option>
                   <option value="modern">모던</option>
                   <option value="north_europe">북유럽</option>
@@ -136,7 +162,7 @@ const InviteCreateDesk: NextPage = () => {
                 </Select>
               </InputBox>
               <InputBox label="혈액형">
-                <Select placeholder="선택">
+                <Select {...register('bloodType')} placeholder="선택">
                   <option value="A">A형</option>
                   <option value="B">B형</option>
                   <option value="O">O형</option>
@@ -144,7 +170,7 @@ const InviteCreateDesk: NextPage = () => {
                 </Select>
               </InputBox>
               <InputBox label="MBTI">
-                <Select placeholder="선택">
+                <Select {...register('mbti')} placeholder="선택">
                   <option value="INTJ">INTJ</option>
                   <option value="INTP">INTP</option>
                   <option value="ENTJ">ENTJ</option>
@@ -244,7 +270,7 @@ const InviteCreateDesk: NextPage = () => {
             </DeskInputSection>
             <HStack spacing="4px" mt="31px">
               <ActionButton h="60px">미리보기</ActionButton>
-              <ActionButton h="60px" bgColor="orange.500">
+              <ActionButton type="submit" h="60px" bgColor="orange.500">
                 보내기
               </ActionButton>
             </HStack>

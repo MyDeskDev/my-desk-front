@@ -196,14 +196,17 @@ const InviteCreateDesk: NextPage = () => {
                 label="나의 책상을 한 줄로 요약하면 어떤 책상인가요?"
                 isRequired
               >
-                <TextInput placeholder="예) 책상은 나의 영혼과 같은 존재입니다." />
+                <TextInput
+                  {...register('deskSummary')}
+                  placeholder="예) 책상은 나의 영혼과 같은 존재입니다."
+                />
               </InputBox>
               <InputBox
                 label="구성 비용"
                 helperText="데스크톱과 노트북 등 고가 장비 제외하여 선택해 주세요."
                 isRequired
               >
-                <Select placeholder="선택">
+                <Select {...register('cost')} placeholder="선택">
                   <option value="10-">10만원 미만</option>
                   <option value="10+">10만원대</option>
                   <option value="20+">20만원대</option>

@@ -20,6 +20,7 @@ const ActionButton = (props: Props) => {
       fontWeight="700"
       lineHeight="2.4rem"
       flex="1"
+      type={props.type}
       _hover={{
         bgColor,
       }}
@@ -29,6 +30,7 @@ const ActionButton = (props: Props) => {
       _active={{
         bgColor,
       }}
+      onClick={props.onClick}
     >
       {props.children}
     </Button>

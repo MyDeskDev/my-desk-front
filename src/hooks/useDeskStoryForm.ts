@@ -2,7 +2,7 @@ import { useForm, useFieldArray } from 'react-hook-form';
 
 export type DeskStoryFormType = 'TEXT' | 'IMAGE';
 
-const useDeskStoryForm = () => {
+export const useDeskStoryForm = () => {
   const { control } = useForm<{
     deskStory: { value: string; type: DeskStoryFormType }[];
   }>({

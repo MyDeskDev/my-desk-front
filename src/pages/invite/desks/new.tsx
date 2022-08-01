@@ -1,6 +1,7 @@
+import React from 'react';
 import type { NextPage } from 'next';
 import { Box, Flex, FormLabel, Text, HStack } from '@chakra-ui/react';
-import { useForm, Controller, useFieldArray } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 import TitleBox from '@/components/CreateDesk/TitleBox';
 import CreateGuide from '@/components/CreateDesk/CreateGuide';
@@ -12,8 +13,10 @@ import SquareRadioGroup from '@/components/CreateDesk/SquareRadioGroup';
 import Select from '@/components/CreateDesk/Select';
 import Textarea from '@/components/CreateDesk/Textarea';
 import ActionButton from '@/components/CreateDesk/ActionButton';
+import DeleteButton from '@/components/CreateDesk/DeleteButton';
 
 import useDeskStoryForm from '@/hooks/useDeskStoryForm';
+import useDeskItemForm from '@/hooks/useDeskItemForm';
 
 const DeskInputSection = (props: { children: React.ReactNode }) => {
   return (
@@ -52,6 +55,14 @@ const FormSectionLabel = (props: FormSectionLabelProps) => {
   );
 };
 
+const ItemTitle = (props: { children?: React.ReactNode }) => {
+  return (
+    <Text as="strong" fontSize="2rem" lineHeight="2rem">
+      {props.children}
+    </Text>
+  );
+};
+
 const InviteCreateDesk: NextPage = () => {
   const { register, handleSubmit, control } = useForm();
 
@@ -60,6 +71,18 @@ const InviteCreateDesk: NextPage = () => {
     append: appendDeskStory,
     remove: removeDeskStory,
   } = useDeskStoryForm();
+
+  const {
+    fields: recommendItemFields,
+    append: appendRecommendItem,
+    remove: removeRecommendItem,
+  } = useDeskItemForm('recommendItem');
+
+  const {
+    fields: cherishedItemFields,
+    append: appendCherishedItem,
+    remove: removeCherishedItem,
+  } = useDeskItemForm('cherishedItem');
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -273,20 +296,46 @@ const InviteCreateDesk: NextPage = () => {
                 label="추천 아이템"
                 helperText="사용자에게 추천 하고 싶은 아이템"
               />
-              <InputBox label="추천 이유" isRequired>
-                <Textarea placeholder="예) 제가 이 아이템을 추천하는 이유는..." />
-              </InputBox>
-              <InputBox label="아이템명" isRequired>
-                <TextInput placeholder="예) 애플 매직 키보드" />
-              </InputBox>
-              <InputBox label="사진" isRequired>
-                <ImageInput />
-              </InputBox>
-              <InputBox label="구매처 링크">
-                <TextInput placeholder="구매하셨던 사이트 링크를 입력해 주세요." />
-              </InputBox>
+              {recommendItemFields.map((field, index) => (
+                <Box
+                  key={field.id}
+                  sx={{
+                    '& + &': {
+                      mt: '48px',
+                    },
+                  }}
+                >
+                  <Flex justifyContent="space-between">
+                    <ItemTitle>{`아이템 ${index + 1}`}</ItemTitle>
+                    <DeleteButton onClick={() => removeRecommendItem(index)} />
+                  </Flex>
+                  <InputBox label="추천 이유" isRequired>
+                    <Textarea placeholder="예) 제가 이 아이템을 추천하는 이유는..." />
+                  </InputBox>
+                  <InputBox label="아이템명" isRequired>
+                    <TextInput placeholder="예) 애플 매직 키보드" />
+                  </InputBox>
+                  <InputBox label="사진" isRequired>
+                    <ImageInput />
+                  </InputBox>
+                  <InputBox label="구매처 링크">
+                    <TextInput placeholder="구매하셨던 사이트 링크를 입력해 주세요." />
+                  </InputBox>
+                </Box>
+              ))}
               <HStack spacing="4px" mt="10px">
-                <ActionButton>아이템 추가</ActionButton>
+                <ActionButton
+                  onClick={() =>
+                    appendRecommendItem({
+                      name: '',
+                      story: '',
+                      image: '',
+                      url: '',
+                    })
+                  }
+                >
+                  아이템 추가
+                </ActionButton>
               </HStack>
             </DeskInputSection>
             <DeskInputSection>
@@ -294,20 +343,50 @@ const InviteCreateDesk: NextPage = () => {
                 label="애장 아이템"
                 helperText="추억이 있거나, 소중하게 생각하는 아이템"
               />
-              <InputBox label="아이템과 관련된 사연" isRequired>
-                <Textarea placeholder="예) 제가 이 아이템을 애장하는 이유는..." />
-              </InputBox>
-              <InputBox label="아이템명" isRequired>
-                <TextInput placeholder="예) 애플 매직 키보드" />
-              </InputBox>
-              <InputBox label="사진" isRequired>
-                <ImageInput />
-              </InputBox>
-              <InputBox label="구매처 링크">
-                <TextInput placeholder="구매하셨던 사이트 링크를 입력해 주세요." />
-              </InputBox>
+              {cherishedItemFields.map((field, index) => {
+                return (
+                  <Box
+                    key={field.id}
+                    sx={{
+                      '& + &': {
+                        mt: '48px',
+                      },
+                    }}
+                  >
+                    <Flex justifyContent="space-between">
+                      <ItemTitle>{`아이템 ${index + 1}`}</ItemTitle>
+                      <DeleteButton
+                        onClick={() => removeCherishedItem(index)}
+                      />
+                    </Flex>
+                    <InputBox label="아이템과 관련된 사연" isRequired>
+                      <Textarea placeholder="예) 제가 이 아이템을 애장하는 이유는..." />
+                    </InputBox>
+                    <InputBox label="아이템명" isRequired>
+                      <TextInput placeholder="예) 애플 매직 키보드" />
+                    </InputBox>
+                    <InputBox label="사진" isRequired>
+                      <ImageInput />
+                    </InputBox>
+                    <InputBox label="구매처 링크">
+                      <TextInput placeholder="구매하셨던 사이트 링크를 입력해 주세요." />
+                    </InputBox>
+                  </Box>
+                );
+              })}
               <HStack spacing="4px" mt="10px">
-                <ActionButton>아이템 추가</ActionButton>
+                <ActionButton
+                  onClick={() =>
+                    appendCherishedItem({
+                      name: '',
+                      story: '',
+                      image: '',
+                      url: '',
+                    })
+                  }
+                >
+                  아이템 추가
+                </ActionButton>
               </HStack>
             </DeskInputSection>
             <HStack spacing="4px" mt="31px">

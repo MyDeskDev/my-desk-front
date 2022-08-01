@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { Box, Flex, FormLabel, Text, HStack } from '@chakra-ui/react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useFieldArray } from 'react-hook-form';
 
 import TitleBox from '@/components/CreateDesk/TitleBox';
 import CreateGuide from '@/components/CreateDesk/CreateGuide';
@@ -12,6 +12,8 @@ import SquareRadioGroup from '@/components/CreateDesk/SquareRadioGroup';
 import Select from '@/components/CreateDesk/Select';
 import Textarea from '@/components/CreateDesk/Textarea';
 import ActionButton from '@/components/CreateDesk/ActionButton';
+
+import useDeskStoryForm from '@/hooks/useDeskStoryForm';
 
 const DeskInputSection = (props: { children: React.ReactNode }) => {
   return (
@@ -52,6 +54,12 @@ const FormSectionLabel = (props: FormSectionLabelProps) => {
 
 const InviteCreateDesk: NextPage = () => {
   const { register, handleSubmit, control } = useForm();
+
+  const {
+    fields: deskStoryFields,
+    append: appendDeskStory,
+    remove: removeDeskStory,
+  } = useDeskStoryForm();
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -218,15 +226,46 @@ const InviteCreateDesk: NextPage = () => {
             </DeskInputSection>
             <DeskInputSection>
               <FormSectionLabel label="책상 이야기" />
-              <InputBox label="내용" isRequired>
-                <Textarea placeholder="예) 안녕하세요. 저는 마이데스크를 운영하고 있는 기미테디입니다. 저의 책상을 이렇게 소개하는게 쑥스럽네요 ^^" />
-              </InputBox>
-              <InputBox label="사진" isRequired>
-                <ImageInput />
-              </InputBox>
+              {deskStoryFields.map((item, index) => {
+                if (item.type === 'TEXT') {
+                  return (
+                    <InputBox
+                      key={item.id}
+                      label="내용"
+                      isRequired
+                      isDeletable
+                      onDelete={() => removeDeskStory(index)}
+                    >
+                      <Textarea placeholder="예) 안녕하세요. 저는 마이데스크를 운영하고 있는 기미테디입니다. 저의 책상을 이렇게 소개하는게 쑥스럽네요 ^^" />
+                    </InputBox>
+                  );
+                } else if (item.type === 'IMAGE') {
+                  return (
+                    <InputBox
+                      key={item.id}
+                      label="사진"
+                      isRequired
+                      isDeletable
+                      onDelete={() => removeDeskStory(index)}
+                    >
+                      <ImageInput />
+                    </InputBox>
+                  );
+                } else {
+                  return <></>;
+                }
+              })}
               <HStack spacing="4px" mt="10px">
-                <ActionButton>텍스트 추가</ActionButton>
-                <ActionButton>사진 추가</ActionButton>
+                <ActionButton
+                  onClick={() => appendDeskStory({ type: 'TEXT', value: '' })}
+                >
+                  텍스트 추가
+                </ActionButton>
+                <ActionButton
+                  onClick={() => appendDeskStory({ type: 'IMAGE', value: '' })}
+                >
+                  사진 추가
+                </ActionButton>
               </HStack>
             </DeskInputSection>
             <DeskInputSection>

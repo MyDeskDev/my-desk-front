@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 
 import TrashCanIcon from '@/icons/trash-can-icon.svg';
+import { MouseEventHandler } from 'react';
 
 interface Props {
   label: string;
@@ -18,6 +19,7 @@ interface Props {
   isRequired?: boolean;
   children?: React.ReactNode;
   isDeletable?: boolean;
+  onDelete?: MouseEventHandler<HTMLButtonElement>;
 }
 
 const InputBox = (props: Props) => {
@@ -51,6 +53,7 @@ const InputBox = (props: Props) => {
             _hover={{ backgroundColor: 'black' }}
             _active={{ backgroundColor: 'black' }}
             _focus={{ ouline: 'none' }}
+            onClick={props.onDelete}
           >
             <VisuallyHidden>삭제</VisuallyHidden>
             <TrashCanIcon />

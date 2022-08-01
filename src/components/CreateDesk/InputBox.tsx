@@ -1,16 +1,14 @@
+import type { MouseEventHandler } from 'react';
 import {
   Box,
   Flex,
   FormLabel,
-  Button,
   FormHelperText,
   FormControl,
   RequiredIndicator,
-  VisuallyHidden,
 } from '@chakra-ui/react';
 
-import TrashCanIcon from '@/icons/trash-can-icon.svg';
-import { MouseEventHandler } from 'react';
+import DeleteButton from '@/components/CreateDesk/DeleteButton';
 
 interface Props {
   label: string;
@@ -39,26 +37,7 @@ const InputBox = (props: Props) => {
           )}
           {props.label}
         </FormLabel>
-        {props.isDeletable && (
-          <Button
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            w="30px"
-            h="30px"
-            p="0"
-            borderRadius="0"
-            backgroundColor="black"
-            outline="none"
-            _hover={{ backgroundColor: 'black' }}
-            _active={{ backgroundColor: 'black' }}
-            _focus={{ ouline: 'none' }}
-            onClick={props.onDelete}
-          >
-            <VisuallyHidden>삭제</VisuallyHidden>
-            <TrashCanIcon />
-          </Button>
-        )}
+        {props.isDeletable && <DeleteButton onClick={props.onDelete} />}
       </Flex>
       {props.helperText && (
         <FormHelperText mt="6px" color="#A5A5A5" fontSize="1.4rem">

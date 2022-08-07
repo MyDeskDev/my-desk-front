@@ -1,7 +1,13 @@
 import { Input, Box } from '@chakra-ui/react';
 import ImageIcon from '@/icons/image-icon.svg';
+import React, { ChangeEventHandler } from 'react';
 
-const ImageInput = () => {
+export interface Props {
+  value?: string | number | ReadonlyArray<string>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+}
+
+const ImageInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   return (
     <Box display="inline-block" w="150px" h="150px">
       <Box
@@ -25,10 +31,15 @@ const ImageInput = () => {
           left="0"
           h="100%"
           cursor="pointer"
+          value={props.value}
+          onChange={props.onChange}
+          ref={ref}
         />
       </Box>
     </Box>
   );
-};
+});
+
+ImageInput.displayName = 'ImageInput';
 
 export default ImageInput;

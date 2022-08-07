@@ -390,7 +390,7 @@ const InviteCreateDesk: NextPage = () => {
               </HStack>
             </DeskInputSection>
             <HStack spacing="4px" mt="31px">
-              <ActionButton h="60px">미리보기</ActionButton>
+              {/* <ActionButton h="60px">미리보기</ActionButton> */}
               <ActionButton type="submit" h="60px" bgColor="orange.500">
                 보내기
               </ActionButton>

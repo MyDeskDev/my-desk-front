@@ -2,6 +2,9 @@ import React, { ChangeEventHandler, useState } from 'react';
 import type { NextPage } from 'next';
 import { Box, Flex, FormLabel, Text, HStack, Image } from '@chakra-ui/react';
 import { useForm, Controller } from 'react-hook-form';
+import ReactCrop from 'react-image-crop';
+
+import 'react-image-crop/dist/ReactCrop.css';
 
 import TitleBox from '@/components/CreateDesk/TitleBox';
 import CreateGuide from '@/components/CreateDesk/CreateGuide';

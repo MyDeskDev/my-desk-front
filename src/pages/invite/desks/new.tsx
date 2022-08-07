@@ -259,7 +259,10 @@ const InviteCreateDesk: NextPage = () => {
                       isDeletable
                       onDelete={() => removeDeskStory(index)}
                     >
-                      <Textarea placeholder="예) 안녕하세요. 저는 마이데스크를 운영하고 있는 기미테디입니다. 저의 책상을 이렇게 소개하는게 쑥스럽네요 ^^" />
+                      <Textarea
+                        {...register(`deskStory.${index}.value`)}
+                        placeholder="예) 안녕하세요. 저는 마이데스크를 운영하고 있는 기미테디입니다. 저의 책상을 이렇게 소개하는게 쑥스럽네요 ^^"
+                      />
                     </InputBox>
                   );
                 } else if (item.type === 'IMAGE') {
@@ -310,16 +313,25 @@ const InviteCreateDesk: NextPage = () => {
                     <DeleteButton onClick={() => removeRecommendItem(index)} />
                   </Flex>
                   <InputBox label="추천 이유" isRequired>
-                    <Textarea placeholder="예) 제가 이 아이템을 추천하는 이유는..." />
+                    <Textarea
+                      {...register(`recommendItem.${index}.story`)}
+                      placeholder="예) 제가 이 아이템을 추천하는 이유는..."
+                    />
                   </InputBox>
                   <InputBox label="아이템명" isRequired>
-                    <TextInput placeholder="예) 애플 매직 키보드" />
+                    <TextInput
+                      {...register(`recommendItem.${index}.name`)}
+                      placeholder="예) 애플 매직 키보드"
+                    />
                   </InputBox>
                   <InputBox label="사진" isRequired>
-                    <ImageInput />
+                    <ImageInput {...register(`recommendItem.${index}.image`)} />
                   </InputBox>
                   <InputBox label="구매처 링크">
-                    <TextInput placeholder="구매하셨던 사이트 링크를 입력해 주세요." />
+                    <TextInput
+                      {...register(`recommendItem.${index}.url`)}
+                      placeholder="구매하셨던 사이트 링크를 입력해 주세요."
+                    />
                   </InputBox>
                 </Box>
               ))}
@@ -360,16 +372,27 @@ const InviteCreateDesk: NextPage = () => {
                       />
                     </Flex>
                     <InputBox label="아이템과 관련된 사연" isRequired>
-                      <Textarea placeholder="예) 제가 이 아이템을 애장하는 이유는..." />
+                      <Textarea
+                        {...register(`cherishedItem.${index}.story`)}
+                        placeholder="예) 제가 이 아이템을 애장하는 이유는..."
+                      />
                     </InputBox>
                     <InputBox label="아이템명" isRequired>
-                      <TextInput placeholder="예) 애플 매직 키보드" />
+                      <TextInput
+                        {...register(`cherishedItem.${index}.name`)}
+                        placeholder="예) 애플 매직 키보드"
+                      />
                     </InputBox>
                     <InputBox label="사진" isRequired>
-                      <ImageInput />
+                      <ImageInput
+                        {...register(`cherishedItem.${index}.image`)}
+                      />
                     </InputBox>
                     <InputBox label="구매처 링크">
-                      <TextInput placeholder="구매하셨던 사이트 링크를 입력해 주세요." />
+                      <TextInput
+                        {...register(`cherishedItem.${index}.url`)}
+                        placeholder="구매하셨던 사이트 링크를 입력해 주세요."
+                      />
                     </InputBox>
                   </Box>
                 );

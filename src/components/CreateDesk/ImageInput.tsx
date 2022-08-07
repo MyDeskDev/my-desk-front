@@ -4,7 +4,9 @@ import React, { ChangeEventHandler } from 'react';
 
 export interface Props {
   value?: string | number | ReadonlyArray<string>;
+  multiple?: boolean;
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  name?: string;
 }
 
 const ImageInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
@@ -34,6 +36,9 @@ const ImageInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
           value={props.value}
           onChange={props.onChange}
           ref={ref}
+          multiple={props.multiple}
+          accept="image/*"
+          name={props.name}
         />
       </Box>
     </Box>

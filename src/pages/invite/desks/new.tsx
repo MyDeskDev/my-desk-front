@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { ChangeEventHandler, useState } from 'react';
 import type { NextPage } from 'next';
-import { Box, Flex, FormLabel, Text, HStack } from '@chakra-ui/react';
+import { Box, Flex, FormLabel, Text, HStack, Image } from '@chakra-ui/react';
 import { useForm, Controller } from 'react-hook-form';
 
 import TitleBox from '@/components/CreateDesk/TitleBox';
@@ -64,7 +64,7 @@ const ItemTitle = (props: { children?: React.ReactNode }) => {
 };
 
 const InviteCreateDesk: NextPage = () => {
-  const { register, handleSubmit, control } = useForm();
+  const { register, handleSubmit, control, setValue } = useForm();
 
   const {
     fields: deskStoryFields,
@@ -88,6 +88,18 @@ const InviteCreateDesk: NextPage = () => {
     console.log(data);
   };
 
+  const [profileImageUrl, setProfileImageUrl] = useState('');
+
+  const onChangeProfileImage: ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    const file = (event.target.files as FileList)[0];
+    const fileObjUrl = URL.createObjectURL(file);
+
+    setProfileImageUrl(fileObjUrl);
+    setValue('profileImageUrl', fileObjUrl);
+  };
+
   return (
     <Box maxW="800px" minW="280px" margin="0 auto">
       <main>
@@ -102,7 +114,30 @@ const InviteCreateDesk: NextPage = () => {
                 helperText="자신을 나타낼 수 있는 사진,캐릭터,이모지 등"
                 isRequired
               >
-                <ImageInput />
+                <Box d="inline-block" position="relative">
+                  <ImageInput
+                    {...register('profileImage', {
+                      onChange: onChangeProfileImage,
+                    })}
+                  />
+                  {profileImageUrl && (
+                    <Box
+                      position="absolute"
+                      top="0"
+                      right="0"
+                      bottom="0"
+                      left="0"
+                      bgColor="white"
+                    >
+                      <Image
+                        src={profileImageUrl}
+                        alt=""
+                        boxSize="100%"
+                        objectFit="cover"
+                      />
+                    </Box>
+                  )}
+                </Box>
               </InputBox>
               <InputBox
                 label="이름"

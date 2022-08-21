@@ -66,7 +66,7 @@ const ItemTitle = (props: { children?: React.ReactNode }) => {
 };
 
 const InviteCreateDesk: NextPage = () => {
-  const { register, handleSubmit, control, setValue } = useForm();
+  const { register, handleSubmit, control, setValue, watch } = useForm();
 
   const {
     fields: deskStoryFields,
@@ -90,8 +90,6 @@ const InviteCreateDesk: NextPage = () => {
     console.log(data);
   };
 
-  const [profileImageUrl, setProfileImageUrl] = useState('');
-
   const onChangeProfileImage: ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
@@ -104,7 +102,6 @@ const InviteCreateDesk: NextPage = () => {
 
     const fileObjUrl = URL.createObjectURL(file);
 
-    setProfileImageUrl(fileObjUrl);
     setValue('profileImageUrl', fileObjUrl);
   };
 
@@ -192,9 +189,17 @@ const InviteCreateDesk: NextPage = () => {
     [key: string]: string;
   }>({});
 
-  const onChangeDeskStoryImage = (key: string) => {
+  const onChangeDeskStory = (index: number) => {
     const handler: ChangeEventHandler<HTMLInputElement> = (event) => {
       event.preventDefault();
+
+      const { type: fieldType } = deskStoryFields[index];
+
+      setValue(`deskStory.${index}.type`, fieldType);
+
+      if (!event.target.files) {
+        return;
+      }
 
       const file = (event.target.files as FileList)[0];
 
@@ -204,12 +209,7 @@ const InviteCreateDesk: NextPage = () => {
 
       const fileObjUrl = URL.createObjectURL(file);
 
-      setDeskStoryImageUrls({
-        ...deskStoryImageUrls,
-        ...{
-          [key]: fileObjUrl,
-        },
-      });
+      setValue(`deskStory.${index}.imageUrl`, fileObjUrl);
     };
 
     return handler;
@@ -248,7 +248,7 @@ const InviteCreateDesk: NextPage = () => {
                       onChange: onChangeProfileImage,
                     })}
                   />
-                  {profileImageUrl && (
+                  {watch('profileImageUrl') && (
                     <Box
                       position="absolute"
                       top="0"
@@ -258,7 +258,7 @@ const InviteCreateDesk: NextPage = () => {
                       bgColor="white"
                     >
                       <Image
-                        src={profileImageUrl}
+                        src={watch('profileImageUrl')}
                         alt=""
                         boxSize="100%"
                         objectFit="cover"
@@ -424,7 +424,9 @@ const InviteCreateDesk: NextPage = () => {
                       onDelete={() => removeDeskStory(index)}
                     >
                       <Textarea
-                        {...register(`deskStory.${index}.value`)}
+                        {...register(`deskStory.${index}.text`, {
+                          onChange: onChangeDeskStory(index),
+                        })}
                         placeholder="예) 안녕하세요. 저는 마이데스크를 운영하고 있는 기미테디입니다. 저의 책상을 이렇게 소개하는게 쑥스럽네요 ^^"
                       />
                     </InputBox>
@@ -439,15 +441,15 @@ const InviteCreateDesk: NextPage = () => {
                         onDelete={() => onDeleteDeskStory(index)}
                       >
                         <ImageInput
-                          {...register(`deskStory.${index}.value`, {
-                            onChange: onChangeDeskStoryImage(item.id),
+                          {...register(`deskStory.${index}.image`, {
+                            onChange: onChangeDeskStory(index),
                           })}
                         />
                       </InputBox>
-                      {deskStoryImageUrls[item.id] && (
+                      {watch(`deskStory.${index}.imageUrl`) && (
                         <Flex justifyContent="center">
                           <Image
-                            src={deskStoryImageUrls[item.id]}
+                            src={watch(`deskStory.${index}.imageUrl`)}
                             alt=""
                             maxW="100%"
                           />
@@ -461,12 +463,21 @@ const InviteCreateDesk: NextPage = () => {
               })}
               <HStack spacing="4px" mt="10px">
                 <ActionButton
-                  onClick={() => appendDeskStory({ type: 'TEXT', value: '' })}
+                  onClick={() =>
+                    appendDeskStory({
+                      type: 'TEXT',
+                      text: '',
+                    })
+                  }
                 >
                   텍스트 추가
                 </ActionButton>
                 <ActionButton
-                  onClick={() => appendDeskStory({ type: 'IMAGE', value: '' })}
+                  onClick={() =>
+                    appendDeskStory({
+                      type: 'IMAGE',
+                    })
+                  }
                 >
                   사진 추가
                 </ActionButton>
@@ -566,7 +577,7 @@ const InviteCreateDesk: NextPage = () => {
                     </Flex>
                     <InputBox label="아이템과 관련된 사연" isRequired>
                       <Textarea
-                        {...register(`cherishedItem.${index}.story`)}
+                        {...register(`favoriate.${index}.story`)}
                         placeholder="예) 제가 이 아이템을 애장하는 이유는..."
                       />
                     </InputBox>

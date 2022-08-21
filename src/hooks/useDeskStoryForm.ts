@@ -4,14 +4,19 @@ export type DeskStoryFormType = 'TEXT' | 'IMAGE';
 
 export const useDeskStoryForm = () => {
   const { control } = useForm<{
-    deskStory: { value: string; type: DeskStoryFormType }[];
+    deskStory: {
+      text?: string;
+      image?: string | ReadonlyArray<string>;
+      imageUrl?: string;
+      type: DeskStoryFormType;
+    }[];
   }>({
     defaultValues: {
       deskStory: [],
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     control,
     name: 'deskStory',
   });
@@ -20,6 +25,8 @@ export const useDeskStoryForm = () => {
     fields,
     append,
     remove,
+    update,
+    control,
   };
 };
 

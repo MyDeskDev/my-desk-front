@@ -3,7 +3,7 @@ import ImageIcon from '@/icons/image-icon.svg';
 import React, { ChangeEventHandler } from 'react';
 
 export interface Props {
-  value?: string | number | ReadonlyArray<string>;
+  value?: string | ReadonlyArray<string>;
   multiple?: boolean;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   name?: string;

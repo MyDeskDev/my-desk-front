@@ -96,7 +96,13 @@ const InviteCreateDesk: NextPage = () => {
   const onChangeProfileImage: ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
+    event.preventDefault();
     const file = (event.target.files as FileList)[0];
+
+    if (file == null) {
+      return;
+    }
+
     const fileObjUrl = URL.createObjectURL(file);
 
     setProfileImageUrl(fileObjUrl);
@@ -137,6 +143,7 @@ const InviteCreateDesk: NextPage = () => {
                         alt=""
                         boxSize="100%"
                         objectFit="cover"
+                        borderRadius="50%"
                       />
                     </Box>
                   )}

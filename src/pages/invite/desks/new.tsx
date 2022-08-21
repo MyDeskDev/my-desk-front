@@ -82,10 +82,10 @@ const InviteCreateDesk: NextPage = () => {
   } = useDeskItemForm('recommendItem');
 
   const {
-    fields: cherishedItemFields,
-    append: appendCherishedItem,
-    remove: removeCherishedItem,
-  } = useDeskItemForm('cherishedItem');
+    fields: favoriteItemFields,
+    append: appendFavoriteItem,
+    remove: removeFavoriteItem,
+  } = useDeskItemForm('favoriteItem');
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -115,7 +115,6 @@ const InviteCreateDesk: NextPage = () => {
 
   const onChangeRecommendItemImage = (key: string) => {
     const handler: ChangeEventHandler<HTMLInputElement> = (event) => {
-      console.log(event.target.name);
       event.preventDefault();
 
       const file = (event.target.files as FileList)[0];
@@ -128,6 +127,33 @@ const InviteCreateDesk: NextPage = () => {
 
       setRecommendItemImageUrls({
         ...recommendItemImageUrls,
+        ...{
+          [key]: fileObjUrl,
+        },
+      });
+    };
+
+    return handler;
+  };
+
+  const [favoriteItemImageUrls, setFavoriteItemImageUrls] = useState<{
+    [key: string]: string;
+  }>({});
+
+  const onChangeFavoriteItemImage = (key: string) => {
+    const handler: ChangeEventHandler<HTMLInputElement> = (event) => {
+      event.preventDefault();
+
+      const file = (event.target.files as FileList)[0];
+
+      if (file == null) {
+        return;
+      }
+
+      const fileObjUrl = URL.createObjectURL(file);
+
+      setFavoriteItemImageUrls({
+        ...favoriteItemImageUrls,
         ...{
           [key]: fileObjUrl,
         },
@@ -441,7 +467,7 @@ const InviteCreateDesk: NextPage = () => {
                 label="애장 아이템"
                 helperText="추억이 있거나, 소중하게 생각하는 아이템"
               />
-              {cherishedItemFields.map((field, index) => {
+              {favoriteItemFields.map((field, index) => {
                 return (
                   <Box
                     key={field.id}
@@ -453,9 +479,7 @@ const InviteCreateDesk: NextPage = () => {
                   >
                     <Flex justifyContent="space-between">
                       <ItemTitle>{`아이템 ${index + 1}`}</ItemTitle>
-                      <DeleteButton
-                        onClick={() => removeCherishedItem(index)}
-                      />
+                      <DeleteButton onClick={() => removeFavoriteItem(index)} />
                     </Flex>
                     <InputBox label="아이템과 관련된 사연" isRequired>
                       <Textarea
@@ -471,9 +495,20 @@ const InviteCreateDesk: NextPage = () => {
                     </InputBox>
                     <InputBox label="사진" isRequired>
                       <ImageInput
-                        {...register(`cherishedItem.${index}.image`)}
+                        {...register(`cherishedItem.${index}.image`, {
+                          onChange: onChangeFavoriteItemImage(field.id),
+                        })}
                       />
                     </InputBox>
+                    {favoriteItemImageUrls[field.id] && (
+                      <Box>
+                        <Image
+                          src={favoriteItemImageUrls[field.id]}
+                          alt=""
+                          maxW="100%"
+                        />
+                      </Box>
+                    )}
                     <InputBox label="구매처 링크">
                       <TextInput
                         {...register(`cherishedItem.${index}.url`)}
@@ -486,7 +521,7 @@ const InviteCreateDesk: NextPage = () => {
               <HStack spacing="4px" mt="10px">
                 <ActionButton
                   onClick={() =>
-                    appendCherishedItem({
+                    appendFavoriteItem({
                       name: '',
                       story: '',
                       image: '',

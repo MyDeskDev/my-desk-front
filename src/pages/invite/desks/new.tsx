@@ -5,8 +5,6 @@ import { useForm, Controller } from 'react-hook-form';
 import type { NextPage } from 'next';
 import type { ChangeEventHandler } from 'react';
 
-import 'react-image-crop/dist/ReactCrop.css';
-
 import TitleBox from '@/components/CreateDesk/TitleBox';
 import CreateGuide from '@/components/CreateDesk/CreateGuide';
 import ImageInput from '@/components/CreateDesk/ImageInput';
@@ -188,6 +186,46 @@ const InviteCreateDesk: NextPage = () => {
 
     removeFavoriteItem(index);
     deleteFavoriteItemImage(imageUrlTarget);
+  };
+
+  const [deskStoryImageUrls, setDeskStoryImageUrls] = useState<{
+    [key: string]: string;
+  }>({});
+
+  const onChangeDeskStoryImage = (key: string) => {
+    const handler: ChangeEventHandler<HTMLInputElement> = (event) => {
+      event.preventDefault();
+
+      const file = (event.target.files as FileList)[0];
+
+      if (file == null) {
+        return;
+      }
+
+      const fileObjUrl = URL.createObjectURL(file);
+
+      setDeskStoryImageUrls({
+        ...deskStoryImageUrls,
+        ...{
+          [key]: fileObjUrl,
+        },
+      });
+    };
+
+    return handler;
+  };
+
+  const deletDeskStoryImage = (key: string) => {
+    const { [key]: deleted, ...remain } = deskStoryImageUrls;
+
+    setDeskStoryImageUrls(remain);
+  };
+
+  const onDeleteDeskStory = (index: number) => {
+    const imageUrlTarget = deskStoryFields[index].id;
+
+    removeDeskStory(index);
+    deletDeskStoryImage(imageUrlTarget);
   };
 
   return (
@@ -393,15 +431,29 @@ const InviteCreateDesk: NextPage = () => {
                   );
                 } else if (item.type === 'IMAGE') {
                   return (
-                    <InputBox
-                      key={item.id}
-                      label="사진"
-                      isRequired
-                      isDeletable
-                      onDelete={() => removeDeskStory(index)}
-                    >
-                      <ImageInput />
-                    </InputBox>
+                    <Box key={item.id}>
+                      <InputBox
+                        label="사진"
+                        isRequired
+                        isDeletable
+                        onDelete={() => onDeleteDeskStory(index)}
+                      >
+                        <ImageInput
+                          {...register(`deskStory.${index}.value`, {
+                            onChange: onChangeDeskStoryImage(item.id),
+                          })}
+                        />
+                      </InputBox>
+                      {deskStoryImageUrls[item.id] && (
+                        <Flex justifyContent="center">
+                          <Image
+                            src={deskStoryImageUrls[item.id]}
+                            alt=""
+                            maxW="100%"
+                          />
+                        </Flex>
+                      )}
+                    </Box>
                   );
                 } else {
                   return <></>;
@@ -460,13 +512,13 @@ const InviteCreateDesk: NextPage = () => {
                     />
                   </InputBox>
                   {recommendItemImageUrls[field.id] && (
-                    <Box>
+                    <Flex justifyContent="center">
                       <Image
                         src={recommendItemImageUrls[field.id]}
                         alt=""
                         maxW="100%"
                       />
-                    </Box>
+                    </Flex>
                   )}
                   <InputBox label="구매처 링크">
                     <TextInput
@@ -532,13 +584,13 @@ const InviteCreateDesk: NextPage = () => {
                       />
                     </InputBox>
                     {favoriteItemImageUrls[field.id] && (
-                      <Box>
+                      <Flex justifyContent="center">
                         <Image
                           src={favoriteItemImageUrls[field.id]}
                           alt=""
                           maxW="100%"
                         />
-                      </Box>
+                      </Flex>
                     )}
                     <InputBox label="구매처 링크">
                       <TextInput

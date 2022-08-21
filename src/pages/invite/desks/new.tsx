@@ -109,6 +109,34 @@ const InviteCreateDesk: NextPage = () => {
     setValue('profileImageUrl', fileObjUrl);
   };
 
+  const [recommendItemImageUrls, setRecommendItemImageUrls] = useState<{
+    [key: string]: string;
+  }>({});
+
+  const onChangeRecommendItemImage = (key: string) => {
+    const handler: ChangeEventHandler<HTMLInputElement> = (event) => {
+      console.log(event.target.name);
+      event.preventDefault();
+
+      const file = (event.target.files as FileList)[0];
+
+      if (file == null) {
+        return;
+      }
+
+      const fileObjUrl = URL.createObjectURL(file);
+
+      setRecommendItemImageUrls({
+        ...recommendItemImageUrls,
+        ...{
+          [key]: fileObjUrl,
+        },
+      });
+    };
+
+    return handler;
+  };
+
   return (
     <Box maxW="800px" minW="280px" margin="0 auto">
       <main>
@@ -370,8 +398,21 @@ const InviteCreateDesk: NextPage = () => {
                     />
                   </InputBox>
                   <InputBox label="사진" isRequired>
-                    <ImageInput {...register(`recommendItem.${index}.image`)} />
+                    <ImageInput
+                      {...register(`recommendItem.${index}.image`, {
+                        onChange: onChangeRecommendItemImage(field.id),
+                      })}
+                    />
                   </InputBox>
+                  {recommendItemImageUrls[field.id] && (
+                    <Box>
+                      <Image
+                        src={recommendItemImageUrls[field.id]}
+                        alt=""
+                        maxW="100%"
+                      />
+                    </Box>
+                  )}
                   <InputBox label="구매처 링크">
                     <TextInput
                       {...register(`recommendItem.${index}.url`)}

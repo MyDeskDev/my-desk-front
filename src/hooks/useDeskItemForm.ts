@@ -4,11 +4,16 @@ export const useDeskItemForm = (name: string = 'item') => {
   const { control } = useForm<{
     [name: string]: {
       name: string;
-      image: string;
+      image: string | null;
       url: string;
       story: string;
+      imageUrl: string;
     }[];
-  }>({ defaultValues: { [name]: [] } });
+  }>({
+    defaultValues: {
+      [name]: [{ name: '', image: null, url: '', story: '', imageUrl: '' }],
+    },
+  });
   const { fields, append, remove } = useFieldArray({ control, name });
 
   return {

@@ -87,10 +87,6 @@ const InviteCreateDesk: NextPage = () => {
     remove: removeFavoriteItem,
   } = useDeskItemForm('favoriteItem');
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
-
   const onChangeProfileImage: ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
@@ -106,11 +102,7 @@ const InviteCreateDesk: NextPage = () => {
     setValue('profileImageUrl', fileObjUrl);
   };
 
-  const [recommendItemImageUrls, setRecommendItemImageUrls] = useState<{
-    [key: string]: string;
-  }>({});
-
-  const onChangeRecommendItemImage = (key: string) => {
+  const onChangeRecommendItemImage = (index: number) => {
     const handler: ChangeEventHandler<HTMLInputElement> = (event) => {
       event.preventDefault();
 
@@ -122,28 +114,15 @@ const InviteCreateDesk: NextPage = () => {
 
       const fileObjUrl = URL.createObjectURL(file);
 
-      setRecommendItemImageUrls({
-        ...recommendItemImageUrls,
-        ...{
-          [key]: fileObjUrl,
-        },
-      });
+      setValue(`recommendItem.${index}.imageUrl`, fileObjUrl);
     };
 
     return handler;
   };
 
-  const deleteRecommendItemImage = (key: string) => {
-    const { [key]: deleted, ...remain } = recommendItemImageUrls;
-
-    setRecommendItemImageUrls(remain);
-  };
-
   const onDeleteRecommendItem = (index: number) => {
-    const imageUrlTarget = recommendItemFields[index].id;
-
     removeRecommendItem(index);
-    deleteRecommendItemImage(imageUrlTarget);
+    unregister(`recommendItem.${index}`);
   };
 
   const [favoriteItemImageUrls, setFavoriteItemImageUrls] = useState<{
@@ -215,6 +194,10 @@ const InviteCreateDesk: NextPage = () => {
   const onDeleteDeskStory = (index: number) => {
     unregister(`deskStory.${index}`);
     removeDeskStory(index);
+  };
+
+  const onSubmit = (data: any) => {
+    console.log(data);
   };
 
   return (
@@ -512,14 +495,14 @@ const InviteCreateDesk: NextPage = () => {
                   <InputBox label="사진" isRequired>
                     <ImageInput
                       {...register(`recommendItem.${index}.image`, {
-                        onChange: onChangeRecommendItemImage(field.id),
+                        onChange: onChangeRecommendItemImage(index),
                       })}
                     />
                   </InputBox>
-                  {recommendItemImageUrls[field.id] && (
+                  {watch(`recommendItem.${index}.imageUrl`) && (
                     <Flex justifyContent="center">
                       <Image
-                        src={recommendItemImageUrls[field.id]}
+                        src={watch(`recommendItem.${index}.imageUrl`)}
                         alt=""
                         maxW="100%"
                       />

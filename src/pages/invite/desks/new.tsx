@@ -129,7 +129,7 @@ const InviteCreateDesk: NextPage = () => {
     [key: string]: string;
   }>({});
 
-  const onChangeFavoriteItemImage = (key: string) => {
+  const onChangeFavoriteItemImage = (index: number) => {
     const handler: ChangeEventHandler<HTMLInputElement> = (event) => {
       event.preventDefault();
 
@@ -141,28 +141,15 @@ const InviteCreateDesk: NextPage = () => {
 
       const fileObjUrl = URL.createObjectURL(file);
 
-      setFavoriteItemImageUrls({
-        ...favoriteItemImageUrls,
-        ...{
-          [key]: fileObjUrl,
-        },
-      });
+      setValue(`favoriteItem.${index}.imageUrl`, fileObjUrl);
     };
 
     return handler;
   };
 
-  const deleteFavoriteItemImage = (key: string) => {
-    const { [key]: deleted, ...remain } = favoriteItemImageUrls;
-
-    setFavoriteItemImageUrls(remain);
-  };
-
   const onDeleteFavoriteItem = (index: number) => {
-    const imageUrlTarget = favoriteItemFields[index].id;
-
     removeFavoriteItem(index);
-    deleteFavoriteItemImage(imageUrlTarget);
+    unregister(`favoriteItem.${index}`);
   };
 
   const onChangeDeskStory = (index: number) => {
@@ -522,8 +509,9 @@ const InviteCreateDesk: NextPage = () => {
                     appendRecommendItem({
                       name: '',
                       story: '',
-                      image: '',
+                      image: null,
                       url: '',
+                      imageUrl: '',
                     })
                   }
                 >
@@ -567,14 +555,14 @@ const InviteCreateDesk: NextPage = () => {
                     <InputBox label="사진" isRequired>
                       <ImageInput
                         {...register(`favoriteItem.${index}.image`, {
-                          onChange: onChangeFavoriteItemImage(field.id),
+                          onChange: onChangeFavoriteItemImage(index),
                         })}
                       />
                     </InputBox>
-                    {favoriteItemImageUrls[field.id] && (
+                    {watch(`favoriteItem.${index}.imageUrl`) && (
                       <Flex justifyContent="center">
                         <Image
-                          src={favoriteItemImageUrls[field.id]}
+                          src={watch(`favoriteItem.${index}.imageUrl`)}
                           alt=""
                           maxW="100%"
                         />
@@ -582,7 +570,7 @@ const InviteCreateDesk: NextPage = () => {
                     )}
                     <InputBox label="구매처 링크">
                       <TextInput
-                        {...register(`cherishedItem.${index}.url`)}
+                        {...register(`favoriteItem.${index}.url`)}
                         placeholder="구매하셨던 사이트 링크를 입력해 주세요."
                       />
                     </InputBox>
@@ -595,8 +583,9 @@ const InviteCreateDesk: NextPage = () => {
                     appendFavoriteItem({
                       name: '',
                       story: '',
-                      image: '',
+                      image: null,
                       url: '',
+                      imageUrl: '',
                     })
                   }
                 >

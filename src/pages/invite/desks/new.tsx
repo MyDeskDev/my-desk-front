@@ -66,7 +66,8 @@ const ItemTitle = (props: { children?: React.ReactNode }) => {
 };
 
 const InviteCreateDesk: NextPage = () => {
-  const { register, handleSubmit, control, setValue, watch } = useForm();
+  const { register, handleSubmit, control, setValue, watch, unregister } =
+    useForm();
 
   const {
     fields: deskStoryFields,
@@ -185,10 +186,6 @@ const InviteCreateDesk: NextPage = () => {
     deleteFavoriteItemImage(imageUrlTarget);
   };
 
-  const [deskStoryImageUrls, setDeskStoryImageUrls] = useState<{
-    [key: string]: string;
-  }>({});
-
   const onChangeDeskStory = (index: number) => {
     const handler: ChangeEventHandler<HTMLInputElement> = (event) => {
       event.preventDefault();
@@ -215,17 +212,9 @@ const InviteCreateDesk: NextPage = () => {
     return handler;
   };
 
-  const deletDeskStoryImage = (key: string) => {
-    const { [key]: deleted, ...remain } = deskStoryImageUrls;
-
-    setDeskStoryImageUrls(remain);
-  };
-
   const onDeleteDeskStory = (index: number) => {
-    const imageUrlTarget = deskStoryFields[index].id;
-
+    unregister(`deskStory.${index}`);
     removeDeskStory(index);
-    deletDeskStoryImage(imageUrlTarget);
   };
 
   return (
@@ -421,7 +410,7 @@ const InviteCreateDesk: NextPage = () => {
                       label="내용"
                       isRequired
                       isDeletable
-                      onDelete={() => removeDeskStory(index)}
+                      onDelete={() => onDeleteDeskStory(index)}
                     >
                       <Textarea
                         {...register(`deskStory.${index}.text`, {
@@ -467,6 +456,8 @@ const InviteCreateDesk: NextPage = () => {
                     appendDeskStory({
                       type: 'TEXT',
                       text: '',
+                      image: null,
+                      imageUrl: '',
                     })
                   }
                 >
@@ -476,6 +467,9 @@ const InviteCreateDesk: NextPage = () => {
                   onClick={() =>
                     appendDeskStory({
                       type: 'IMAGE',
+                      text: '',
+                      image: null,
+                      imageUrl: '',
                     })
                   }
                 >
@@ -577,19 +571,19 @@ const InviteCreateDesk: NextPage = () => {
                     </Flex>
                     <InputBox label="아이템과 관련된 사연" isRequired>
                       <Textarea
-                        {...register(`favoriate.${index}.story`)}
+                        {...register(`favoriteItem.${index}.story`)}
                         placeholder="예) 제가 이 아이템을 애장하는 이유는..."
                       />
                     </InputBox>
                     <InputBox label="아이템명" isRequired>
                       <TextInput
-                        {...register(`cherishedItem.${index}.name`)}
+                        {...register(`favoriteItem.${index}.name`)}
                         placeholder="예) 애플 매직 키보드"
                       />
                     </InputBox>
                     <InputBox label="사진" isRequired>
                       <ImageInput
-                        {...register(`cherishedItem.${index}.image`, {
+                        {...register(`favoriteItem.${index}.image`, {
                           onChange: onChangeFavoriteItemImage(field.id),
                         })}
                       />

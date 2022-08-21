@@ -5,14 +5,17 @@ export type DeskStoryFormType = 'TEXT' | 'IMAGE';
 export const useDeskStoryForm = () => {
   const { control } = useForm<{
     deskStory: {
-      text?: string;
-      image?: string | ReadonlyArray<string>;
-      imageUrl?: string;
+      text: string;
+      image: string | null;
+      imageUrl: string;
       type: DeskStoryFormType;
     }[];
   }>({
     defaultValues: {
-      deskStory: [],
+      deskStory: [
+        { type: 'TEXT', text: '', image: null, imageUrl: '' },
+        { type: 'IMAGE', text: '', image: null, imageUrl: '' },
+      ],
     },
   });
 

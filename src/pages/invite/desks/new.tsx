@@ -1,8 +1,9 @@
-import React, { ChangeEventHandler, useState } from 'react';
-import type { NextPage } from 'next';
+import React, { useState } from 'react';
 import { Box, Flex, FormLabel, Text, HStack, Image } from '@chakra-ui/react';
 import { useForm, Controller } from 'react-hook-form';
-import ReactCrop from 'react-image-crop';
+
+import type { NextPage } from 'next';
+import type { ChangeEventHandler } from 'react';
 
 import 'react-image-crop/dist/ReactCrop.css';
 
@@ -136,6 +137,19 @@ const InviteCreateDesk: NextPage = () => {
     return handler;
   };
 
+  const deleteRecommendItemImage = (key: string) => {
+    const { [key]: deleted, ...remain } = recommendItemImageUrls;
+
+    setRecommendItemImageUrls(remain);
+  };
+
+  const onDeleteRecommendItem = (index: number) => {
+    const imageUrlTarget = recommendItemFields[index].id;
+
+    removeRecommendItem(index);
+    deleteRecommendItemImage(imageUrlTarget);
+  };
+
   const [favoriteItemImageUrls, setFavoriteItemImageUrls] = useState<{
     [key: string]: string;
   }>({});
@@ -161,6 +175,19 @@ const InviteCreateDesk: NextPage = () => {
     };
 
     return handler;
+  };
+
+  const deleteFavoriteItemImage = (key: string) => {
+    const { [key]: deleted, ...remain } = favoriteItemImageUrls;
+
+    setFavoriteItemImageUrls(remain);
+  };
+
+  const onDeleteFavoriteItem = (index: number) => {
+    const imageUrlTarget = favoriteItemFields[index].id;
+
+    removeFavoriteItem(index);
+    deleteFavoriteItemImage(imageUrlTarget);
   };
 
   return (
@@ -409,7 +436,9 @@ const InviteCreateDesk: NextPage = () => {
                 >
                   <Flex justifyContent="space-between">
                     <ItemTitle>{`아이템 ${index + 1}`}</ItemTitle>
-                    <DeleteButton onClick={() => removeRecommendItem(index)} />
+                    <DeleteButton
+                      onClick={() => onDeleteRecommendItem(index)}
+                    />
                   </Flex>
                   <InputBox label="추천 이유" isRequired>
                     <Textarea
@@ -479,7 +508,9 @@ const InviteCreateDesk: NextPage = () => {
                   >
                     <Flex justifyContent="space-between">
                       <ItemTitle>{`아이템 ${index + 1}`}</ItemTitle>
-                      <DeleteButton onClick={() => removeFavoriteItem(index)} />
+                      <DeleteButton
+                        onClick={() => onDeleteFavoriteItem(index)}
+                      />
                     </Flex>
                     <InputBox label="아이템과 관련된 사연" isRequired>
                       <Textarea

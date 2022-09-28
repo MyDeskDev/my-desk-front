@@ -1,9 +1,13 @@
 import type { NextPage } from 'next';
 
+import DeskCard from '@/components/BrowseDesk/DeskCard';
+
 const Desks: NextPage = () => {
   return (
     <div>
-      <main>데스크 목록</main>
+      <main>
+        <DeskCard deskId={1} avatar={<></>} />
+      </main>
     </div>
   );
 };

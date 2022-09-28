@@ -31,12 +31,14 @@ const DeskCard = (props: Props) => {
           alt={desk.thumbnail.name}
           loading="lazy"
           position="absolute"
-          top={0}
-          right={0}
-          bottom={0}
-          left={0}
-          htmlHeight="251px"
+          top="50%"
+          right="50%"
+          bottom="50%"
+          left="50%"
+          w="100%"
+          h="100%"
           objectFit="cover"
+          transform="translate(-50%, -50%)"
         />
       </Box>
       <Flex h="80px" mt="-36px" justifyContent="center" zIndex={1}>

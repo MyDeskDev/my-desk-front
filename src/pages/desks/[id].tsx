@@ -13,6 +13,7 @@ import DeskStoryImage from '@/components/DeskDetail/DeskStoryImage';
 import ItemSectionTitle from '@/components/DeskDetail/ItemSectionTitle';
 import ItemBox from '@/components/DeskDetail/ItemBox';
 import ComicRenderedImage from '@/components/DeskDetail/ComicRenderedImage';
+import YoutubeLinkBox from '@/components/DeskDetail/YoutubeLinkBox';
 
 const Desk: NextPage = () => {
   return (
@@ -60,6 +61,9 @@ const Desk: NextPage = () => {
         </Box>
         <Box mt="40px">
           <ComicRenderedImage />
+        </Box>
+        <Box mt="20px">
+          <YoutubeLinkBox />
         </Box>
       </main>
     </div>

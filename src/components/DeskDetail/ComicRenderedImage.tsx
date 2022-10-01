@@ -16,7 +16,7 @@ const ComicRenderedImage = () => {
         <Text as="span" color="#1480FF">
           기미테디
         </Text>
-        의 소중한 이야기를 전해주셔서 감사합니다.
+        님의 소중한 이야기를 전해주셔서 감사합니다.
       </Box>
     </Box>
   );

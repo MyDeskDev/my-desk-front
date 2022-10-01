@@ -7,6 +7,7 @@ import DeskThumbnail from '@/components/DeskDetail/Thumbnail';
 import UserProfileImage from '@/components/DeskDetail/UserProfileImage';
 import UserSummary from '@/components/DeskDetail/UserSummary';
 import DeskTypeContainer from '@/components/DeskDetail/DeskTypeContainer';
+import DeskSummary from '@/components/DeskDetail/DeskSummary';
 
 const Desk: NextPage = () => {
   return (
@@ -19,6 +20,7 @@ const Desk: NextPage = () => {
           <UserSummary />
         </Box>
         <DeskTypeContainer />
+        <DeskSummary />
       </main>
     </div>
   );

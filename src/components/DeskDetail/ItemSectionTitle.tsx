@@ -15,7 +15,7 @@ const ItemSectionTitle = (props: {
       fontWeight="700"
       lineHeight="2.6rem"
       maxW="1200px"
-      margin="0 auto"
+      margin="35px auto 20px"
       padding={{ base: '0 18px', lg: '0' }}
     >
       {children}

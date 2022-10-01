@@ -16,7 +16,9 @@ const DeskTypeContainer = () => {
 
   return (
     <Flex
+      maxWidth="1200px"
       h="102px"
+      margin="0 auto"
       flexDir="column"
       alignItems="center"
       justifyContent="center"

@@ -12,6 +12,7 @@ import DeskStoryText from '@/components/DeskDetail/DeskStoryText';
 import DeskStoryImage from '@/components/DeskDetail/DeskStoryImage';
 import ItemSectionTitle from '@/components/DeskDetail/ItemSectionTitle';
 import ItemBox from '@/components/DeskDetail/ItemBox';
+import ComicRenderedImage from '@/components/DeskDetail/ComicRenderedImage';
 
 const Desk: NextPage = () => {
   return (
@@ -56,6 +57,9 @@ const Desk: NextPage = () => {
         <Box>
           <ItemSectionTitle>{'[애장아이템]'}</ItemSectionTitle>
           <ItemBox />
+        </Box>
+        <Box mt="40px">
+          <ComicRenderedImage />
         </Box>
       </main>
     </div>

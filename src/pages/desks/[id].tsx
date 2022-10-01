@@ -10,6 +10,7 @@ import DeskTypeContainer from '@/components/DeskDetail/DeskTypeContainer';
 import DeskSummary from '@/components/DeskDetail/DeskSummary';
 import DeskStoryText from '@/components/DeskDetail/DeskStoryText';
 import DeskStoryImage from '@/components/DeskDetail/DeskStoryImage';
+import ItemSectionTitle from '@/components/DeskDetail/ItemSectionTitle';
 
 const Desk: NextPage = () => {
   return (
@@ -45,6 +46,9 @@ const Desk: NextPage = () => {
           <DeskStoryImage />
           <DeskStoryImage />
           <DeskStoryImage />
+        </Box>
+        <Box>
+          <ItemSectionTitle>{'[애장아이템]'}</ItemSectionTitle>
         </Box>
       </main>
     </div>

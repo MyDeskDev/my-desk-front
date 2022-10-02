@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import type { NextPage } from 'next';
 
-import DeskCard from '@/components/BrowseDesk/DeskCard';
-import DeskList from '@/components/BrowseDesk/DeskList';
-import DeskListItem from '@/components/BrowseDesk/DeskListItem';
+import DeskCard from '@/components/DeskList/DeskCard';
+import DeskList from '@/components/DeskList/DeskList';
+import DeskListItem from '@/components/DeskList/DeskListItem';
 import BaseContainer from '@/components/layouts/Base/BaseContainer';
 import BaseHeader from '@/components/layouts/Base/BaseHeader';
 

@@ -1,21 +1,13 @@
 import { Box, Image, Text, Flex } from '@chakra-ui/react';
 
+import type { DeskPreview } from '@/api/desk';
+
 export interface Props {
-  deskId: number;
-  avatar: React.ReactNode;
+  desk: DeskPreview;
 }
 
 const DeskCard = (props: Props) => {
-  const { avatar } = props;
-
-  const desk = {
-    id: 1,
-    summary: '자유로운 영혼이 어울리는 그의 자리를 소개합니다.',
-    thumbnail: {
-      name: '',
-      url: '',
-    },
-  };
+  const { desk } = props;
 
   return (
     <Box>
@@ -27,8 +19,8 @@ const DeskCard = (props: Props) => {
         bgColor="lightgray"
       >
         <Image
-          src={desk.thumbnail.url}
-          alt={desk.thumbnail.name}
+          src={desk.mainImgUrl}
+          alt=""
           loading="lazy"
           position="absolute"
           top="50%"
@@ -48,7 +40,17 @@ const DeskCard = (props: Props) => {
           h="80px"
           zIndex={1}
           bgColor="gray"
-        ></Box>
+          overflow="hidden"
+        >
+          <Image
+            src={desk.user.profileImgUrl}
+            alt=""
+            loading="lazy"
+            w="100%"
+            h="100%"
+            objectFit="cover"
+          />
+        </Box>
       </Flex>
       <Box p="15px 49px 49px">
         <Text
@@ -58,7 +60,7 @@ const DeskCard = (props: Props) => {
           lineHeight="2rem"
           textAlign="center"
         >
-          {desk.summary}
+          {desk.title}
         </Text>
       </Box>
     </Box>

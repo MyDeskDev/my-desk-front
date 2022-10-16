@@ -1,18 +1,20 @@
 import { useQuery } from 'react-query';
-import axios from 'axios';
 
 import type { UseQueryResult } from 'react-query';
 import type { AxiosError } from 'axios';
 
-import config from '@/config';
+import DeskApi from '@/api/desk';
 
-const instance = axios.create({ baseURL: config.apiUrl });
+import type { DeskPreview } from '@/api/desk';
 
-export const useDesksQuery = <T>(): UseQueryResult<T, AxiosError> => {
+export const useDesksQuery = <T = DeskPreview[]>(): UseQueryResult<
+  T,
+  AxiosError
+> => {
   return useQuery(['desks'], async () => {
-    const { data } = await instance.get('/api/v1/post');
+    const desks = await DeskApi.getAll();
 
-    return data;
+    return desks;
   });
 };
 

@@ -19,6 +19,7 @@ import DeleteButton from '@/components/CreateDesk/DeleteButton';
 
 import useDeskStoryForm from '@/hooks/useDeskStoryForm';
 import useDeskItemForm from '@/hooks/useDeskItemForm';
+import useFileUploadMutation from '@/hooks/useFileUploadMutation';
 
 const DeskInputSection = (props: { children: React.ReactNode }) => {
   return (
@@ -87,7 +88,9 @@ const InviteCreateDesk: NextPage = () => {
     remove: removeFavoriteItem,
   } = useDeskItemForm('favoriteItem');
 
-  const onChangeProfileImage: ChangeEventHandler<HTMLInputElement> = (
+  const fileUploadMutation = useFileUploadMutation();
+
+  const onChangeProfileImage: ChangeEventHandler<HTMLInputElement> = async (
     event
   ) => {
     event.preventDefault();
@@ -97,9 +100,13 @@ const InviteCreateDesk: NextPage = () => {
       return;
     }
 
-    const fileObjUrl = URL.createObjectURL(file);
-
-    setValue('profileImageUrl', fileObjUrl);
+    try {
+      const profileImgUrl = await fileUploadMutation.mutateAsync(file);
+      setValue('profileImageUrl', profileImgUrl);
+    } catch (err) {
+      alert('프로필 이미지 업로드 실패');
+      console.log(err);
+    }
   };
 
   const onChangeRecommendItemImage = (index: number) => {

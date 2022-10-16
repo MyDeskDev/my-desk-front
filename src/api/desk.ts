@@ -173,3 +173,5 @@ export const Desk = {
     return data;
   },
 };
+
+export default Desk;

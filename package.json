@@ -47,7 +47,8 @@
     "react-hook-form": "^7.33.1",
     "react-image-crop": "^10.0.6",
     "react-query": "^3.39.1",
-    "recoil": "^0.7.3"
+    "recoil": "^0.7.3",
+    "uuid": "^9.0.0"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

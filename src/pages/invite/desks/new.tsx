@@ -77,16 +77,10 @@ const InviteCreateDesk: NextPage = () => {
   } = useDeskStoryForm();
 
   const {
-    fields: recommendItemFields,
-    append: appendRecommendItem,
-    remove: removeRecommendItem,
-  } = useDeskItemForm('recommendItem');
-
-  const {
-    fields: favoriteItemFields,
-    append: appendFavoriteItem,
-    remove: removeFavoriteItem,
-  } = useDeskItemForm('favoriteItem');
+    fields: deskItemFields,
+    append: appendDeskItem,
+    remove: removeDeskItem,
+  } = useDeskItemForm('deskItem');
 
   const fileUploadMutation = useFileUploadMutation();
 
@@ -109,7 +103,7 @@ const InviteCreateDesk: NextPage = () => {
     }
   };
 
-  const onChangeRecommendItemImage = (index: number) => {
+  const onChangeDeskItemImage = (index: number) => {
     const handler: ChangeEventHandler<HTMLInputElement> = (event) => {
       event.preventDefault();
 
@@ -121,42 +115,15 @@ const InviteCreateDesk: NextPage = () => {
 
       const fileObjUrl = URL.createObjectURL(file);
 
-      setValue(`recommendItem.${index}.imageUrl`, fileObjUrl);
+      setValue(`deskItem.${index}.imageUrl`, fileObjUrl);
     };
 
     return handler;
   };
 
-  const onDeleteRecommendItem = (index: number) => {
-    removeRecommendItem(index);
-    unregister(`recommendItem.${index}`);
-  };
-
-  const [favoriteItemImageUrls, setFavoriteItemImageUrls] = useState<{
-    [key: string]: string;
-  }>({});
-
-  const onChangeFavoriteItemImage = (index: number) => {
-    const handler: ChangeEventHandler<HTMLInputElement> = (event) => {
-      event.preventDefault();
-
-      const file = (event.target.files as FileList)[0];
-
-      if (file == null) {
-        return;
-      }
-
-      const fileObjUrl = URL.createObjectURL(file);
-
-      setValue(`favoriteItem.${index}.imageUrl`, fileObjUrl);
-    };
-
-    return handler;
-  };
-
-  const onDeleteFavoriteItem = (index: number) => {
-    removeFavoriteItem(index);
-    unregister(`favoriteItem.${index}`);
+  const onDeleteDeskItem = (index: number) => {
+    removeDeskItem(index);
+    unregister(`deskItem.${index}`);
   };
 
   const onChangeDeskStory = (index: number) => {
@@ -456,10 +423,10 @@ const InviteCreateDesk: NextPage = () => {
             </DeskInputSection>
             <DeskInputSection>
               <FormSectionLabel
-                label="추천 아이템"
-                helperText="사용자에게 추천 하고 싶은 아이템"
+                label="아이템 작성하기"
+                helperText="보여주고 싶은 아이템이 있으면 작성해 주세요."
               />
-              {recommendItemFields.map((field, index) => (
+              {deskItemFields.map((field, index) => (
                 <Box
                   key={field.id}
                   sx={{
@@ -470,42 +437,40 @@ const InviteCreateDesk: NextPage = () => {
                 >
                   <Flex justifyContent="space-between">
                     <ItemTitle>{`아이템 ${index + 1}`}</ItemTitle>
-                    <DeleteButton
-                      onClick={() => onDeleteRecommendItem(index)}
-                    />
+                    <DeleteButton onClick={() => onDeleteDeskItem(index)} />
                   </Flex>
-                  <InputBox label="추천 이유" isRequired>
+                  <InputBox label="어떤 아이템인가요?" isRequired>
                     <Textarea
-                      {...register(`recommendItem.${index}.story`)}
-                      placeholder="예) 제가 이 아이템을 추천하는 이유는..."
+                      {...register(`deskItem.${index}.story`)}
+                      placeholder="ex: 자주 쓰는 키보드예요"
                     />
                   </InputBox>
                   <InputBox label="아이템명" isRequired>
                     <TextInput
-                      {...register(`recommendItem.${index}.name`)}
-                      placeholder="예) 애플 매직 키보드"
+                      {...register(`deskItem.${index}.name`)}
+                      placeholder="ex: 애플 매직 키보드"
                     />
                   </InputBox>
                   <InputBox label="사진" isRequired>
                     <ImageInput
-                      {...register(`recommendItem.${index}.image`, {
-                        onChange: onChangeRecommendItemImage(index),
+                      {...register(`deskItem.${index}.image`, {
+                        onChange: onChangeDeskItemImage(index),
                       })}
                     />
                   </InputBox>
-                  {watch(`recommendItem.${index}.imageUrl`) && (
+                  {watch(`deskItem.${index}.imageUrl`) && (
                     <Flex justifyContent="center">
                       <Image
-                        src={watch(`recommendItem.${index}.imageUrl`)}
+                        src={watch(`deskItem.${index}.imageUrl`)}
                         alt=""
                         maxW="100%"
                       />
                     </Flex>
                   )}
-                  <InputBox label="구매처 링크">
+                  <InputBox label="구매 링크">
                     <TextInput
-                      {...register(`recommendItem.${index}.url`)}
-                      placeholder="구매하셨던 사이트 링크를 입력해 주세요."
+                      {...register(`deskItem.${index}.url`)}
+                      placeholder="링크를 입력해 주세요"
                     />
                   </InputBox>
                 </Box>
@@ -513,86 +478,14 @@ const InviteCreateDesk: NextPage = () => {
               <HStack spacing="4px" mt="10px">
                 <ActionButton
                   onClick={() =>
-                    appendRecommendItem({
+                    appendDeskItem({
                       name: '',
                       story: '',
                       image: null,
                       url: '',
                       imageUrl: '',
-                    })
-                  }
-                >
-                  아이템 추가
-                </ActionButton>
-              </HStack>
-            </DeskInputSection>
-            <DeskInputSection>
-              <FormSectionLabel
-                label="애장 아이템"
-                helperText="추억이 있거나, 소중하게 생각하는 아이템"
-              />
-              {favoriteItemFields.map((field, index) => {
-                return (
-                  <Box
-                    key={field.id}
-                    sx={{
-                      '& + &': {
-                        mt: '48px',
-                      },
-                    }}
-                  >
-                    <Flex justifyContent="space-between">
-                      <ItemTitle>{`아이템 ${index + 1}`}</ItemTitle>
-                      <DeleteButton
-                        onClick={() => onDeleteFavoriteItem(index)}
-                      />
-                    </Flex>
-                    <InputBox label="아이템과 관련된 사연" isRequired>
-                      <Textarea
-                        {...register(`favoriteItem.${index}.story`)}
-                        placeholder="예) 제가 이 아이템을 애장하는 이유는..."
-                      />
-                    </InputBox>
-                    <InputBox label="아이템명" isRequired>
-                      <TextInput
-                        {...register(`favoriteItem.${index}.name`)}
-                        placeholder="예) 애플 매직 키보드"
-                      />
-                    </InputBox>
-                    <InputBox label="사진" isRequired>
-                      <ImageInput
-                        {...register(`favoriteItem.${index}.image`, {
-                          onChange: onChangeFavoriteItemImage(index),
-                        })}
-                      />
-                    </InputBox>
-                    {watch(`favoriteItem.${index}.imageUrl`) && (
-                      <Flex justifyContent="center">
-                        <Image
-                          src={watch(`favoriteItem.${index}.imageUrl`)}
-                          alt=""
-                          maxW="100%"
-                        />
-                      </Flex>
-                    )}
-                    <InputBox label="구매처 링크">
-                      <TextInput
-                        {...register(`favoriteItem.${index}.url`)}
-                        placeholder="구매하셨던 사이트 링크를 입력해 주세요."
-                      />
-                    </InputBox>
-                  </Box>
-                );
-              })}
-              <HStack spacing="4px" mt="10px">
-                <ActionButton
-                  onClick={() =>
-                    appendFavoriteItem({
-                      name: '',
-                      story: '',
-                      image: null,
-                      url: '',
-                      imageUrl: '',
+                      isFavorite: false,
+                      isRecommend: false,
                     })
                   }
                 >

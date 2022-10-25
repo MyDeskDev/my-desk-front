@@ -8,10 +8,22 @@ export const useDeskItemForm = (name: string = 'item') => {
       url: string;
       story: string;
       imageUrl: string;
+      isFavorite: boolean;
+      isRecommend: boolean;
     }[];
   }>({
     defaultValues: {
-      [name]: [{ name: '', image: null, url: '', story: '', imageUrl: '' }],
+      [name]: [
+        {
+          name: '',
+          image: null,
+          url: '',
+          story: '',
+          imageUrl: '',
+          isFavorite: false,
+          isRecommend: false,
+        },
+      ],
     },
   });
   const { fields, append, remove } = useFieldArray({ control, name });

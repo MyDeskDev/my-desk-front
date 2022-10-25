@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import config from '@/config';
 
-const api = axios.create({ baseURL: config.apiUrl });
+const api = axios.create({ baseURL: config.apiHost });
 
 export interface GetAllDeskResponse {
   id: number;

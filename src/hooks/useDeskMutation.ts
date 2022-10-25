@@ -12,7 +12,7 @@ import type {
   Mbti,
 } from '@/types';
 
-const instance = axios.create({ baseURL: config.apiUrl });
+const instance = axios.create({ baseURL: config.apiHost });
 
 export type DeskCost = '10-' | '10-20' | '20-30' | '30-40' | '40-50' | '50+';
 

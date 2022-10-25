@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import config from '@/config';
 
-const api = axios.create({ baseURL: config.apiUrl });
+const api = axios.create({ baseURL: config.apiHost });
 
 export const File = {
   upload: async (file: File) => {

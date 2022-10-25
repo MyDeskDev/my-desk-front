@@ -16,6 +16,7 @@ import Select from '@/components/CreateDesk/Select';
 import Textarea from '@/components/CreateDesk/Textarea';
 import ActionButton from '@/components/CreateDesk/ActionButton';
 import DeleteButton from '@/components/CreateDesk/DeleteButton';
+import DeskItemCheckbox from '@/components/CreateDesk/DeskItemCheckbox';
 
 import useDeskStoryForm from '@/hooks/useDeskStoryForm';
 import useDeskItemForm from '@/hooks/useDeskItemForm';
@@ -473,6 +474,12 @@ const InviteCreateDesk: NextPage = () => {
                       placeholder="링크를 입력해 주세요"
                     />
                   </InputBox>
+                  <Box mt="10px" lineHeight={0}>
+                    <DeskItemCheckbox>추천하는 아이템인가요?</DeskItemCheckbox>
+                  </Box>
+                  <Box mt="10px" lineHeight={0}>
+                    <DeskItemCheckbox>애장하는 아이템인가요?</DeskItemCheckbox>
+                  </Box>
                 </Box>
               ))}
               <HStack spacing="4px" mt="10px">

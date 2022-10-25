@@ -10,7 +10,7 @@ const theme = extendTheme({
     global: {
       html: {
         height: '100%',
-        fontSize: '67.5%',
+        fontSize: '62.5%',
       },
       body: {
         height: '100%',

@@ -482,7 +482,7 @@ const InviteCreateDesk: NextPage = () => {
                   </Box>
                 </Box>
               ))}
-              <HStack spacing="4px" mt="10px">
+              <HStack spacing="4px" mt="20px">
                 <ActionButton
                   onClick={() =>
                     appendDeskItem({

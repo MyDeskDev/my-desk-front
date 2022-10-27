@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Flex, FormLabel, Text, HStack, Image } from '@chakra-ui/react';
 import { useForm, Controller } from 'react-hook-form';
+import { DevTool } from '@hookform/devtools';
 
 import type { NextPage } from 'next';
 import type { ChangeEventHandler } from 'react';
@@ -69,7 +70,9 @@ const ItemTitle = (props: { children?: React.ReactNode }) => {
 
 const InviteCreateDesk: NextPage = () => {
   const { register, handleSubmit, control, setValue, watch, unregister } =
-    useForm();
+    useForm({
+      mode: 'onChange',
+    });
 
   const {
     fields: deskStoryFields,
@@ -475,10 +478,18 @@ const InviteCreateDesk: NextPage = () => {
                     />
                   </InputBox>
                   <Box mt="10px" lineHeight={0}>
-                    <DeskItemCheckbox>추천하는 아이템인가요?</DeskItemCheckbox>
+                    <DeskItemCheckbox
+                      {...register(`deskItem.${index}.isRecommend`)}
+                    >
+                      추천하는 아이템인가요?
+                    </DeskItemCheckbox>
                   </Box>
                   <Box mt="10px" lineHeight={0}>
-                    <DeskItemCheckbox>애장하는 아이템인가요?</DeskItemCheckbox>
+                    <DeskItemCheckbox
+                      {...register(`deskItem.${index}.isFavorite`)}
+                    >
+                      애장하는 아이템인가요?
+                    </DeskItemCheckbox>
                   </Box>
                 </Box>
               ))}
@@ -509,6 +520,7 @@ const InviteCreateDesk: NextPage = () => {
           </Box>
         </form>
       </main>
+      <DevTool control={control} />
     </Box>
   );
 };

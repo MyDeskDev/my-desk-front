@@ -14,13 +14,10 @@ import TextInput from '@/components/CreateDesk/TextInput';
 import SquareRadio from '@/components/CreateDesk/SquareRadio';
 import SquareRadioGroup from '@/components/CreateDesk/SquareRadioGroup';
 import Select from '@/components/CreateDesk/Select';
-import Textarea from '@/components/CreateDesk/Textarea';
 import ActionButton from '@/components/CreateDesk/ActionButton';
-import DeleteButton from '@/components/CreateDesk/DeleteButton';
-import DeskItemCheckbox from '@/components/CreateDesk/DeskItemCheckbox';
 import DeskStoryFields from '@/components/CreateDesk/DeskStoryFields';
+import DeskItemFields from '@/components/CreateDesk/DeskItemFields';
 
-import useDeskItemForm from '@/hooks/useDeskItemForm';
 import useFileUploadMutation from '@/hooks/useFileUploadMutation';
 
 const DeskInputSection = (props: { children: React.ReactNode }) => {
@@ -60,14 +57,6 @@ const FormSectionLabel = (props: FormSectionLabelProps) => {
   );
 };
 
-const ItemTitle = (props: { children?: React.ReactNode }) => {
-  return (
-    <Text as="strong" fontSize="2rem" lineHeight="2rem">
-      {props.children}
-    </Text>
-  );
-};
-
 const InviteCreateDesk: NextPage = () => {
   const methods = useForm({
     mode: 'onSubmit',
@@ -75,12 +64,6 @@ const InviteCreateDesk: NextPage = () => {
 
   const { register, handleSubmit, control, setValue, watch, unregister } =
     methods;
-
-  const {
-    fields: deskItemFields,
-    append: appendDeskItem,
-    remove: removeDeskItem,
-  } = useDeskItemForm('deskItem');
 
   const fileUploadMutation = useFileUploadMutation();
 
@@ -100,27 +83,6 @@ const InviteCreateDesk: NextPage = () => {
       alert('프로필 이미지 업로드 실패');
       console.log(err);
     }
-  };
-
-  const onChangeDeskItemImage = (index: number) => {
-    const handler: ChangeEventHandler<HTMLInputElement> = (event) => {
-      const file = (event.target.files as FileList)[0];
-
-      if (file == null) {
-        return;
-      }
-
-      const fileObjUrl = URL.createObjectURL(file);
-
-      setValue(`deskItem.${index}.imageUrl`, fileObjUrl);
-    };
-
-    return handler;
-  };
-
-  const onDeleteDeskItem = (index: number) => {
-    removeDeskItem(index);
-    unregister(`deskItem.${index}`);
   };
 
   const onSubmit = (data: any) => {
@@ -320,86 +282,7 @@ const InviteCreateDesk: NextPage = () => {
                   label="아이템 작성하기"
                   helperText="보여주고 싶은 아이템이 있으면 작성해 주세요."
                 />
-                {deskItemFields.map((field, index) => (
-                  <Box
-                    key={field.id}
-                    sx={{
-                      '& + &': {
-                        mt: '48px',
-                      },
-                    }}
-                  >
-                    <Flex justifyContent="space-between">
-                      <ItemTitle>{`아이템 ${index + 1}`}</ItemTitle>
-                      <DeleteButton onClick={() => onDeleteDeskItem(index)} />
-                    </Flex>
-                    <InputBox label="어떤 아이템인가요?" isRequired>
-                      <Textarea
-                        {...register(`deskItem.${index}.story`)}
-                        placeholder="ex: 자주 쓰는 키보드예요"
-                      />
-                    </InputBox>
-                    <InputBox label="아이템명" isRequired>
-                      <TextInput
-                        {...register(`deskItem.${index}.name`)}
-                        placeholder="ex: 애플 매직 키보드"
-                      />
-                    </InputBox>
-                    <InputBox label="사진" isRequired>
-                      <ImageInput
-                        {...register(`deskItem.${index}.image`, {
-                          onChange: onChangeDeskItemImage(index),
-                        })}
-                      />
-                    </InputBox>
-                    {watch(`deskItem.${index}.imageUrl`) && (
-                      <Flex justifyContent="center">
-                        <Image
-                          src={watch(`deskItem.${index}.imageUrl`)}
-                          alt=""
-                          maxW="100%"
-                        />
-                      </Flex>
-                    )}
-                    <InputBox label="구매 링크">
-                      <TextInput
-                        {...register(`deskItem.${index}.url`)}
-                        placeholder="링크를 입력해 주세요"
-                      />
-                    </InputBox>
-                    <Box mt="10px" lineHeight={0}>
-                      <DeskItemCheckbox
-                        {...register(`deskItem.${index}.isRecommend`)}
-                      >
-                        추천하는 아이템인가요?
-                      </DeskItemCheckbox>
-                    </Box>
-                    <Box mt="10px" lineHeight={0}>
-                      <DeskItemCheckbox
-                        {...register(`deskItem.${index}.isFavorite`)}
-                      >
-                        애장하는 아이템인가요?
-                      </DeskItemCheckbox>
-                    </Box>
-                  </Box>
-                ))}
-                <HStack spacing="4px" mt="20px">
-                  <ActionButton
-                    onClick={() =>
-                      appendDeskItem({
-                        name: '',
-                        story: '',
-                        image: null,
-                        url: '',
-                        imageUrl: '',
-                        isFavorite: false,
-                        isRecommend: false,
-                      })
-                    }
-                  >
-                    아이템 추가
-                  </ActionButton>
-                </HStack>
+                <DeskItemFields />
               </DeskInputSection>
               <HStack spacing="4px" mt="31px">
                 {/* <ActionButton h="60px">미리보기</ActionButton> */}

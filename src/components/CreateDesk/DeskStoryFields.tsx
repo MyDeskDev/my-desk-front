@@ -37,7 +37,6 @@ const DeskStoryFields = () => {
 
       const fileUrl = URL.createObjectURL(file);
 
-      setValue(`deskStory.${index}.image`, file.name);
       setValue(`deskStory.${index}.imageUrl`, fileUrl);
     };
 

@@ -1,6 +1,7 @@
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex, Text, Icon } from '@chakra-ui/react';
 import Link from 'next/link';
 import { WarningIcon } from '@chakra-ui/icons';
+import { FcClock } from 'react-icons/fc';
 
 import DeskListItem from '@/components/DeskList/DeskListItem';
 import DeskCard from '@/components/DeskList/DeskCard';
@@ -34,7 +35,6 @@ const DeskList = () => {
         flexDir="column"
         alignItems="center"
         justifyContent="center"
-        flex="1"
         p="48px"
       >
         <WarningIcon w="24px" h="24px" color="orange.500" />
@@ -50,7 +50,25 @@ const DeskList = () => {
       </Flex>
     );
   } else if (desks?.length === 0) {
-    return <div>아직 등록된 책상이 없습니다.</div>;
+    return (
+      <Flex
+        flexDir="column"
+        alignItems="center"
+        justifyContent="center"
+        p="48px"
+      >
+        <Icon as={FcClock} w="30px" h="30px" />
+        <Text
+          mt="20px"
+          fontSize="2rem"
+          lineHeight="2.4rem"
+          wordBreak="keep-all"
+          align="center"
+        >
+          첫 데스크 소개까지 얼마 남지 않았어요
+        </Text>
+      </Flex>
+    );
   }
 
   return (

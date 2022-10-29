@@ -1,5 +1,6 @@
-import { Flex, Skeleton } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import Link from 'next/link';
+import { WarningIcon } from '@chakra-ui/icons';
 
 import DeskListItem from '@/components/DeskList/DeskListItem';
 import DeskCard from '@/components/DeskList/DeskCard';
@@ -9,7 +10,7 @@ import useDesksQuery from '@/hooks/useDesksQuery';
 import useDeskListSkeleton from '@/hooks/useDeskListSkeleton';
 
 const DeskList = () => {
-  const { data: desks, isLoading } = useDesksQuery();
+  const { data: desks, isLoading, isError } = useDesksQuery();
 
   const { skeletonLength } = useDeskListSkeleton({ defaultLength: 30 });
 
@@ -25,6 +26,27 @@ const DeskList = () => {
               </DeskListItem>
             );
           })}
+      </Flex>
+    );
+  } else if (isError) {
+    return (
+      <Flex
+        flexDir="column"
+        alignItems="center"
+        justifyContent="center"
+        flex="1"
+        p="48px"
+      >
+        <WarningIcon w="24px" h="24px" color="orange.500" />
+        <Text
+          mt="20px"
+          fontSize="2rem"
+          lineHeight="2.4rem"
+          wordBreak="keep-all"
+          align="center"
+        >
+          예기치 못한 오류가 발생했습니다.
+        </Text>
       </Flex>
     );
   } else if (desks?.length === 0) {

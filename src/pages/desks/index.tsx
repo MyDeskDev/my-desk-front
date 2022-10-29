@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import { Flex } from '@chakra-ui/react';
 
 import DeskList from '@/components/DeskList/DeskList';
 import BaseContainer from '@/components/layouts/Base/BaseContainer';
@@ -6,14 +7,14 @@ import BaseHeader from '@/components/layouts/Base/BaseHeader';
 
 const Desks: NextPage = () => {
   return (
-    <div>
+    <Flex flexDir="column" minH="100%">
       <BaseHeader />
-      <main>
+      <Flex as="main" flexDir="column" flex="1">
         <BaseContainer>
           <DeskList />
         </BaseContainer>
-      </main>
-    </div>
+      </Flex>
+    </Flex>
   );
 };
 

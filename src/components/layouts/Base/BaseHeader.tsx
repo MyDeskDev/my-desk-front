@@ -1,4 +1,4 @@
-import { Container, Heading } from '@chakra-ui/react';
+import { Container, Heading, Image } from '@chakra-ui/react';
 
 const BaseHeader = () => {
   return (
@@ -16,8 +16,7 @@ const BaseHeader = () => {
           fontWeight={700}
           lineHeight="5rem"
         >
-          우리의 <br />
-          책상 이야기
+          <Image src="/images/logo.png" alt="my desk project" w="172px" />
         </Heading>
       </Container>
     </header>

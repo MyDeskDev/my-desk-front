@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 export type DeskStoryFormType = 'TEXT' | 'IMAGE';
@@ -12,7 +13,7 @@ export const useDeskStoryFields = () => {
     }[];
   }>();
 
-  const { fields, append, remove, update } = useFieldArray<{
+  const { fields, append, remove, update, replace } = useFieldArray<{
     deskStory: {
       text: string;
       image: string | null;
@@ -23,6 +24,30 @@ export const useDeskStoryFields = () => {
     control,
     name: 'deskStory',
   });
+
+  useEffect(() => {
+    const defaultValues: {
+      text: string;
+      image: string | null;
+      imageUrl: string;
+      type: DeskStoryFormType;
+    }[] = [
+      {
+        text: '',
+        image: null,
+        imageUrl: '',
+        type: 'TEXT',
+      },
+      {
+        text: '',
+        image: null,
+        imageUrl: '',
+        type: 'IMAGE',
+      },
+    ];
+
+    replace(defaultValues);
+  }, [replace]);
 
   return {
     fields,

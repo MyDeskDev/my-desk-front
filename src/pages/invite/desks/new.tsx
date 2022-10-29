@@ -20,7 +20,6 @@ import DeleteButton from '@/components/CreateDesk/DeleteButton';
 import DeskItemCheckbox from '@/components/CreateDesk/DeskItemCheckbox';
 import DeskStoryFields from '@/components/CreateDesk/DeskStoryFields';
 
-import useDeskStoryForm from '@/hooks/useDeskStoryForm';
 import useDeskItemForm from '@/hooks/useDeskItemForm';
 import useFileUploadMutation from '@/hooks/useFileUploadMutation';
 
@@ -71,17 +70,11 @@ const ItemTitle = (props: { children?: React.ReactNode }) => {
 
 const InviteCreateDesk: NextPage = () => {
   const methods = useForm({
-    mode: 'onBlur',
+    mode: 'onSubmit',
   });
 
   const { register, handleSubmit, control, setValue, watch, unregister } =
     methods;
-
-  const {
-    fields: deskStoryFields,
-    append: appendDeskStory,
-    remove: removeDeskStory,
-  } = useDeskStoryForm();
 
   const {
     fields: deskItemFields,
@@ -94,7 +87,6 @@ const InviteCreateDesk: NextPage = () => {
   const onChangeProfileImage: ChangeEventHandler<HTMLInputElement> = async (
     event
   ) => {
-    event.preventDefault();
     const file = (event.target.files as FileList)[0];
 
     if (file == null) {
@@ -112,8 +104,6 @@ const InviteCreateDesk: NextPage = () => {
 
   const onChangeDeskItemImage = (index: number) => {
     const handler: ChangeEventHandler<HTMLInputElement> = (event) => {
-      event.preventDefault();
-
       const file = (event.target.files as FileList)[0];
 
       if (file == null) {
@@ -131,37 +121,6 @@ const InviteCreateDesk: NextPage = () => {
   const onDeleteDeskItem = (index: number) => {
     removeDeskItem(index);
     unregister(`deskItem.${index}`);
-  };
-
-  const onChangeDeskStory = (index: number) => {
-    const handler: ChangeEventHandler<HTMLInputElement> = (event) => {
-      event.preventDefault();
-
-      const { type: fieldType } = deskStoryFields[index];
-
-      setValue(`deskStory.${index}.type`, fieldType);
-
-      if (!event.target.files) {
-        return;
-      }
-
-      const file = (event.target.files as FileList)[0];
-
-      if (file == null) {
-        return;
-      }
-
-      const fileObjUrl = URL.createObjectURL(file);
-
-      setValue(`deskStory.${index}.imageUrl`, fileObjUrl);
-    };
-
-    return handler;
-  };
-
-  const onDeleteDeskStory = (index: number) => {
-    unregister(`deskStory.${index}`);
-    removeDeskStory(index);
   };
 
   const onSubmit = (data: any) => {

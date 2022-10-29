@@ -3,6 +3,7 @@ import { Box, HStack, Flex, Image } from '@chakra-ui/react';
 import type { ChangeEventHandler } from 'react';
 
 import useDeskStoryFields from '@/hooks/useDeskStoryFields';
+import useFileUploadMutation from '@/hooks/useFileUploadMutation';
 
 import InputBox from '@/components/CreateDesk/InputBox';
 import Textarea from '@/components/CreateDesk/Textarea';
@@ -16,6 +17,8 @@ const DeskStoryFields = () => {
   const onDelete = (index: number) => {
     remove(index);
   };
+
+  const { mutateAsync } = useFileUploadMutation();
 
   const onUploadImage = (index: number) => {
     const handler: ChangeEventHandler<HTMLInputElement> = async (event) => {
@@ -35,9 +38,13 @@ const DeskStoryFields = () => {
         return;
       }
 
-      const fileUrl = URL.createObjectURL(file);
-
-      setValue(`deskStory.${index}.imageUrl`, fileUrl);
+      try {
+        const fileUrl = await mutateAsync(file);
+        setValue(`deskStory.${index}.imageUrl`, fileUrl);
+      } catch (err) {
+        alert('사진 업로드 실패');
+        console.log(err);
+      }
     };
 
     return handler;

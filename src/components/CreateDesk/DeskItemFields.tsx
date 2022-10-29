@@ -1,12 +1,12 @@
 import { Box, Flex, HStack, Text, Image } from '@chakra-ui/react';
+import type { ChangeEventHandler } from 'react';
 
 import useDeskItemFields from '@/hooks/useDeskItemFields';
+import useFileUploadMutation from '@/hooks/useFileUploadMutation';
 
 import DeleteButton from '@/components/CreateDesk/DeleteButton';
 import InputBox from '@/components/CreateDesk/InputBox';
 import Textarea from '@/components/CreateDesk/Textarea';
-import type { ChangeEventHandler } from 'react';
-
 import TextInput from '@/components/CreateDesk/TextInput';
 import ImageInput from '@/components/CreateDesk/ImageInput';
 import DeskItemCheckbox from '@/components/CreateDesk/DeskItemCheckbox';
@@ -28,6 +28,8 @@ const DeskItemFields = () => {
     remove(index);
   };
 
+  const { mutateAsync } = useFileUploadMutation();
+
   const onUploadImage = (index: number) => {
     const handler: ChangeEventHandler<HTMLInputElement> = async (event) => {
       if (!event.target.files) {
@@ -40,9 +42,10 @@ const DeskItemFields = () => {
         return;
       }
 
-      const fileUrl = URL.createObjectURL(file);
-
-      setValue(`deskItem.${index}.imageUrl`, fileUrl);
+      try {
+        const fileUrl = await mutateAsync(file);
+        setValue(`deskItem.${index}.imageUrl`, fileUrl);
+      } catch (err) {}
     };
 
     return handler;

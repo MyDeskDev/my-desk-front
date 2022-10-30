@@ -62,8 +62,7 @@ const InviteCreateDesk: NextPage = () => {
     mode: 'onSubmit',
   });
 
-  const { register, handleSubmit, control, setValue, watch, unregister } =
-    methods;
+  const { register, handleSubmit, control, setValue, watch } = methods;
 
   const fileUploadMutation = useFileUploadMutation();
 
@@ -182,10 +181,10 @@ const InviteCreateDesk: NextPage = () => {
                     name="ageGroup"
                     render={({ field: { onChange, value } }) => (
                       <SquareRadioGroup onChange={onChange} value={value}>
-                        <SquareRadio value="20">20대</SquareRadio>
-                        <SquareRadio value="30">30대</SquareRadio>
-                        <SquareRadio value="40">40대</SquareRadio>
-                        <SquareRadio value="50">50대</SquareRadio>
+                        <SquareRadio value={20}>20대</SquareRadio>
+                        <SquareRadio value={30}>30대</SquareRadio>
+                        <SquareRadio value={40}>40대</SquareRadio>
+                        <SquareRadio value={50}>50대</SquareRadio>
                       </SquareRadioGroup>
                     )}
                   />
@@ -264,12 +263,12 @@ const InviteCreateDesk: NextPage = () => {
                   isRequired
                 >
                   <Select {...register('cost')} placeholder="선택">
-                    <option value="10-">10만원 미만</option>
-                    <option value="10+">10만원대</option>
-                    <option value="20+">20만원대</option>
-                    <option value="30+">30만원대</option>
-                    <option value="40+">40만원대</option>
-                    <option value="50+">50만원 이상</option>
+                    <option value={0}>10만원 미만</option>
+                    <option value={10}>10만원대</option>
+                    <option value={20}>20만원대</option>
+                    <option value={30}>30만원대</option>
+                    <option value={40}>40만원대</option>
+                    <option value={50}>50만원 이상</option>
                   </Select>
                 </InputBox>
               </DeskInputSection>

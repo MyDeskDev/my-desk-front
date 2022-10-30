@@ -9,7 +9,8 @@ import type {
   DeskCost,
 } from '@/types';
 
-export const GENDER: { [K: string]: Gender } = {
+type GenderKey = 'MALE' | 'FEMALE' | 'UNKNOWN';
+export const GENDER: { [K in GenderKey]: Gender } = {
   MALE: 'M',
   FEMALE: 'F',
   UNKNOWN: 'U',
@@ -17,18 +18,18 @@ export const GENDER: { [K: string]: Gender } = {
 
 export const AGE_GROUP: AgeGroup[] = [20, 30, 40, 50];
 
-export const COUNTRY_CODE: { [K: string]: CountryCode } = {
+export const COUNTRY_CODE: { [K in CountryCode]: CountryCode } = {
   KR: 'KR',
 } as const;
 
-export const JOB: { [K: string]: Job } = {
+export const JOB: { [K in Job]: Job } = {
   DEVELOPER: 'DEVELOPER',
   DESIGNER: 'DESIGNER',
   FREELANCER: 'FREELANCER',
   STUDENT: 'STUDENT',
 } as const;
 
-export const DESK_STYLE: { [K: string]: DeskStyle } = {
+export const DESK_STYLE: { [K in DeskStyle]: DeskStyle } = {
   NATURAL: 'NATURAL',
   MODERN: 'MODERN',
   NORTH_EUROPE: 'NORTH_EUROPE',
@@ -42,14 +43,14 @@ export const DESK_STYLE: { [K: string]: DeskStyle } = {
   UNIQUE: 'UNIQUE',
 } as const;
 
-export const BLOOD_TYPE: { [k: string]: BloodType } = {
+export const BLOOD_TYPE: { [K in BloodType]: BloodType } = {
   A: 'A',
   B: 'B',
   AB: 'AB',
   O: 'O',
 } as const;
 
-export const MBTI: { [K: string]: Mbti } = {
+export const MBTI: { [K in Mbti]: Mbti } = {
   INTJ: 'INTJ',
   INTP: 'INTP',
   ENTJ: 'ENTJ',

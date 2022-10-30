@@ -19,6 +19,14 @@ import DeskStoryFields from '@/components/CreateDesk/DeskStoryFields';
 import DeskItemFields from '@/components/CreateDesk/DeskItemFields';
 
 import useFileUploadMutation from '@/hooks/useFileUploadMutation';
+import {
+  GENDER,
+  AGE_GROUP,
+  COUNTRY_CODE,
+  JOB,
+  DESK_STYLE,
+  DESK_COST,
+} from '@/constants';
 
 const DeskInputSection = (props: { children: React.ReactNode }) => {
   return (
@@ -56,6 +64,97 @@ const FormSectionLabel = (props: FormSectionLabelProps) => {
     </Box>
   );
 };
+
+const genderRadios = [
+  {
+    label: '남자',
+    value: GENDER.MALE,
+  },
+  {
+    label: '여자',
+    value: GENDER.FEMALE,
+  },
+];
+
+const ageGroupLabelMap: { [K in typeof AGE_GROUP[number]]: string } = {
+  20: '20대',
+  30: '30대',
+  40: '40대',
+  50: '50대',
+};
+
+const ageRadios = AGE_GROUP.map((age) => {
+  return {
+    label: ageGroupLabelMap[age],
+    value: age,
+  };
+});
+
+const countryCodeLabelMap: {
+  [K in typeof COUNTRY_CODE[keyof typeof COUNTRY_CODE]]: string;
+} = {
+  [COUNTRY_CODE.KR]: '한국',
+};
+
+const countryCodeOptions = Object.values(COUNTRY_CODE).map((countryCode) => {
+  return {
+    label: countryCodeLabelMap[countryCode],
+    value: countryCode,
+  };
+});
+
+const jobLabelMap = {
+  [JOB.DESIGNER]: '디자이너',
+  [JOB.DEVELOPER]: '개발자',
+  [JOB.FREELANCER]: '프리랜서',
+  [JOB.STUDENT]: '학생',
+};
+
+const jobOptions = Object.values(JOB).map((job) => {
+  return {
+    label: jobLabelMap[job],
+    value: job,
+  };
+});
+
+const deskStyleLabelMap = {
+  [DESK_STYLE.NATURAL]: '네추럴',
+  [DESK_STYLE.MODERN]: '모던',
+  [DESK_STYLE.NORTH_EUROPE]: '북유럽',
+  [DESK_STYLE.VINTAGE]: '빈티지&레트로',
+  [DESK_STYLE.MINIMAL]: '미니멀&심플',
+  [DESK_STYLE.LOVELY]: '러블리&로맨틱',
+  [DESK_STYLE.CLASSIC]: '클래식&엔틱',
+  [DESK_STYLE.FRENCH]: '프렌치&프로방스',
+  [DESK_STYLE.INDUSTRIAL]: '인더스트리얼',
+  [DESK_STYLE.KOREAN]: '한국&아시아',
+  [DESK_STYLE.UNIQUE]: '유니크',
+};
+
+const deskStyleOptions = Object.values(DESK_STYLE).map((deskStyle) => {
+  return {
+    label: deskStyleLabelMap[deskStyle],
+    value: deskStyle,
+  };
+});
+
+const deskCostLabelMap: {
+  [K in typeof DESK_COST[number]]: string;
+} = {
+  0: '10만원 미만',
+  10: '10만원대',
+  20: '20만원대',
+  30: '30만원대',
+  40: '40만원대',
+  50: '50만원 이상',
+};
+
+const deskCostOptions = DESK_COST.map((cost) => {
+  return {
+    label: deskCostLabelMap[cost],
+    value: cost,
+  };
+});
 
 const InviteCreateDesk: NextPage = () => {
   const methods = useForm({
@@ -165,12 +264,17 @@ const InviteCreateDesk: NextPage = () => {
                     name="gender"
                     render={({ field: { onChange, value } }) => (
                       <SquareRadioGroup onChange={onChange} value={value}>
-                        <SquareRadio value="male" name="gender">
-                          남자
-                        </SquareRadio>
-                        <SquareRadio value="female" name="gender">
-                          여자
-                        </SquareRadio>
+                        {genderRadios.map(({ label, value }) => {
+                          return (
+                            <SquareRadio
+                              key={value}
+                              value={value}
+                              name="gender"
+                            >
+                              {label}
+                            </SquareRadio>
+                          );
+                        })}
                       </SquareRadioGroup>
                     )}
                   />
@@ -181,40 +285,48 @@ const InviteCreateDesk: NextPage = () => {
                     name="ageGroup"
                     render={({ field: { onChange, value } }) => (
                       <SquareRadioGroup onChange={onChange} value={value}>
-                        <SquareRadio value={20}>20대</SquareRadio>
-                        <SquareRadio value={30}>30대</SquareRadio>
-                        <SquareRadio value={40}>40대</SquareRadio>
-                        <SquareRadio value={50}>50대</SquareRadio>
+                        {ageRadios.map(({ label, value }) => {
+                          return (
+                            <SquareRadio key={value} value={value.toString()}>
+                              {label}
+                            </SquareRadio>
+                          );
+                        })}
                       </SquareRadioGroup>
                     )}
                   />
                 </InputBox>
                 <InputBox label="거주지 국가" isRequired>
                   <Select {...register('country')} placeholder="선택">
-                    <option value="KR">한국</option>
+                    {countryCodeOptions.map(({ label, value }) => {
+                      return (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      );
+                    })}
                   </Select>
                 </InputBox>
                 <InputBox label="직업" isRequired>
                   <Select {...register('job')} placeholder="선택">
-                    <option value="developer">개발자</option>
-                    <option value="designer">디자이너</option>
-                    <option value="freelancer">프리랜서</option>
-                    <option value="student">학생</option>
+                    {jobOptions.map(({ label, value }) => {
+                      return (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      );
+                    })}
                   </Select>
                 </InputBox>
                 <InputBox label="컨셉스타일" isRequired>
                   <Select {...register('deskConcept')} placeholder="선택">
-                    <option value="natural">네추럴</option>
-                    <option value="modern">모던</option>
-                    <option value="north_europe">북유럽</option>
-                    <option value="vintage">빈티지&amp;레트로</option>
-                    <option value="minimal">미니멀&amp;심플</option>
-                    <option value="lovely">러블리&amp;로맨틱</option>
-                    <option value="classic">클래식&amp;엔틱</option>
-                    <option value="french">프렌치&amp;프로방스</option>
-                    <option value="industrial">인더스트리얼</option>
-                    <option value="korean">한국&amp;아시아</option>
-                    <option value="unique">유니크</option>
+                    {deskStyleOptions.map(({ label, value }) => {
+                      return (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      );
+                    })}
                   </Select>
                 </InputBox>
                 <InputBox label="혈액형">
@@ -263,12 +375,13 @@ const InviteCreateDesk: NextPage = () => {
                   isRequired
                 >
                   <Select {...register('cost')} placeholder="선택">
-                    <option value={0}>10만원 미만</option>
-                    <option value={10}>10만원대</option>
-                    <option value={20}>20만원대</option>
-                    <option value={30}>30만원대</option>
-                    <option value={40}>40만원대</option>
-                    <option value={50}>50만원 이상</option>
+                    {deskCostOptions.map(({ label, value }) => {
+                      return (
+                        <option key={value} value={value.toString()}>
+                          {label}
+                        </option>
+                      );
+                    })}
                   </Select>
                 </InputBox>
               </DeskInputSection>

@@ -154,7 +154,7 @@ const convertGetDeskResponse = (data: GetDeskResponse): Desk => {
 
 export const Desk = {
   getAll: async () => {
-    const res = await api.get<GetAllDesksResponse>('/api/v1/post');
+    const res = await api.get<GetAllDesksResponse>('/api/v1/posts');
 
     const { data: rawData } = res;
 

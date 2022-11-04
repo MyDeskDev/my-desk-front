@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Flex, FormLabel, Text, HStack, Image } from '@chakra-ui/react';
 import { useForm, Controller, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
+import { useRouter } from 'next/router';
 
 import type { NextPage } from 'next';
 import type { ChangeEventHandler } from 'react';
@@ -158,6 +159,8 @@ const deskCostOptions = DESK_COST.map((cost) => {
 });
 
 const InviteCreateDesk: NextPage = () => {
+  const router = useRouter();
+
   const methods = useForm({
     mode: 'onSubmit',
   });
@@ -219,6 +222,8 @@ const InviteCreateDesk: NextPage = () => {
 
     try {
       await DeskApi.create(_data);
+
+      router.push('/invite/desks/success');
     } catch (err) {
       console.log(err);
       alert('예기치 못한 오류가 발생했습니다.');

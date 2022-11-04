@@ -27,6 +27,7 @@ import {
   DESK_STYLE,
   DESK_COST,
 } from '@/constants';
+import DeskApi from '@/api/desk';
 
 const DeskInputSection = (props: { children: React.ReactNode }) => {
   return (
@@ -183,8 +184,45 @@ const InviteCreateDesk: NextPage = () => {
     }
   };
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    const { deskStory, profileImage, deskItem, mbti, bloodType, ...rest } =
+      data;
+
+    if (deskStory.length === 0) {
+      alert('책상 이야기는 반드시 작성해야 합니다.');
+      return;
+    }
+
+    const _deskStory = deskStory.map((story: any) => {
+      const { image, ...rest } = story;
+
+      return {
+        ...rest,
+      };
+    });
+
+    const _deskItem = deskItem.map((item: any) => {
+      const { image, ...rest } = item;
+
+      return {
+        ...rest,
+      };
+    });
+
+    const _data = {
+      ...rest,
+      deskStory: _deskStory,
+      deskItem: _deskItem,
+      ...(mbti && { mbti }),
+      ...(bloodType && { bloodType }),
+    };
+
+    try {
+      await DeskApi.create(_data);
+    } catch (err) {
+      console.log(err);
+      alert('예기치 못한 오류가 발생했습니다.');
+    }
   };
 
   return (

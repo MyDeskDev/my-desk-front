@@ -3,6 +3,17 @@ import { v4 as uuidv4 } from 'uuid';
 
 import config from '@/config';
 
+import type {
+  Gender,
+  AgeGroup,
+  CountryCode,
+  Job,
+  DeskStyle,
+  BloodType,
+  Mbti,
+  DeskCost,
+} from '@/types';
+
 const api = axios.create({ baseURL: config.apiHost });
 
 export interface GetAllDeskResponse {
@@ -76,6 +87,36 @@ export interface Desk extends DeskPreview {
   user: Required<User>;
   deskStories: DeskStory[];
   deskItems: DeskItem[];
+}
+
+export interface CreateDeskData {
+  profileImageUrl: string;
+  name: string;
+  nickname: string;
+  email: string;
+  roomType: string;
+  gender: Gender;
+  ageGroup: AgeGroup;
+  country: CountryCode;
+  job: Job;
+  deskConcept: DeskStyle;
+  bloodType?: BloodType;
+  mbti?: Mbti;
+  deskSummary: string;
+  cost: DeskCost;
+  deskStory: {
+    type: 'TEXT' | 'IMAGE';
+    text: string;
+    imageUrl: string;
+  }[];
+  deskItem: {
+    name: string;
+    imageUrl: string;
+    story: string;
+    url?: string;
+    isFavorite: boolean;
+    isRecommend: boolean;
+  }[];
 }
 
 const convertGetAllDesksResponse = (
@@ -152,6 +193,61 @@ const convertGetDeskResponse = (data: GetDeskResponse): Desk => {
   return result;
 };
 
+const convertCreateDeskForm = (data: CreateDeskData) => {
+  const { profileImageUrl, gender, country, deskStory, deskItem, ...rest } =
+    data;
+
+  const genderMap = {
+    M: 'MALE',
+    F: 'FEMALE',
+    U: 'UNKNOWN',
+  };
+  const _gender = genderMap[gender];
+
+  const countryMap = {
+    KR: 'KOREA',
+  };
+  const nationality = countryMap[country];
+
+  const deskContents = deskStory.map((story) => {
+    const { type, text, imageUrl } = story;
+
+    const typeMap = {
+      TEXT: 'deskDescription',
+      IMAGE: 'deskPicture',
+    };
+    const _type = typeMap[type];
+    const value = type === 'TEXT' ? text : imageUrl;
+
+    const data = { type: _type, value };
+
+    return data;
+  });
+
+  const deskItems = deskItem.map((item) => {
+    const { imageUrl, story, ...rest } = item;
+
+    const data = {
+      picture: imageUrl,
+      content: story,
+      ...rest,
+    };
+
+    return data;
+  });
+
+  const formData = {
+    profileImage: profileImageUrl,
+    gender: _gender,
+    nationality,
+    deskContents,
+    deskItems,
+    ...rest,
+  };
+
+  return formData;
+};
+
 export const Desk = {
   getAll: async () => {
     const res = await api.get<GetAllDesksResponse>('/api/v1/posts');
@@ -171,6 +267,12 @@ export const Desk = {
     const data = convertGetDeskResponse(rawData);
 
     return data;
+  },
+
+  create: async (data: CreateDeskData) => {
+    const _data = convertCreateDeskForm(data);
+
+    console.log(_data);
   },
 };
 

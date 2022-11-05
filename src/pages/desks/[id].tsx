@@ -1,5 +1,6 @@
-import type { NextPage } from 'next';
 import { Box } from '@chakra-ui/react';
+
+import type { NextPage, GetServerSideProps } from 'next';
 
 import BaseHeader from '@/components/layouts/Base/BaseHeader';
 import BaseContainer from '@/components/layouts/Base/BaseContainer';
@@ -14,6 +15,20 @@ import ItemSectionTitle from '@/components/DeskDetail/ItemSectionTitle';
 import ItemBox from '@/components/DeskDetail/ItemBox';
 import ComicRenderedImage from '@/components/DeskDetail/ComicRenderedImage';
 import YoutubeLinkBox from '@/components/DeskDetail/YoutubeLinkBox';
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { params } = context;
+
+  const pattern = /\d*/;
+
+  if (pattern.test((params?.id ?? '') as string)) {
+    return {
+      redirect: { destination: '/desks', permanent: false },
+    };
+  }
+
+  return { props: {} };
+};
 
 const Desk: NextPage = () => {
   return (

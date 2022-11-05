@@ -8,7 +8,13 @@ import Head from 'next/head';
 import theme from '@/styles/theme';
 import Fonts from '@/styles/fonts';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

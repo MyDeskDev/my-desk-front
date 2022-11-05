@@ -11,10 +11,13 @@ export const useDesksQuery = <T = DeskPreview[]>(): UseQueryResult<
   T,
   AxiosError
 > => {
-  return useQuery(['desks'], async () => {
-    const desks = await DeskApi.getAll();
+  return useQuery({
+    queryKey: ['desks'],
+    queryFn: async () => {
+      const desks = await DeskApi.getAll();
 
-    return desks;
+      return desks;
+    },
   });
 };
 

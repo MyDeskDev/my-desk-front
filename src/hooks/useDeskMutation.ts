@@ -1,7 +1,8 @@
-import { useMutation } from 'react-query';
-import axios from 'axios';
+import { useMutation } from '@tanstack/react-query';
 
-import config from '@/config';
+import DeskApi from '@/api/desk';
+
+import type { CreateDeskData } from '@/api/desk';
 
 import type {
   Gender,
@@ -11,8 +12,6 @@ import type {
   BloodType,
   Mbti,
 } from '@/types';
-
-const instance = axios.create({ baseURL: config.apiHost });
 
 export type DeskCost = '10-' | '10-20' | '20-30' | '30-40' | '40-50' | '50+';
 
@@ -47,8 +46,8 @@ export interface DeskForm {
 }
 
 export const useDeskMutation = () => {
-  const mutation = useMutation((deskForm: DeskForm) =>
-    instance.post('/', deskForm)
+  const mutation = useMutation((deskForm: CreateDeskData) =>
+    DeskApi.create(deskForm)
   );
 
   return {

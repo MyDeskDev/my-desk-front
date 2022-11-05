@@ -29,6 +29,7 @@ import {
   DESK_COST,
 } from '@/constants';
 import DeskApi from '@/api/desk';
+import useDeskMutation from '@/hooks/useDeskMutation';
 
 const DeskInputSection = (props: { children: React.ReactNode }) => {
   return (
@@ -188,11 +189,28 @@ const InviteCreateDesk: NextPage = () => {
   };
 
   const onSubmit = async (data: any) => {
-    const { deskStory, profileImage, deskItem, mbti, bloodType, ...rest } =
-      data;
+    const {
+      deskStory,
+      profileImage,
+      deskItem,
+      mbti,
+      bloodType,
+      ageGroup,
+      cost,
+      ...rest
+    } = data;
 
-    if (deskStory.length === 0) {
-      alert('책상 이야기는 반드시 작성해야 합니다.');
+    console.log(data);
+
+    const hasTextDeskStory = !!deskStory.find(
+      (story: any) => story.type === 'TEXT'
+    );
+    const hasImageDeskStory = !!deskStory.find(
+      (story: any) => story.type === 'IMAGE'
+    );
+
+    if (!hasTextDeskStory || !hasImageDeskStory) {
+      alert('책상 이야기엔 글과 사진이 최소 하나씩 작성해야 합니다.');
       return;
     }
 
@@ -205,10 +223,11 @@ const InviteCreateDesk: NextPage = () => {
     });
 
     const _deskItem = deskItem.map((item: any) => {
-      const { image, ...rest } = item;
+      const { image, url, ...rest } = item;
 
       return {
         ...rest,
+        ...(url && { url }),
       };
     });
 
@@ -216,6 +235,8 @@ const InviteCreateDesk: NextPage = () => {
       ...rest,
       deskStory: _deskStory,
       deskItem: _deskItem,
+      ageGroup: Number(ageGroup),
+      cost: Number(cost),
       ...(mbti && { mbti }),
       ...(bloodType && { bloodType }),
     };

@@ -194,8 +194,14 @@ const convertGetDeskResponse = (data: GetDeskResponse): Desk => {
 };
 
 const convertCreateDeskForm = (data: CreateDeskData) => {
-  const { profileImageUrl, gender, country, deskStory, deskItem, ...rest } =
-    data;
+  const {
+    profileImageUrl,
+    gender,
+    country: countryCode,
+    deskStory,
+    deskItem,
+    ...rest
+  } = data;
 
   const genderMap = {
     M: 'MALE',
@@ -203,11 +209,6 @@ const convertCreateDeskForm = (data: CreateDeskData) => {
     U: 'UNKNOWN',
   };
   const _gender = genderMap[gender];
-
-  const countryMap = {
-    KR: 'KOREA',
-  };
-  const nationality = countryMap[country];
 
   const deskContents = deskStory.map((story) => {
     const { type, text, imageUrl } = story;
@@ -239,7 +240,7 @@ const convertCreateDeskForm = (data: CreateDeskData) => {
   const formData = {
     profileImage: profileImageUrl,
     gender: _gender,
-    nationality,
+    countryCode,
     deskContents,
     deskItems,
     ...rest,

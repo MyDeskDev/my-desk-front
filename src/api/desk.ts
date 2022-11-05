@@ -18,7 +18,7 @@ const api = axios.create({ baseURL: config.apiHost });
 
 export interface GetAllDeskResponse {
   id: number;
-  title: string;
+  deskSummary: string;
   userId: number;
   userPicture: string; // url
   deskPicture: string; // url
@@ -78,15 +78,16 @@ export interface DeskItem {
 export interface DeskPreview {
   id: number;
   title: string;
-  mainImgUrl: string;
+  thumbnailImgUrl: string;
   user: User;
 }
 
 // TODO: 응답에 따라 변경
-export interface Desk extends DeskPreview {
+export interface Desk extends Omit<DeskPreview, 'title'> {
   user: Required<User>;
   deskStories: DeskStory[];
   deskItems: DeskItem[];
+  deskSummary: string;
 }
 
 export interface CreateDeskData {
@@ -123,7 +124,7 @@ const convertGetAllDesksResponse = (
   data: GetAllDesksResponse
 ): DeskPreview[] => {
   const result: DeskPreview[] = data.map((desk) => {
-    const { userPicture, deskPicture, userId, ...rest } = desk;
+    const { userPicture, deskPicture, userId, deskSummary, ...rest } = desk;
 
     const user = {
       id: userId,
@@ -132,8 +133,9 @@ const convertGetAllDesksResponse = (
 
     return {
       ...rest,
-      mainImgUrl: deskPicture,
+      thumbnailImgUrl: deskPicture,
       user,
+      title: deskSummary,
     };
   });
 
@@ -183,7 +185,7 @@ const convertGetDeskResponse = (data: GetDeskResponse): Desk => {
   );
 
   const result: Desk = {
-    mainImgUrl: picture,
+    thumbnailImgUrl: picture,
     user,
     deskStories,
     deskItems,

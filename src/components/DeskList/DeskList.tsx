@@ -76,7 +76,7 @@ const DeskList = () => {
       {desks?.map((desk) => {
         return (
           <DeskListItem key={desk.id}>
-            <Link href={`./${desk.id}`}>
+            <Link href={`/desks/${desk.id}`}>
               <a>
                 <DeskCard desk={desk} />
               </a>

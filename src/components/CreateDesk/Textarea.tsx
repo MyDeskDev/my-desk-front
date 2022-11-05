@@ -1,5 +1,6 @@
 import { Textarea } from '@chakra-ui/react';
 import React, { ChangeEventHandler } from 'react';
+import AutoResizeTextarea from 'react-textarea-autosize';
 
 interface Props {
   placeholder?: string;
@@ -25,6 +26,8 @@ const CustomTextarea = React.forwardRef<HTMLTextAreaElement, Props>(
         lineHeight="2.4rem"
         _placeholder={{ color: '#C4C4C4' }}
         onChange={props.onChange}
+        minRows={3}
+        as={AutoResizeTextarea}
         ref={ref}
       />
     );

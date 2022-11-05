@@ -52,6 +52,7 @@
     "react-hook-form": "^7.33.1",
     "react-icons": "^4.6.0",
     "react-image-crop": "^10.0.6",
+    "react-textarea-autosize": "^8.3.4",
     "recoil": "^0.7.3",
     "uuid": "^9.0.0"
   },

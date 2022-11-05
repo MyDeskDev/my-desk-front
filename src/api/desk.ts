@@ -28,6 +28,7 @@ export type GetAllDesksResponse = GetAllDeskResponse[];
 
 // TODO: id 추가
 export interface DeskContentResponse {
+  id?: number;
   name: string;
   picture?: string; // url
   content?: string;
@@ -36,31 +37,43 @@ export interface DeskContentResponse {
 
 // TODO: id, 구매 url, 추천 아이템 여부 추가
 export interface DeskItemResponse {
+  id?: number;
   name: string;
   picture: string; // url
   content: string;
   isFavorite: boolean;
+  isRecommended: boolean;
   contentOrder: number;
 }
 
 // TODO: user 정보(userId, 닉네임, 직업, 혈액형, mbti, 프로필 이미지), 공간 형태, 컨셉 스타일 추가
 // TODO: deskPicture 응답 일원화
 export interface GetDeskResponse
-  extends Omit<GetAllDeskResponse, 'userId' | 'userPicture' | 'deskPicture'> {
+  extends Omit<GetAllDeskResponse, 'deskPicture'> {
   picture: string; // url
   deskContents: DeskContentResponse[];
   deskItems: DeskItemResponse[];
+  mbti?: Mbti;
+  bloodType?: BloodType;
+  job: Job;
+  nickname: string;
+  spaceType: string;
+  deskConcept: DeskStyle;
 }
 
 // TODO: 응답에 따라 변경
 export interface User {
   id: number;
   profileImgUrl: string;
+  job?: Job;
+  nickname?: string;
+  bloodType?: BloodType;
+  mbti?: Mbti;
 }
 
 // TODO: 응답에 따라 변경
 export interface DeskStory {
-  id: string;
+  id: string | number;
   imgUrl?: string;
   content?: string;
   contentOrder: number;
@@ -68,11 +81,12 @@ export interface DeskStory {
 
 // TODO: 응답에 따라 변경
 export interface DeskItem {
-  id: string;
+  id: string | number;
   imgUrl: string;
-  content: string;
+  story: string;
   contentOrder: number;
   isFavorite: boolean;
+  isRecommended: boolean;
 }
 
 export interface DeskPreview {
@@ -84,12 +98,15 @@ export interface DeskPreview {
 
 // TODO: 응답에 따라 변경
 export interface Desk extends Omit<DeskPreview, 'title'> {
-  user: Required<User>;
+  user: Required<Pick<User, 'job' | 'nickname'>> & User;
   deskStories: DeskStory[];
   deskItems: DeskItem[];
   deskSummary: string;
+  roomType: string;
+  deskStyle: DeskStyle;
 }
 
+// TODO: drived type으로 리팩토링 필요
 export interface CreateDeskData {
   profileImageUrl: string;
   name: string;
@@ -145,9 +162,7 @@ const convertGetAllDesksResponse = (
 const convertDeskContentResponse = (
   deskContent: DeskContentResponse
 ): DeskStory => {
-  const { picture: imgUrl, ...rest } = deskContent;
-
-  const id = uuidv4();
+  const { picture: imgUrl, id = uuidv4(), ...rest } = deskContent;
 
   const result: DeskStory = {
     id,
@@ -161,22 +176,46 @@ const convertDeskContentResponse = (
 const convertDeskItemResponse = (
   deskItemResponse: DeskItemResponse
 ): DeskItem => {
-  const { picture: imgUrl, ...rest } = deskItemResponse;
-
-  const id = uuidv4();
+  const {
+    picture: imgUrl,
+    content: story,
+    id = uuidv4(),
+    ...rest
+  } = deskItemResponse;
 
   return {
     id,
     imgUrl,
+    story,
     ...rest,
   };
 };
 
 const convertGetDeskResponse = (data: GetDeskResponse): Desk => {
-  const { picture, deskContents, deskItems: deskItemsResponse, ...rest } = data;
+  const {
+    picture,
+    deskContents,
+    deskItems: deskItemsResponse,
+    userId,
+    userPicture,
+    job,
+    bloodType,
+    mbti,
+    nickname,
+    spaceType: roomType,
+    deskConcept: deskStyle,
+    ...rest
+  } = data;
 
   // dummy user
-  const user = { id: 0, profileImgUrl: '' };
+  const user = {
+    id: userId,
+    profileImgUrl: userPicture,
+    job,
+    bloodType,
+    mbti,
+    nickname,
+  };
   const deskStories = deskContents.map((deskContent) =>
     convertDeskContentResponse(deskContent)
   );
@@ -189,6 +228,8 @@ const convertGetDeskResponse = (data: GetDeskResponse): Desk => {
     user,
     deskStories,
     deskItems,
+    roomType,
+    deskStyle,
     ...rest,
   };
 

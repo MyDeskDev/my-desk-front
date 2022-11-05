@@ -244,7 +244,7 @@ const InviteCreateDesk: NextPage = () => {
     try {
       await DeskApi.create(_data);
 
-      router.push('/invite/desks/success');
+      router.push('/invite/desk/success');
     } catch (err) {
       console.log(err);
       alert('예기치 못한 오류가 발생했습니다.');

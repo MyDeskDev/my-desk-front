@@ -101,7 +101,7 @@ const DeskItemFields = () => {
             />
           </InputBox>
           <Box mt="10px" lineHeight={0}>
-            <DeskItemCheckbox {...register(`deskItem.${index}.isRecommend`)}>
+            <DeskItemCheckbox {...register(`deskItem.${index}.isRecommended`)}>
               추천하는 아이템인가요?
             </DeskItemCheckbox>
           </Box>
@@ -122,7 +122,7 @@ const DeskItemFields = () => {
               url: '',
               imageUrl: '',
               isFavorite: false,
-              isRecommend: false,
+              isRecommended: false,
             })
           }
         >

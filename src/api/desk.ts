@@ -115,7 +115,7 @@ export interface CreateDeskData {
     story: string;
     url?: string;
     isFavorite: boolean;
-    isRecommend: boolean;
+    isRecommended: boolean;
   }[];
 }
 
@@ -200,6 +200,7 @@ const convertCreateDeskForm = (data: CreateDeskData) => {
     country: countryCode,
     deskStory,
     deskItem,
+    roomType,
     ...rest
   } = data;
 
@@ -243,6 +244,7 @@ const convertCreateDeskForm = (data: CreateDeskData) => {
     countryCode,
     deskContents,
     deskItems,
+    spaceType: roomType,
     ...rest,
   };
 

@@ -282,7 +282,7 @@ const convertCreateDeskForm = (data: CreateDeskData) => {
   });
 
   const formData = {
-    profileImage: profileImageUrl,
+    profileImgUrl: profileImageUrl,
     gender: _gender,
     countryCode,
     deskContents,
@@ -306,9 +306,11 @@ export const Desk = {
   },
 
   get: async (id: number) => {
-    const res = await api.get(`/api/v1/post/${id}`);
+    const res = await api.get(`/api/v1/posts/${id}`);
 
     const { data: rawData } = res;
+
+    console.log(rawData);
 
     const data = convertGetDeskResponse(rawData);
 

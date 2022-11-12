@@ -13,7 +13,7 @@ import DeskStoryText from '@/components/DeskDetail/DeskStoryText';
 import DeskStoryImage from '@/components/DeskDetail/DeskStoryImage';
 import ItemSectionTitle from '@/components/DeskDetail/ItemSectionTitle';
 import ItemBox from '@/components/DeskDetail/ItemBox';
-import ComicRenderedImage from '@/components/DeskDetail/ComicRenderedImage';
+import CartoonRenderedImage from '@/components/DeskDetail/CartoonRenderedImage';
 import YoutubeLinkBox from '@/components/DeskDetail/YoutubeLinkBox';
 
 import useDeskDetailQuery from '@/hooks/useDeskDetailQuery';
@@ -89,16 +89,11 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
           })}
         </Box>
         <Box>
-          <ItemSectionTitle>{'[추천 아이템]'}</ItemSectionTitle>
           <ItemBox />
-          <ItemBox />
-        </Box>
-        <Box>
-          <ItemSectionTitle>{'[애장아이템]'}</ItemSectionTitle>
           <ItemBox />
         </Box>
         <Box mt="40px">
-          <ComicRenderedImage />
+          <CartoonRenderedImage />
         </Box>
         <Box mt="20px">
           <YoutubeLinkBox />

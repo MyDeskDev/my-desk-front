@@ -1,6 +1,6 @@
 import { Box, Image, Text } from '@chakra-ui/react';
 
-const ComicRenderedImage = () => {
+const CartoonRenderedImage = () => {
   return (
     <Box padding={{ base: '0 18px', lg: '0' }} maxW="1200" margin="0 auto">
       <Image src="" alt="" w="100%" />
@@ -22,4 +22,4 @@ const ComicRenderedImage = () => {
   );
 };
 
-export default ComicRenderedImage;
+export default CartoonRenderedImage;

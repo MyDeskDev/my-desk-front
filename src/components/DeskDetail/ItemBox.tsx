@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Text, Link } from '@chakra-ui/react';
 
 import DeskStoryText from '@/components/DeskDetail/DeskStoryText';
 import DeskStoryImage from '@/components/DeskDetail/DeskStoryImage';
@@ -65,8 +65,14 @@ const ItemBox = (props: Props) => {
         fontWeight="500"
         lineHeight="1.4rem"
       >
-        {/* TODO: url 추가 */}
-        아이템명 : {item.name}
+        아이템명 :&nbsp;
+        {item.url ? (
+          <Link href={item.url} target="_blank" textDecor="underline">
+            {item.name}
+          </Link>
+        ) : (
+          item.name
+        )}
       </Flex>
     </Box>
   );

@@ -197,6 +197,7 @@ const convertDeskItemResponse = (
     picture: imgUrl,
     content: story,
     id = uuidv4(),
+    purchaseLink: url,
     contentOrder: order,
     ...rest
   } = deskItemResponse;
@@ -206,6 +207,7 @@ const convertDeskItemResponse = (
     imgUrl,
     story,
     order,
+    ...(url != null && { url }),
     ...rest,
   };
 };

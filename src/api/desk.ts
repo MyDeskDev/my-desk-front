@@ -26,12 +26,16 @@ export interface GetAllDeskResponse {
 
 export type GetAllDesksResponse = GetAllDeskResponse[];
 
-// TODO: id 추가
+// TODO: id 추가, 불필요한 필드 백엔드랑 맞춰서 삭제
 export interface DeskContentResponse {
   id?: number;
   picture: string | null;
   content: string | null;
   contentOrder: number;
+  isFavorite: null;
+  isRecommended: null;
+  name: null;
+  purchaseLink: null;
 }
 
 // TODO: id, 구매 url, 추천 아이템 여부 추가
@@ -173,7 +177,6 @@ const convertDeskContentResponse = (
     content: text,
     id = uuidv4(),
     contentOrder: order,
-    ...rest
   } = deskContent;
 
   const deskStoryType = imgUrl == null ? 'TEXT' : 'IMAGE';
@@ -184,7 +187,6 @@ const convertDeskContentResponse = (
     order,
     ...(imgUrl != null && { imgUrl }),
     ...(text != null && { text }),
-    ...rest,
   };
 
   return result;
@@ -333,9 +335,9 @@ export const Desk = {
 
     const { data: rawData } = res;
 
-    console.log(rawData);
-
     const data = convertGetDeskResponse(rawData);
+
+    console.log(data);
 
     return data;
   },

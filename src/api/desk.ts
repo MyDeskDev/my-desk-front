@@ -88,6 +88,7 @@ export interface DeskStory {
 // TODO: 응답에 따라 변경
 export interface DeskItem {
   id: string | number;
+  name: string;
   imgUrl: string;
   story: string;
   order: number;

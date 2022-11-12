@@ -1,9 +1,21 @@
 import { Box, Image, Text } from '@chakra-ui/react';
 
-const CartoonRenderedImage = () => {
+export interface Props {
+  image?: {
+    src: string;
+    alt?: string;
+  };
+  user: {
+    nickname: string;
+  };
+}
+
+const CartoonRenderedImage = (props: Props) => {
+  const { image, user } = props;
+
   return (
     <Box padding={{ base: '0 18px', lg: '0' }} maxW="1200" margin="0 auto">
-      <Image src="" alt="" w="100%" />
+      {image && <Image src={image.src} alt={image.alt} w="100%" />}
       <Box
         p="10px 85px"
         bgColor="#000000"
@@ -14,7 +26,7 @@ const CartoonRenderedImage = () => {
         lineHeight="1.8rem"
       >
         <Text as="span" color="#1480FF">
-          기미테디
+          {user.nickname}
         </Text>
         님의 소중한 이야기를 전해주셔서 감사합니다.
       </Box>

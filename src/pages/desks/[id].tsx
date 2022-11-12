@@ -49,6 +49,7 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
     deskStyle,
     deskSummary,
     deskStories,
+    deskItems,
   } = props.desk;
 
   const userSummaryData = {
@@ -89,11 +90,12 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
           })}
         </Box>
         <Box>
-          <ItemBox />
-          <ItemBox />
+          {deskItems.map((deskItem) => {
+            return <ItemBox key={deskItem.id} item={deskItem} />;
+          })}
         </Box>
         <Box mt="40px">
-          <CartoonRenderedImage />
+          <CartoonRenderedImage user={{ nickname: user.nickname }} />
         </Box>
         <Box mt="20px">
           <YoutubeLinkBox />

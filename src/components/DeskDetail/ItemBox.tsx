@@ -3,7 +3,15 @@ import { Box, Flex } from '@chakra-ui/react';
 import DeskStoryText from '@/components/DeskDetail/DeskStoryText';
 import DeskStoryImage from '@/components/DeskDetail/DeskStoryImage';
 
-const ItemBox = () => {
+import type { DeskItem } from '@/api/desk';
+
+export interface Props {
+  item: DeskItem;
+}
+
+const ItemBox = (props: Props) => {
+  const { item } = props;
+
   return (
     <Box
       sx={{
@@ -12,10 +20,9 @@ const ItemBox = () => {
         },
       }}
     >
-      <DeskStoryText>
-        안방에 있던 콘솔을 거실로 옮겨 귀여운 책상공간을 만들었어요.
-      </DeskStoryText>
-      <DeskStoryImage />
+      <DeskStoryText>{item.story}</DeskStoryText>
+      {/* TODO: 추천, 애장 아이템 표시 추가 */}
+      <DeskStoryImage src={item.imgUrl} />
       <Flex
         maxW="1200px"
         margin="14px auto 0"
@@ -25,7 +32,8 @@ const ItemBox = () => {
         fontWeight="500"
         lineHeight="1.4rem"
       >
-        아이템명 : apple 에어팟2
+        {/* TODO: url 추가 */}
+        아이템명 : {item.name}
       </Flex>
     </Box>
   );

@@ -337,8 +337,6 @@ export const Desk = {
 
     const data = convertGetDeskResponse(rawData);
 
-    console.log(data);
-
     return data;
   },
 

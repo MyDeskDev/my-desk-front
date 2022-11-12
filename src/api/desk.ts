@@ -29,9 +29,8 @@ export type GetAllDesksResponse = GetAllDeskResponse[];
 // TODO: id 추가
 export interface DeskContentResponse {
   id?: number;
-  name: string;
-  picture?: string; // url
-  content?: string;
+  picture: string | null;
+  content: string | null;
   contentOrder: number;
 }
 
@@ -43,22 +42,22 @@ export interface DeskItemResponse {
   content: string;
   isFavorite: boolean;
   isRecommended: boolean;
+  purchaseLink: string | null;
   contentOrder: number;
 }
 
-// TODO: user 정보(userId, 닉네임, 직업, 혈액형, mbti, 프로필 이미지), 공간 형태, 컨셉 스타일 추가
-// TODO: deskPicture 응답 일원화
-export interface GetDeskResponse
-  extends Omit<GetAllDeskResponse, 'deskPicture'> {
-  picture: string; // url
-  deskContents: DeskContentResponse[];
-  deskItems: DeskItemResponse[];
-  mbti?: Mbti;
-  bloodType?: BloodType;
+export interface GetDeskResponse extends GetAllDeskResponse {
+  cost: DeskCost;
   job: Job;
   nickname: string;
+  age: AgeGroup;
+  mbti?: Mbti;
+  bloodType?: BloodType;
   spaceType: string;
   deskConcept: DeskStyle;
+  countryCode: CountryCode;
+  deskContents: DeskContentResponse[];
+  deskItems: DeskItemResponse[];
 }
 
 // TODO: 응답에 따라 변경
@@ -69,14 +68,17 @@ export interface User {
   nickname?: string;
   bloodType?: BloodType;
   mbti?: Mbti;
+  countryCode?: CountryCode;
+  ageGroup?: AgeGroup;
 }
 
 // TODO: 응답에 따라 변경
 export interface DeskStory {
   id: string | number;
+  type: 'TEXT' | 'IMAGE';
+  text?: string;
   imgUrl?: string;
-  content?: string;
-  contentOrder: number;
+  order: number;
 }
 
 // TODO: 응답에 따라 변경
@@ -84,9 +86,10 @@ export interface DeskItem {
   id: string | number;
   imgUrl: string;
   story: string;
-  contentOrder: number;
+  order: number;
   isFavorite: boolean;
   isRecommended: boolean;
+  url?: string;
 }
 
 export interface DeskPreview {
@@ -98,12 +101,14 @@ export interface DeskPreview {
 
 // TODO: 응답에 따라 변경
 export interface Desk extends Omit<DeskPreview, 'title'> {
-  user: Required<Pick<User, 'job' | 'nickname'>> & User;
+  user: Required<Pick<User, 'job' | 'nickname' | 'countryCode' | 'ageGroup'>> &
+    User;
   deskStories: DeskStory[];
   deskItems: DeskItem[];
   deskSummary: string;
   roomType: string;
   deskStyle: DeskStyle;
+  cost: DeskCost;
 }
 
 // TODO: drived type으로 리팩토링 필요
@@ -163,11 +168,22 @@ const convertGetAllDesksResponse = (
 const convertDeskContentResponse = (
   deskContent: DeskContentResponse
 ): DeskStory => {
-  const { picture: imgUrl, id = uuidv4(), ...rest } = deskContent;
+  const {
+    picture: imgUrl,
+    content: text,
+    id = uuidv4(),
+    contentOrder: order,
+    ...rest
+  } = deskContent;
+
+  const deskStoryType = imgUrl == null ? 'TEXT' : 'IMAGE';
 
   const result: DeskStory = {
     id,
-    imgUrl,
+    type: deskStoryType,
+    order,
+    ...(imgUrl != null && { imgUrl }),
+    ...(text != null && { text }),
     ...rest,
   };
 
@@ -181,6 +197,7 @@ const convertDeskItemResponse = (
     picture: imgUrl,
     content: story,
     id = uuidv4(),
+    contentOrder: order,
     ...rest
   } = deskItemResponse;
 
@@ -188,34 +205,38 @@ const convertDeskItemResponse = (
     id,
     imgUrl,
     story,
+    order,
     ...rest,
   };
 };
 
 const convertGetDeskResponse = (data: GetDeskResponse): Desk => {
   const {
-    picture,
-    deskContents,
-    deskItems: deskItemsResponse,
+    spaceType: roomType,
+    deskConcept: deskStyle,
     userId,
-    userPicture,
+    profileImgUrl,
     job,
     bloodType,
     mbti,
     nickname,
-    spaceType: roomType,
-    deskConcept: deskStyle,
+    countryCode,
+    age: ageGroup,
+    deskContents,
+    deskItems: deskItemsResponse,
     ...rest
   } = data;
 
   // dummy user
   const user = {
     id: userId,
-    profileImgUrl: userPicture,
+    profileImgUrl,
     job,
     bloodType,
     mbti,
     nickname,
+    ageGroup,
+    countryCode,
   };
   const deskStories = deskContents.map((deskContent) =>
     convertDeskContentResponse(deskContent)
@@ -225,7 +246,6 @@ const convertGetDeskResponse = (data: GetDeskResponse): Desk => {
   );
 
   const result: Desk = {
-    thumbnailImgUrl: picture,
     user,
     deskStories,
     deskItems,
@@ -307,7 +327,7 @@ export const Desk = {
   },
 
   get: async (id: number) => {
-    const res = await api.get(`/api/v1/posts/${id}`);
+    const res = await api.get<GetDeskResponse>(`/api/v1/posts/${id}`);
 
     const { data: rawData } = res;
 

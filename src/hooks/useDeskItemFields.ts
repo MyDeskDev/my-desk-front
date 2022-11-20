@@ -8,7 +8,7 @@ export interface DeskItemField {
   story: string;
   imageUrl: string;
   isFavorite: boolean;
-  isRecommend: boolean;
+  isRecommended: boolean;
 }
 
 export const useDeskItemFields = () => {
@@ -32,7 +32,7 @@ export const useDeskItemFields = () => {
         story: '',
         imageUrl: '',
         isFavorite: false,
-        isRecommend: false,
+        isRecommended: false,
       },
     ];
 

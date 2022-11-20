@@ -1,5 +1,5 @@
 export type Gender = 'M' | 'F' | 'U';
-export type AgeGroup = '20-' | '20-30' | '30-40' | '40-50' | '50-60';
+export type AgeGroup = 20 | 30 | 40 | 50; // 각 구간의 최소
 export type CountryCode = 'KR';
 export type Job = 'DEVELOPER' | 'DESIGNER' | 'FREELANCER' | 'STUDENT';
 export type DeskStyle =
@@ -32,3 +32,4 @@ export type Mbti =
   | 'ISFP'
   | 'ESTP'
   | 'ESFP';
+export type DeskCost = 0 | 10 | 20 | 30 | 40 | 50; // 각 구간의 최소

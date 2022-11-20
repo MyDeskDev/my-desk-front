@@ -1,6 +1,37 @@
 import { Flex, Box, Text } from '@chakra-ui/react';
 
-const DeskTypeContainer = () => {
+import type { DeskStyle } from '@/types';
+
+export interface Props {
+  desk: {
+    roomType: string;
+    deskStyle: DeskStyle;
+  };
+}
+
+const toDeskStyleText = (deskStyle: DeskStyle) => {
+  const deskStyleTextMap: { [K in DeskStyle]: string } = {
+    NATURAL: '내추럴',
+    MODERN: '모던',
+    NORTH_EUROPE: '북유럽',
+    VINTAGE: '빈티지&레트로',
+    MINIMAL: '미니멀&심플',
+    LOVELY: '러블리&로맨틱',
+    CLASSIC: '클래식&엔틱',
+    FRENCH: '프렌치&프로방스',
+    INDUSTRIAL: '인터스트리얼',
+    KOREAN: '한국&아시아',
+    UNIQUE: '유니크',
+  };
+
+  return deskStyleTextMap[deskStyle];
+};
+
+const DeskTypeContainer = (props: Props) => {
+  const { desk } = props;
+
+  const deskStyleText = toDeskStyleText(desk.deskStyle);
+
   const keyTextProps = {
     color: '#B7B7B7',
     fontSize: '1.4rem',
@@ -27,18 +58,18 @@ const DeskTypeContainer = () => {
     >
       <Box textAlign="center">
         <Text {...keyTextProps} as="span">
-          공간형태 :
+          공간형태 :&nbsp;
         </Text>
         <Text {...valueTextProps} as="span" color="#2085FB">
-          공용 사무공간
+          {desk.roomType}
         </Text>
       </Box>
       <Box textAlign="center">
         <Text {...keyTextProps} as="span">
-          컨셉스타일 :
+          컨셉스타일 :&nbsp;
         </Text>
         <Text {...valueTextProps} as="span" color="#2D2D2D">
-          미니멀&amp;심플
+          {deskStyleText}
         </Text>
       </Box>
     </Flex>

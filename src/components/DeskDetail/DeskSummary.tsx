@@ -1,6 +1,10 @@
 import { Flex } from '@chakra-ui/react';
 
-const DeskSummary = () => {
+export interface Props {
+  summary: string;
+}
+
+const DeskSummary = (props: Props) => {
   return (
     <Flex padding="30px 20px" justifyContent="center">
       <Flex
@@ -15,8 +19,7 @@ const DeskSummary = () => {
         lineHeight="2.4rem"
         textAlign="center"
       >
-        “내가 일하고 있는 책상은 나를 대변하는 소울을 가진 나와의 동반자다.
-        동반자와 함께 매일 하루를 지낸다.”
+        {props.summary}
       </Flex>
     </Flex>
   );

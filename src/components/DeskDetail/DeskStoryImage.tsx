@@ -1,9 +1,14 @@
 import { Box, Image } from '@chakra-ui/react';
 
-const DeskStoryImage = () => {
+export interface Props {
+  src: string;
+  alt?: string;
+}
+
+const DeskStoryImage = (props: Props) => {
   return (
     <Box maxW="1200px" margin="0 auto" padding="5px 0">
-      <Image src="" alt="" w="100%" />
+      <Image src={props.src} alt={props.alt} w="100%" />
     </Box>
   );
 };

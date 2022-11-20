@@ -1,0 +1,46 @@
+name: Deploy my-desk-front
+
+on:
+  push:
+    branches: ['master']
+  pull_request:
+    branches: ['master']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: node:16.15.0-alpine
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install and build
+      - run: npm ci
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_API_HOST: ${{ secrets.NEXT_PUBLIC_API_HOST }}
+          NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+
+      - name: Make zip file for archive
+      - run: |
+          mkdir before-deploy
+          cp package.json before-depoy/
+          cp package-lock.json before-deploy/
+          cp -R node_modules/ before-deploy/
+          cp -R .next/ before-deploy/
+          cp -R public/ before-deploy/
+          cp Dockerfile before-deploy/
+          cd before-deploy && zip -r before-deploy *
+          cd ../ && mkdir deploy
+          mv before-deploy/before-deploy.zip deploy/$GITHUB_SHA.zip
+
+      - name: Upload zip file to s3
+      - run: aws s3 cp --region ap-northeast-2 deploy/$GITHUB_SHA.zip s3://mydesk-api-archive/$GITHUB_SHA.zip
+
+      - name: Trigger aws codedeploy
+      - run: >
+          aws deploy create-deployment
+          --application-name mydesk-api
+          --deployment-config-name CodeDeployDefault.OneAtATime
+          --deployment-group-name mydesk-api-group
+          --s3-location bucket=mydesk-api-archive,key=$GITHUB_SHA.zip,bundleType=zip

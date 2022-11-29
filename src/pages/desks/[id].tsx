@@ -16,7 +16,7 @@ import ItemBox from '@/components/DeskDetail/ItemBox';
 import CartoonRenderedImage from '@/components/DeskDetail/CartoonRenderedImage';
 import YoutubeLinkBox from '@/components/DeskDetail/YoutubeLinkBox';
 
-import useDeskDetailQuery from '@/hooks/useDeskDetailQuery';
+// import useDeskDetailQuery from '@/hooks/useDeskDetailQuery';
 import DeskApi from '@/api/desk';
 
 import type { Desk as IDesk } from '@/api/desk';

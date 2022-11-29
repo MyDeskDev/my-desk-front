@@ -24,7 +24,7 @@ jobs:
       - name: Make zip file for archive
         run: |
           mkdir before-deploy
-          cp package.json before-depoy/
+          cp package.json before-deploy/
           cp package-lock.json before-deploy/
           cp -R node_modules/ before-deploy/
           cp -R .next/ before-deploy/

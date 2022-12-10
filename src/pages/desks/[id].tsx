@@ -94,12 +94,12 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
             return <ItemBox key={deskItem.id} item={deskItem} />;
           })}
         </Box>
-        <Box mt="40px">
+        <Box mt="40px" pb="20px">
           <CartoonRenderedImage user={{ nickname: user.nickname }} />
         </Box>
-        <Box mt="20px">
+        {/* <Box mt="20px">
           <YoutubeLinkBox />
-        </Box>
+        </Box> */}
       </main>
     </div>
   );

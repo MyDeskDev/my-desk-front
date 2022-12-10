@@ -24,6 +24,7 @@ const CartoonRenderedImage = (props: Props) => {
         fontSize="1.4rem"
         fontWeight="500"
         lineHeight="1.8rem"
+        wordBreak="keep-all"
       >
         <Text as="span" color="#1480FF">
           {user.nickname}

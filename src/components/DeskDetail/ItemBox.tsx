@@ -34,6 +34,8 @@ const ItemBox = (props: Props) => {
 
   return (
     <Box
+      maxW="1200px"
+      m="0 auto"
       sx={{
         '& + &': {
           marginTop: '40px',

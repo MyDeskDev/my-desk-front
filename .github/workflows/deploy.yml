@@ -26,16 +26,15 @@ jobs:
 
       - name: Make zip file for archive
         run: |
-          mkdir before-deploy
-          cp package.json before-depoy/
-          cp package-lock.json before-deploy/
-          cp -R node_modules/ before-deploy/
-          cp -R .next/ before-deploy/
-          cp -R public/ before-deploy/
-          cp Dockerfile before-deploy/
-          cd before-deploy && zip -r before-deploy *
-          cd ../ && mkdir deploy
-          mv before-deploy/before-deploy.zip deploy/$GITHUB_SHA.zip
+          zip -qq -r before-deploy.zip package.json package-lock.json node_modules/ .next/ public/ Dockerfile
+          mv before-deploy.zip deploy/$GITHUB_SHA.zip
+
+      - name: configure aws credientials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_DEPLOY_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_DEPLOY_SECRET_KEY }}
+          aws-region: ap-northeast-2
 
       - name: Upload zip file to s3
         run: aws s3 cp --region ap-northeast-2 deploy/$GITHUB_SHA.zip s3://mydesk-front-archive/$GITHUB_SHA.zip

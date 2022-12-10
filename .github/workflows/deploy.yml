@@ -21,13 +21,13 @@ jobs:
           NEXT_PUBLIC_API_HOST: ${{ secrets.NEXT_PUBLIC_API_HOST }}
           NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
 
-      - name: Install zip
+      - name: Install zip and zip output
         uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r before-deploy.zip package.json package-lock.json node_modules/ .next/ public/ Dockerfile
 
-      - name: Make zip file for archive
-        run: |
-          zip -qq -r before-deploy.zip package.json package-lock.json node_modules/ .next/ public/ Dockerfile
-          mv before-deploy.zip deploy/$GITHUB_SHA.zip
+      - name: Change zip file name
+        run: mv before-deploy.zip deploy/$GITHUB_SHA.zip
 
       - name: configure aws credientials
         uses: aws-actions/configure-aws-credentials@v1

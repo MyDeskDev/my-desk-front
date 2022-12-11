@@ -94,7 +94,7 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
             return node;
           })}
         </Box>
-        <Box>
+        <Box mt="40px">
           {deskItems.map((deskItem) => {
             return <ItemBox key={deskItem.id} item={deskItem} />;
           })}

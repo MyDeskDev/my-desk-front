@@ -14,7 +14,7 @@ const CartoonRenderedImage = (props: Props) => {
   const { image, user } = props;
 
   return (
-    <Box padding={{ base: '0 18px', lg: '0' }} maxW="1200" margin="0 auto">
+    <Box padding={{ base: '0 18px', lg: '0' }} maxW="960px" margin="0 auto">
       {image && <Image src={image.src} alt={image.alt} w="100%" />}
       <Box
         p="10px 85px"

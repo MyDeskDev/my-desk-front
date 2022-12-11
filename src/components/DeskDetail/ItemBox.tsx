@@ -34,7 +34,7 @@ const ItemBox = (props: Props) => {
 
   return (
     <Box
-      maxW="1200px"
+      maxW="960px"
       m="0 auto"
       sx={{
         '& + &': {
@@ -45,7 +45,7 @@ const ItemBox = (props: Props) => {
       <DeskStoryText>{item.story}</DeskStoryText>
       <Box position="relative">
         <DeskStoryImage src={item.imgUrl} />
-        <Flex gap="2px" position="absolute" top="6px" left="6px">
+        <Flex gap="2px" position="absolute" top="12px" left="6px">
           {item.isRecommended && (
             <Badge>
               <Text color="orange.500">추천</Text>

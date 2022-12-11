@@ -5,13 +5,15 @@ const DeskStoryText = (props: { children?: React.ReactNode }) => {
 
   return (
     <Box
-      maxW="1200px"
+      maxW="960px"
       margin="0 auto"
       padding={{ base: '5px 18px', lg: '5px 0' }}
       color="#2D2D2D"
       fontSize="1.6rem"
       fontWeight="500"
       lineHeight="2.4rem"
+      textAlign="center"
+      wordBreak="keep-all"
     >
       {children}
     </Box>

@@ -10,4 +10,4 @@ RUN npm ci
 COPY .next/ ./.next/
 COPY public/ ./public/
 
-CMD ["npm", "start"]
+RUN npm start

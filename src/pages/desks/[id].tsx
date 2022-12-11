@@ -1,6 +1,5 @@
 import { Box } from '@chakra-ui/react';
 import Head from 'next/head';
-import { useMemo } from 'react';
 
 import type { NextPage, GetServerSideProps } from 'next';
 
@@ -19,10 +18,12 @@ import CartoonRenderedImage from '@/components/DeskDetail/CartoonRenderedImage';
 import DeskApi from '@/api/desk';
 
 import type { Desk as IDesk } from '@/api/desk';
+import type { MetaData } from '@/types';
 
-export const getServerSideProps: GetServerSideProps<{ desk: IDesk }> = async (
-  context
-) => {
+export const getServerSideProps: GetServerSideProps<{
+  desk: IDesk;
+  meta: MetaData;
+}> = async (context) => {
   const id = context.params?.id as string;
 
   if (!/\d+/.test(id)) {
@@ -34,7 +35,12 @@ export const getServerSideProps: GetServerSideProps<{ desk: IDesk }> = async (
   try {
     const desk = await DeskApi.get(_id);
 
-    return { props: { desk } };
+    const meta = {
+      title: desk.deskSummary,
+      image: desk.thumbnailImgUrl,
+    };
+
+    return { props: { desk, meta } };
   } catch {
     return { notFound: true, props: {} };
   }
@@ -65,10 +71,6 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
 
   return (
     <div>
-      <Head>
-        <title>{deskSummary} | My Desk Project</title>
-        <meta property="og:image" content={thumbnailImgUrl} />
-      </Head>
       <BaseHeader />
       <main>
         <DeskThumbnail src={thumbnailImgUrl} />

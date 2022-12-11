@@ -8,6 +8,8 @@ import Head from 'next/head';
 import theme from '@/styles/theme';
 import Fonts from '@/styles/fonts';
 
+import { SEO_DEFAULT } from '@/constants';
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -17,10 +19,14 @@ const queryClient = new QueryClient({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const title = pageProps.meta?.title ?? SEO_DEFAULT.title;
+  const description = pageProps.meta?.description ?? SEO_DEFAULT.description;
+  const image = pageProps.meta?.image ?? SEO_DEFAULT.image;
+
   return (
     <>
       <Head>
-        <title>My Desk Project</title>
+        <title>{title}</title>
         <meta
           name="viewport"
           content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0"
@@ -32,11 +38,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mydeskproject.com" />
-        <meta
-          property="og:description"
-          content="당신의 책상 이야기를 들려주세요."
-        />
-        <meta property="og:image" content="/images/open-graph.png" />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={image} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <RecoilRoot>

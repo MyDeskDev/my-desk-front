@@ -4,7 +4,7 @@ import { useForm, Controller, FormProvider } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useRouter } from 'next/router';
 
-import type { NextPage } from 'next';
+import type { NextPage, GetServerSideProps } from 'next';
 import type { ChangeEventHandler } from 'react';
 
 import TitleBox from '@/components/CreateDesk/TitleBox';
@@ -29,7 +29,21 @@ import {
   DESK_COST,
 } from '@/constants';
 import DeskApi from '@/api/desk';
-import useDeskMutation from '@/hooks/useDeskMutation';
+import { SEO_DEFAULT } from '@/constants';
+
+import type { MetaData } from '@/types';
+
+export const getServerSideProps: GetServerSideProps<{
+  meta: MetaData;
+}> = async () => {
+  const meta: MetaData = {
+    title: `작성하기 | ${SEO_DEFAULT.title}`,
+  };
+
+  return {
+    props: { meta },
+  };
+};
 
 const DeskInputSection = (props: { children: React.ReactNode }) => {
   return (

@@ -33,3 +33,9 @@ export type Mbti =
   | 'ESTP'
   | 'ESFP';
 export type DeskCost = 0 | 10 | 20 | 30 | 40 | 50; // 각 구간의 최소
+
+export interface MetaData {
+  title?: string;
+  description?: string;
+  image?: string;
+}

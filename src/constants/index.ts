@@ -70,3 +70,9 @@ export const MBTI: { [K in Mbti]: Mbti } = {
 };
 
 export const DESK_COST: DeskCost[] = [0, 10, 20, 30, 40, 50];
+
+export const SEO_DEFAULT = {
+  title: 'My Desk Project',
+  description: '당신의 책상 이야기를 들려주세요.',
+  image: '/images/open-graph.png',
+};

@@ -1,11 +1,9 @@
 import { Box } from '@chakra-ui/react';
 import Head from 'next/head';
-import { useMemo } from 'react';
 
 import type { NextPage, GetServerSideProps } from 'next';
 
 import BaseHeader from '@/components/layouts/Base/BaseHeader';
-import BaseContainer from '@/components/layouts/Base/BaseContainer';
 import DeskThumbnail from '@/components/DeskDetail/Thumbnail';
 import UserProfileImage from '@/components/DeskDetail/UserProfileImage';
 import UserSummary from '@/components/DeskDetail/UserSummary';
@@ -13,19 +11,19 @@ import DeskTypeContainer from '@/components/DeskDetail/DeskTypeContainer';
 import DeskSummary from '@/components/DeskDetail/DeskSummary';
 import DeskStoryText from '@/components/DeskDetail/DeskStoryText';
 import DeskStoryImage from '@/components/DeskDetail/DeskStoryImage';
-import ItemSectionTitle from '@/components/DeskDetail/ItemSectionTitle';
 import ItemBox from '@/components/DeskDetail/ItemBox';
 import CartoonRenderedImage from '@/components/DeskDetail/CartoonRenderedImage';
-import YoutubeLinkBox from '@/components/DeskDetail/YoutubeLinkBox';
 
 // import useDeskDetailQuery from '@/hooks/useDeskDetailQuery';
 import DeskApi from '@/api/desk';
 
 import type { Desk as IDesk } from '@/api/desk';
+import type { MetaData } from '@/types';
 
-export const getServerSideProps: GetServerSideProps<{ desk: IDesk }> = async (
-  context
-) => {
+export const getServerSideProps: GetServerSideProps<{
+  desk: IDesk;
+  meta: MetaData;
+}> = async (context) => {
   const id = context.params?.id as string;
 
   if (!/\d+/.test(id)) {
@@ -37,7 +35,12 @@ export const getServerSideProps: GetServerSideProps<{ desk: IDesk }> = async (
   try {
     const desk = await DeskApi.get(_id);
 
-    return { props: { desk } };
+    const meta = {
+      title: desk.deskSummary,
+      image: desk.thumbnailImgUrl,
+    };
+
+    return { props: { desk, meta } };
   } catch {
     return { notFound: true, props: {} };
   }
@@ -66,20 +69,8 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
     deskStyle,
   };
 
-  const thumbnailImageUrl = useMemo(() => {
-    const firstImageContent = deskStories.find(
-      (story) => story.type === 'IMAGE'
-    );
-
-    return firstImageContent?.imgUrl ?? '';
-  }, [deskStories]);
-
   return (
     <div>
-      <Head>
-        <title>{deskSummary} | My Desk Project</title>
-        <meta property="og:image" content={thumbnailImageUrl} />
-      </Head>
       <BaseHeader />
       <main>
         <DeskThumbnail src={thumbnailImgUrl} />

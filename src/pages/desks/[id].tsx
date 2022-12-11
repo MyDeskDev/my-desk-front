@@ -5,7 +5,6 @@ import { useMemo } from 'react';
 import type { NextPage, GetServerSideProps } from 'next';
 
 import BaseHeader from '@/components/layouts/Base/BaseHeader';
-import BaseContainer from '@/components/layouts/Base/BaseContainer';
 import DeskThumbnail from '@/components/DeskDetail/Thumbnail';
 import UserProfileImage from '@/components/DeskDetail/UserProfileImage';
 import UserSummary from '@/components/DeskDetail/UserSummary';
@@ -13,10 +12,8 @@ import DeskTypeContainer from '@/components/DeskDetail/DeskTypeContainer';
 import DeskSummary from '@/components/DeskDetail/DeskSummary';
 import DeskStoryText from '@/components/DeskDetail/DeskStoryText';
 import DeskStoryImage from '@/components/DeskDetail/DeskStoryImage';
-import ItemSectionTitle from '@/components/DeskDetail/ItemSectionTitle';
 import ItemBox from '@/components/DeskDetail/ItemBox';
 import CartoonRenderedImage from '@/components/DeskDetail/CartoonRenderedImage';
-import YoutubeLinkBox from '@/components/DeskDetail/YoutubeLinkBox';
 
 // import useDeskDetailQuery from '@/hooks/useDeskDetailQuery';
 import DeskApi from '@/api/desk';
@@ -66,19 +63,11 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
     deskStyle,
   };
 
-  const thumbnailImageUrl = useMemo(() => {
-    const firstImageContent = deskStories.find(
-      (story) => story.type === 'IMAGE'
-    );
-
-    return firstImageContent?.imgUrl ?? '';
-  }, [deskStories]);
-
   return (
     <div>
       <Head>
-        <title>{deskSummary} | My Desk Project</title>
-        <meta property="og:image" content={thumbnailImageUrl} />
+        <title>{deskSummary} | 마이데스크프로젝트-책상에 취향을 녹이다</title>
+        <meta property="og:image" content={thumbnailImgUrl} />
       </Head>
       <BaseHeader />
       <main>

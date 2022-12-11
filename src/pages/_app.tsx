@@ -20,16 +20,22 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>My Desk Project</title>
+        <title>마이데스크프로젝트-책상에 취향을 녹이다</title>
         <meta
           name="viewport"
           content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0"
         />
-        <meta name="description" content="My Desk Project" />
-        <meta property="og:title" content="My Desk Project" />
+        <meta name="description" content="당신의 책상 이야기를 들려주세요." />
+        <meta
+          property="og:title"
+          content="마이데스크프로젝트-책상에 취향을 녹이다"
+        />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mydeskproject.com" />
-        <meta property="og:description" content="My Desk Project" />
+        <meta
+          property="og:description"
+          content="당신의 책상 이야기를 들려주세요."
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <RecoilRoot>

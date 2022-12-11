@@ -20,10 +20,17 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
+        <title>My Desk Project</title>
         <meta
           name="viewport"
           content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0"
         />
+        <meta name="description" content="My Desk Project" />
+        <meta property="og:title" content="My Desk Project" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://mydeskproject.com" />
+        <meta property="og:description" content="My Desk Project" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>

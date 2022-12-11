@@ -1,4 +1,6 @@
 import { Box } from '@chakra-ui/react';
+import Head from 'next/head';
+import { useMemo } from 'react';
 
 import type { NextPage, GetServerSideProps } from 'next';
 
@@ -64,8 +66,20 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
     deskStyle,
   };
 
+  const thumbnailImageUrl = useMemo(() => {
+    const firstImageContent = deskStories.find(
+      (story) => story.type === 'IMAGE'
+    );
+
+    return firstImageContent?.imgUrl ?? '';
+  }, [deskStories]);
+
   return (
     <div>
+      <Head>
+        <title>{deskSummary} | My Desk Project</title>
+        <meta property="og:image" content={thumbnailImageUrl} />
+      </Head>
       <BaseHeader />
       <main>
         <DeskThumbnail src={thumbnailImgUrl} />

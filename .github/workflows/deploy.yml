@@ -26,11 +26,11 @@ jobs:
         with:
           args: zip -qq -r before-deploy.zip package.json package-lock.json node_modules/ .next/ public/ Dockerfile
 
-      - name: Check zip file
-        run: ls
-
       - name: Change zip file name
-        run: mv before-deploy.zip deploy/$GITHUB_SHA.zip
+        run: |
+          ls 
+          mv before-deploy.zip $GITHUB_SHA.zip
+          mkdir deploy && mv before-deploy.zip deploy/
 
       - name: configure aws credientials
         uses: aws-actions/configure-aws-credentials@v1

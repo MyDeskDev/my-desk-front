@@ -1,4 +1,5 @@
 import { Box, HStack, Flex, Image } from '@chakra-ui/react';
+import { useMemo } from 'react';
 
 import type { ChangeEventHandler } from 'react';
 
@@ -50,6 +51,16 @@ const DeskStoryFields = () => {
     return handler;
   };
 
+  const firstImageIndex = useMemo(() => {
+    const index = fields.findIndex((field) => field.type === 'IMAGE');
+
+    return index;
+  }, [fields]);
+
+  const getImageInputLabel = (index: number) => {
+    return index === firstImageIndex ? '대표 이미지' : '사진';
+  };
+
   return (
     <>
       {fields.map((item, index) => {
@@ -72,7 +83,7 @@ const DeskStoryFields = () => {
           return (
             <Box key={item.id}>
               <InputBox
-                label="사진"
+                label={getImageInputLabel(index)}
                 isRequired
                 isDeletable
                 onDelete={() => onDelete(index)}

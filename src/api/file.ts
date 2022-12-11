@@ -10,7 +10,7 @@ export const File = {
 
     formData.append('file', file);
 
-    const res = await api.post<string>(`/upload`, formData, {
+    const res = await api.post<string>(`/api/upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

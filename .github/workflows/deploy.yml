@@ -7,10 +7,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: node:16.15.0-alpine
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: v16.15.0
 
       - name: Install
         run: npm ci
@@ -21,15 +25,18 @@ jobs:
           NEXT_PUBLIC_API_HOST: ${{ secrets.NEXT_PUBLIC_API_HOST }}
           NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
 
-      - name: Install zip
+      - name: Install zip and zip output
         uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r before-deploy.zip package.json package-lock.json node_modules/ .next/ public/ Dockerfile
 
-      - name: Make zip file for archive
+      - name: Change zip file name
         run: |
-          zip -qq -r before-deploy.zip package.json package-lock.json node_modules/ .next/ public/ Dockerfile
-          mv before-deploy.zip deploy/$GITHUB_SHA.zip
+          ls 
+          mv before-deploy.zip $GITHUB_SHA.zip
+          mkdir deploy && mv $GITHUB_SHA.zip deploy/
 
-      - name: configure aws credientials
+      - name: Configure aws credientials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_DEPLOY_ACCESS_KEY }}

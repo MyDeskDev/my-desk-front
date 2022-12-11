@@ -4,7 +4,10 @@ WORKDIR /usr/src/app
 
 COPY package.json ./
 COPY package-lock.json ./
-COPY .next/ ./
-COPY public/ ./
+
+RUN npm ci
+
+COPY .next/ ./.next/
+COPY public/ ./public/
 
 CMD ["npm", "start"]

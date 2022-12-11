@@ -36,6 +36,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           property="og:description"
           content="당신의 책상 이야기를 들려주세요."
         />
+        <meta property="og:image" content="/images/open-graph.png" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <RecoilRoot>

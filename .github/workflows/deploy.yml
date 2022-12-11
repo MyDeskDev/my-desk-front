@@ -30,7 +30,7 @@ jobs:
         run: |
           ls 
           mv before-deploy.zip $GITHUB_SHA.zip
-          mkdir deploy && mv before-deploy.zip deploy/
+          mkdir deploy && mv $GITHUB_SHA.zip deploy/
 
       - name: configure aws credientials
         uses: aws-actions/configure-aws-credentials@v1

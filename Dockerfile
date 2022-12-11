@@ -4,7 +4,6 @@ WORKDIR /usr/src/app
 
 COPY package.json ./
 COPY package-lock.json ./
-COPY node_modules/ ./
 COPY .next/ ./
 COPY public/ ./
 

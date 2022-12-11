@@ -66,7 +66,7 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
   return (
     <div>
       <Head>
-        <title>{deskSummary} | 마이데스크프로젝트-책상에 취향을 녹이다</title>
+        <title>{deskSummary} | My Desk Project</title>
         <meta property="og:image" content={thumbnailImgUrl} />
       </Head>
       <BaseHeader />

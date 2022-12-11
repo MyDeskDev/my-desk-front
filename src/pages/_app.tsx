@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>마이데스크프로젝트-책상에 취향을 녹이다</title>
+        <title>My Desk Project</title>
         <meta
           name="viewport"
           content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0"

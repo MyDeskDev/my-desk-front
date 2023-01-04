@@ -47,7 +47,7 @@ const DeskTypeContainer = (props: Props) => {
 
   return (
     <Flex
-      maxWidth="1200px"
+      maxWidth="960px"
       h="102px"
       margin="0 auto"
       flexDir="column"

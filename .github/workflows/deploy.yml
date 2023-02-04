@@ -28,7 +28,7 @@ jobs:
       - name: Install zip and zip output
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r before-deploy.zip package.json package-lock.json .next/ public/ Dockerfile appspec.yml
+          args: zip -qq -r before-deploy.zip package.json package-lock.json .next/ public/ Dockerfile appspec.yml scripts/update.sh
 
       - name: Change zip file name
         run: |

@@ -1,9 +1,7 @@
 import { Box } from '@chakra-ui/react';
-import Head from 'next/head';
 
 import type { NextPage, GetServerSideProps } from 'next';
 
-import BaseHeader from '@/components/layouts/Base/BaseHeader';
 import DeskThumbnail from '@/components/DeskDetail/Thumbnail';
 import UserProfileImage from '@/components/DeskDetail/UserProfileImage';
 import UserSummary from '@/components/DeskDetail/UserSummary';
@@ -71,7 +69,6 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
 
   return (
     <div>
-      <BaseHeader />
       <main>
         <DeskThumbnail src={thumbnailImgUrl} />
         <UserProfileImage src={user.profileImgUrl} />

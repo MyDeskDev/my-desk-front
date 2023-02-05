@@ -1,4 +1,4 @@
-import { Flex, Text, Icon } from '@chakra-ui/react';
+import { Flex, Text, Icon, Grid } from '@chakra-ui/react';
 import Link from 'next/link';
 import { WarningIcon } from '@chakra-ui/icons';
 import { FcClock } from 'react-icons/fc';
@@ -17,7 +17,11 @@ const DeskList = () => {
 
   if (isLoading) {
     return (
-      <Flex flexWrap="wrap" margin="0 -39px">
+      <Grid
+        gridTemplateColumns={{ base: '315px', md: 'repeat(2, 315px)' }}
+        justifyContent="center"
+        gap="70px"
+      >
         {Array(skeletonLength)
           .fill(0)
           .map((_, index) => {
@@ -27,7 +31,7 @@ const DeskList = () => {
               </DeskListItem>
             );
           })}
-      </Flex>
+      </Grid>
     );
   } else if (isError) {
     return (
@@ -72,7 +76,11 @@ const DeskList = () => {
   }
 
   return (
-    <Flex flexWrap="wrap" margin="0 -39px">
+    <Grid
+      gridTemplateColumns={{ base: '315px', md: 'repeat(2, 315px)' }}
+      justifyContent="center"
+      gap="70px"
+    >
       {desks?.map((desk) => {
         return (
           <DeskListItem key={desk.id}>
@@ -84,7 +92,7 @@ const DeskList = () => {
           </DeskListItem>
         );
       })}
-    </Flex>
+    </Grid>
   );
 };
 

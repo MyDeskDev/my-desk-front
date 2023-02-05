@@ -2,6 +2,7 @@ import { Global, css } from '@emotion/react';
 
 const styles = css`
   @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.4/dist/web/static/pretendard.css');
+
   @font-face {
     font-family: 'Apple SD Gothic Neo';
     src: url('/fonts/AppleSDGothicNeoR.woff2') format('woff2'),
@@ -33,7 +34,11 @@ const styles = css`
     font-weight: normal;
     font-style: normal;
   }
-  @import url('https://fonts.cdnfonts.com/css/antihero');
+  @font-face {
+    font-family: 'Antihero';
+    src: url('/fonts/Antihero.ttf') format('truetype');
+    font-weight: 400;
+  }
 `;
 
 const Fonts = () => {

@@ -11,8 +11,8 @@ import DeskStoryText from '@/components/DeskDetail/DeskStoryText';
 import DeskStoryImage from '@/components/DeskDetail/DeskStoryImage';
 import ItemBox from '@/components/DeskDetail/ItemBox';
 import CartoonRenderedImage from '@/components/DeskDetail/CartoonRenderedImage';
+import ThanksBox from '@/components/DeskDetail/ThanksBox';
 
-// import useDeskDetailQuery from '@/hooks/useDeskDetailQuery';
 import DeskApi from '@/api/desk';
 
 import type { Desk as IDesk } from '@/api/desk';
@@ -92,7 +92,7 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
             <UserSummary user={userSummaryData} desk={deskStyleData} />
           </Flex>
         </Flex>
-        <Box maxW="768px" m="60px auto" p="0 26px 0 24px">
+        <Box maxW="768px" m="0 auto" p="60px 26px 60px 24px">
           <Box {...equalSpaceContainerProps}>
             <DeskSummary summary={deskSummary} />
           </Box>
@@ -119,6 +119,9 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
               </Box>
             );
           })}
+          <Box {...equalSpaceContainerProps}>
+            <ThanksBox nickname={user.nickname} />
+          </Box>
         </Box>
         {/* <Box mt="40px" pb="20px">
           <CartoonRenderedImage user={{ nickname: user.nickname }} />

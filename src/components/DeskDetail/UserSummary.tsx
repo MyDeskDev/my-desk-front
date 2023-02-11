@@ -1,34 +1,48 @@
 import { Flex, Text, Box } from '@chakra-ui/react';
 import React from 'react';
 
-import type { Job, BloodType, Mbti } from '@/types';
+import { antiheroFont } from '@/styles/variables';
+
+import type { Job, BloodType, Mbti, DeskStyle, DeskCost } from '@/types';
 
 const SummaryKey = (props: { children?: React.ReactNode }) => {
   const { children } = props;
 
-  return (
-    <Text
-      as="span"
-      color="#B7B7B7"
-      fontSize="1.6rem"
-      fontWeight="700"
-      lineHeight="1.6rem"
-    >
-      {children}
-    </Text>
-  );
+  return <Box flex="1">{children}</Box>;
 };
 
 const SummaryValue = (props: { children?: React.ReactNode }) => {
   const { children } = props;
 
+  return <Box flex="1">{children}</Box>;
+};
+
+const DetailKeyText = (props: { children?: React.ReactNode }) => {
+  {
+    const { children } = props;
+
+    return (
+      <Text
+        color="#858585"
+        fontSize="1.2rem"
+        fontWeight="300"
+        lineHeight="1.4rem"
+      >
+        {children}
+      </Text>
+    );
+  }
+};
+
+const DetailValueText = (props: { children?: React.ReactNode }) => {
+  const { children } = props;
+
   return (
     <Text
-      as="span"
-      color="#2D2D2D"
-      fontSize="1.6rem"
-      fontWeight="700"
-      lineHeight="1.6rem"
+      color="#383838"
+      fontSize="1.2rem"
+      fontWeight="300"
+      lineHeight="1.4rem"
     >
       {children}
     </Text>
@@ -41,6 +55,12 @@ export interface Props {
     job: Job;
     bloodType?: BloodType;
     mbti?: Mbti;
+  };
+  desk: {
+    id: number | string;
+    roomType: string;
+    deskStyle: DeskStyle;
+    cost: DeskCost;
   };
 }
 
@@ -55,33 +75,119 @@ const toJobText = (job: Job) => {
   return jobTextMap[job];
 };
 
+const toDeskStyleText = (deskStyle: DeskStyle) => {
+  const deskStyleTextMap: { [K in DeskStyle]: string } = {
+    NATURAL: '내추럴',
+    MODERN: '모던',
+    NORTH_EUROPE: '북유럽',
+    VINTAGE: '빈티지&레트로',
+    MINIMAL: '미니멀&심플',
+    LOVELY: '러블리&로맨틱',
+    CLASSIC: '클래식&엔틱',
+    FRENCH: '프렌치&프로방스',
+    INDUSTRIAL: '인터스트리얼',
+    KOREAN: '한국&아시아',
+    UNIQUE: '유니크',
+  };
+
+  return deskStyleTextMap[deskStyle];
+};
+
+const toDeskCostText = (cost: DeskCost) => {
+  const deskCostTextMap: Record<DeskCost, string> = {
+    0: '10만원 미만',
+    10: '10만원대',
+    20: '20만원대',
+    30: '30만원대',
+    40: '40만원대',
+    50: '50만원 이상',
+  };
+
+  return deskCostTextMap[cost];
+};
+
 const UserSummary = (props: Props) => {
-  const { user } = props;
+  const { user, desk } = props;
 
   const job = toJobText(user.job);
+  const bloodType = user.bloodType != null ? `${user.bloodType}형` : '-';
+  const deskStyle = toDeskStyleText(desk.deskStyle);
+  const cost = toDeskCostText(desk.cost);
 
   return (
-    <Flex flexDir="column" alignItems="center" gap="10px">
-      <Box textAlign="center">
-        <SummaryKey>닉네임 : </SummaryKey>
-        <SummaryValue>{user.nickname}</SummaryValue>
-      </Box>
-      <Box textAlign="center">
-        <SummaryKey>직업 : </SummaryKey>
-        <SummaryValue>{job}</SummaryValue>
-      </Box>
-      {user.bloodType && (
-        <Box textAlign="center">
-          <SummaryKey>혈액형 : </SummaryKey>
-          <SummaryValue>{user.bloodType}형</SummaryValue>
-        </Box>
-      )}
-      {user.mbti && (
-        <Box textAlign="center">
-          <SummaryKey>MBTI : </SummaryKey>
-          <SummaryValue>{user.mbti}</SummaryValue>
-        </Box>
-      )}
+    <Flex flexDir="column" gap="14px" width="100%">
+      <Flex>
+        <SummaryKey>
+          <Text
+            as="span"
+            color="#383838"
+            fontFamily={antiheroFont}
+            fontSize="1.6rem"
+            lineHeight="3rem"
+          >
+            NO.{desk.id}
+          </Text>
+        </SummaryKey>
+        <SummaryValue>
+          <Text
+            as="span"
+            color="#383838"
+            fontSize="1.6rem"
+            fontWeight={600}
+            lineHeight="3rem"
+          >
+            {user.nickname}
+          </Text>
+        </SummaryValue>
+      </Flex>
+      <Flex>
+        <SummaryKey>
+          <DetailKeyText>직업</DetailKeyText>
+        </SummaryKey>
+        <SummaryValue>
+          <DetailValueText>{job}</DetailValueText>
+        </SummaryValue>
+      </Flex>
+      <Flex>
+        <SummaryKey>
+          <DetailKeyText>혈액형</DetailKeyText>
+        </SummaryKey>
+        <SummaryValue>
+          <DetailValueText>{bloodType}</DetailValueText>
+        </SummaryValue>
+      </Flex>
+      <Flex>
+        <SummaryKey>
+          <DetailKeyText>MBTI</DetailKeyText>
+        </SummaryKey>
+        <SummaryValue>
+          <DetailValueText>{user.mbti ?? '-'}</DetailValueText>
+        </SummaryValue>
+      </Flex>
+      <Flex>
+        <SummaryKey>
+          <DetailKeyText>공간</DetailKeyText>
+        </SummaryKey>
+        <SummaryValue>
+          <DetailValueText>{desk.roomType}</DetailValueText>
+        </SummaryValue>
+      </Flex>
+      <Flex>
+        <SummaryKey>
+          <DetailKeyText>스타일</DetailKeyText>
+        </SummaryKey>
+        <SummaryValue>
+          <DetailValueText>{deskStyle}</DetailValueText>
+        </SummaryValue>
+      </Flex>
+      {/* <Flex>
+        <SummaryKey>
+          <DetailKeyText>구성 비용</DetailKeyText>
+        </SummaryKey>
+        <SummaryValue>
+          <DetailValueText>{cost}</DetailValueText>
+        </SummaryValue>
+      </Flex> */}
     </Flex>
   );
 };

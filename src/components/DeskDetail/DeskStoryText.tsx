@@ -1,22 +1,18 @@
-import { Box } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 
 const DeskStoryText = (props: { children?: React.ReactNode }) => {
   const { children } = props;
 
   return (
-    <Box
-      maxW="960px"
-      margin="0 auto"
-      padding={{ base: '5px 18px', lg: '5px 0' }}
-      color="#2D2D2D"
-      fontSize="1.6rem"
-      fontWeight="500"
-      lineHeight="2.4rem"
-      textAlign="center"
-      wordBreak="keep-all"
+    <Text
+      color="#383838"
+      fontSize="1.4rem"
+      fontWeight="300"
+      lineHeight="2.5rem"
+      whiteSpace="pre-wrap"
     >
       {children}
-    </Box>
+    </Text>
   );
 };
 

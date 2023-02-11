@@ -1,9 +1,7 @@
-import { Box } from '@chakra-ui/react';
-import Head from 'next/head';
+import { Box, Flex, Link } from '@chakra-ui/react';
 
 import type { NextPage, GetServerSideProps } from 'next';
 
-import BaseHeader from '@/components/layouts/Base/BaseHeader';
 import DeskThumbnail from '@/components/DeskDetail/Thumbnail';
 import UserProfileImage from '@/components/DeskDetail/UserProfileImage';
 import UserSummary from '@/components/DeskDetail/UserSummary';
@@ -13,12 +11,13 @@ import DeskStoryText from '@/components/DeskDetail/DeskStoryText';
 import DeskStoryImage from '@/components/DeskDetail/DeskStoryImage';
 import ItemBox from '@/components/DeskDetail/ItemBox';
 import CartoonRenderedImage from '@/components/DeskDetail/CartoonRenderedImage';
+import ThanksBox from '@/components/DeskDetail/ThanksBox';
+import LeftIcon from '@/icons/left-icon.svg';
 
-// import useDeskDetailQuery from '@/hooks/useDeskDetailQuery';
 import DeskApi from '@/api/desk';
 
 import type { Desk as IDesk } from '@/api/desk';
-import type { MetaData } from '@/types';
+import type { MetaData, DeskCost } from '@/types';
 
 export const getServerSideProps: GetServerSideProps<{
   desk: IDesk;
@@ -48,6 +47,7 @@ export const getServerSideProps: GetServerSideProps<{
 
 const Desk: NextPage<{ desk: IDesk }> = (props) => {
   const {
+    id,
     thumbnailImgUrl,
     user,
     roomType,
@@ -65,48 +65,89 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
   };
 
   const deskStyleData = {
+    id: id,
     roomType,
     deskStyle,
+    cost: 0 as DeskCost,
+  };
+
+  const equalSpaceContainerProps = {
+    sx: {
+      '& + &': {
+        marginTop: '60px',
+      },
+    },
   };
 
   return (
-    <div>
-      <BaseHeader />
+    <Box backgroundColor="#F8F5EF">
+      <Box as="header" position="sticky" top="0">
+        <Flex
+          display={{ base: 'flex', md: 'none' }}
+          alignItems="center"
+          h="50px"
+          p="0 20px"
+          bgColor="#FFFFFF"
+        >
+          <Link
+            href="/desks"
+            display="inline-flex"
+            alignItems="center"
+            w="22px"
+            h="40px"
+          >
+            <LeftIcon />
+          </Link>
+        </Flex>
+      </Box>
       <main>
-        <DeskThumbnail src={thumbnailImgUrl} />
-        <UserProfileImage src={user.profileImgUrl} />
-        <Box p="20px 0">
-          <UserSummary user={userSummaryData} />
-        </Box>
-        <DeskTypeContainer desk={deskStyleData} />
-        <DeskSummary summary={deskSummary} />
-        <Box>
+        <Flex
+          p={{ base: '20px 24px 40px', md: '88px 24px 62px' }}
+          bgColor="#FFFFFF"
+          alignItems="center"
+          flexDir="column"
+        >
+          <DeskThumbnail src={thumbnailImgUrl} />
+          <Flex mt="20px" w="100%" maxW="460px">
+            <UserSummary user={userSummaryData} desk={deskStyleData} />
+          </Flex>
+        </Flex>
+        <Box maxW="768px" m="0 auto" p="60px 26px 60px 24px">
+          <Box {...equalSpaceContainerProps}>
+            <DeskSummary summary={deskSummary} />
+          </Box>
           {deskStories.map((deskStory) => {
             const { imgUrl, text, id } = deskStory;
 
             const node =
               deskStory.type === 'IMAGE' ? (
-                <DeskStoryImage key={id} src={imgUrl as string} />
+                <DeskStoryImage src={imgUrl as string} />
               ) : (
-                <DeskStoryText key={id}>{text}</DeskStoryText>
+                <DeskStoryText>{text}</DeskStoryText>
               );
 
-            return node;
+            return (
+              <Box key={id} {...equalSpaceContainerProps}>
+                {node}
+              </Box>
+            );
           })}
-        </Box>
-        <Box mt="40px">
           {deskItems.map((deskItem) => {
-            return <ItemBox key={deskItem.id} item={deskItem} />;
+            return (
+              <Box key={deskItem.id} {...equalSpaceContainerProps}>
+                <ItemBox item={deskItem} />
+              </Box>
+            );
           })}
+          <Box {...equalSpaceContainerProps}>
+            <ThanksBox nickname={user.nickname} />
+          </Box>
         </Box>
-        <Box mt="40px" pb="20px">
+        {/* <Box mt="40px" pb="20px">
           <CartoonRenderedImage user={{ nickname: user.nickname }} />
-        </Box>
-        {/* <Box mt="20px">
-          <YoutubeLinkBox />
         </Box> */}
       </main>
-    </div>
+    </Box>
   );
 };
 

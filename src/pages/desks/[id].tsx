@@ -102,7 +102,7 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
       </Box>
       <main>
         <Flex
-          p="20px 24px 40px"
+          p={{ base: '20px 24px 40px', md: '88px 24px 62px' }}
           bgColor="#FFFFFF"
           alignItems="center"
           flexDir="column"

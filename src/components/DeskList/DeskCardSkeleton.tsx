@@ -1,34 +1,15 @@
-import {
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
-  Box,
-  Flex,
-} from '@chakra-ui/react';
+import { Skeleton, SkeletonText, Box, Flex } from '@chakra-ui/react';
 
 const DeskCardSkeleton = () => {
   return (
-    <Box>
-      <Box
-        position="relative"
-        overflow="hidden"
-        pt="251px"
-        borderRadius="20px 20px 0 0"
-      >
-        <Skeleton
-          position="absolute"
-          top="50%"
-          left="50%"
-          w="100%"
-          h="100%"
-          transform="translate(-50%, -50%)"
-        />
-      </Box>
-      <Flex h="80px" mt="-36px" justifyContent="center" zIndex={1}>
-        <SkeletonCircle w="80px" h="80px" />
+    <Box width="315px" height="390px" p="18px" bgColor="#fff">
+      <Skeleton height="220px" />
+      <Flex justifyContent="space-between" gap="4px" height="16px" mt="20px">
+        <Skeleton flex="1" height="100%" />
+        <Skeleton flex="0 0 180px" width="180px" height="100%" />
       </Flex>
-      <Box p="15px 49px 49px">
-        <SkeletonText noOfLines={2} skeletonHeight="1.6rem" spacing="0.4rem" />
+      <Box mt="14px">
+        <SkeletonText noOfLines={3} skeletonHeight="1.3rem" spacing="0.7rem" />
       </Box>
     </Box>
   );

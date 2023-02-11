@@ -1,13 +1,16 @@
-import { Container, Heading, Image } from '@chakra-ui/react';
+import { Heading, Image, Text, Box } from '@chakra-ui/react';
+
+import { mapoFlowerIslandFont } from '@/styles/variables';
 
 const BaseHeader = () => {
   return (
-    <header>
-      <Container
+    <Box as="header">
+      <Box
         display="flex"
-        justifyContent="space-between"
-        p="44px 20px 42px"
-        maxW="1200px"
+        flexDir="column"
+        alignItems="center"
+        maxW="768px"
+        m="0 auto"
       >
         <Heading
           as="h1"
@@ -18,8 +21,21 @@ const BaseHeader = () => {
         >
           <Image src="/images/logo.png" alt="my desk project" w="172px" />
         </Heading>
-      </Container>
-    </header>
+        <Text
+          mt="30px"
+          color="#4F4F4F"
+          fontFamily={mapoFlowerIslandFont}
+          fontSize="1.6rem"
+          fontWeight={400}
+          lineHeight="3rem"
+          textAlign="center"
+        >
+          책상에 취향을 녹이다.
+          <br />
+          당신의 책상이야기를 들려주세요
+        </Text>
+      </Box>
+    </Box>
   );
 };
 

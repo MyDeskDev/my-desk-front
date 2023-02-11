@@ -22,6 +22,7 @@ export interface GetAllDeskResponse {
   userId: number;
   profileImgUrl: string; // url
   thumbnailImgUrl: string; // url
+  nickname: string;
 }
 
 export type GetAllDesksResponse = GetAllDeskResponse[];
@@ -69,7 +70,7 @@ export interface User {
   id: number;
   profileImgUrl: string;
   job?: Job;
-  nickname?: string;
+  nickname: string;
   bloodType?: BloodType;
   mbti?: Mbti;
   countryCode?: CountryCode;
@@ -151,12 +152,19 @@ const convertGetAllDesksResponse = (
   data: GetAllDesksResponse
 ): DeskPreview[] => {
   const result: DeskPreview[] = data.map((desk) => {
-    const { profileImgUrl, thumbnailImgUrl, userId, deskSummary, ...rest } =
-      desk;
+    const {
+      profileImgUrl,
+      thumbnailImgUrl,
+      userId,
+      deskSummary,
+      nickname,
+      ...rest
+    } = desk;
 
     const user = {
       id: userId,
       profileImgUrl,
+      nickname,
     };
 
     return {

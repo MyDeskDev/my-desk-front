@@ -57,6 +57,7 @@ export interface Props {
     mbti?: Mbti;
   };
   desk: {
+    id: number | string;
     roomType: string;
     deskStyle: DeskStyle;
     cost: DeskCost;
@@ -124,7 +125,7 @@ const UserSummary = (props: Props) => {
             fontSize="1.6rem"
             lineHeight="3rem"
           >
-            NO.1
+            NO.{desk.id}
           </Text>
         </SummaryKey>
         <SummaryValue>

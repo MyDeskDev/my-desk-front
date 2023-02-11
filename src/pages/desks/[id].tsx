@@ -46,6 +46,7 @@ export const getServerSideProps: GetServerSideProps<{
 
 const Desk: NextPage<{ desk: IDesk }> = (props) => {
   const {
+    id,
     thumbnailImgUrl,
     user,
     roomType,
@@ -63,6 +64,7 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
   };
 
   const deskStyleData = {
+    id: id,
     roomType,
     deskStyle,
     cost: 0 as DeskCost,

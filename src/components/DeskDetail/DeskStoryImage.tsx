@@ -6,11 +6,7 @@ export interface Props {
 }
 
 const DeskStoryImage = (props: Props) => {
-  return (
-    <Box maxW="960px" margin="0 auto" padding="5px 0">
-      <Image src={props.src} alt={props.alt} w="100%" />
-    </Box>
-  );
+  return <Image src={props.src} alt={props.alt ?? ''} w="100%" />;
 };
 
 export default DeskStoryImage;

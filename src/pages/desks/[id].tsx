@@ -70,6 +70,14 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
     cost: 0 as DeskCost,
   };
 
+  const equalSpaceContainerProps = {
+    sx: {
+      '& + &': {
+        marginTop: '60px',
+      },
+    },
+  };
+
   return (
     <Box backgroundColor="#F8F5EF">
       <main>
@@ -85,30 +93,36 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
           </Flex>
         </Flex>
         <Box maxW="768px" m="60px auto" p="0 26px 0 24px">
-          <DeskSummary summary={deskSummary} />
-        </Box>
-        <Box>
+          <Box {...equalSpaceContainerProps}>
+            <DeskSummary summary={deskSummary} />
+          </Box>
           {deskStories.map((deskStory) => {
             const { imgUrl, text, id } = deskStory;
 
             const node =
               deskStory.type === 'IMAGE' ? (
-                <DeskStoryImage key={id} src={imgUrl as string} />
+                <DeskStoryImage src={imgUrl as string} />
               ) : (
-                <DeskStoryText key={id}>{text}</DeskStoryText>
+                <DeskStoryText>{text}</DeskStoryText>
               );
 
-            return node;
+            return (
+              <Box key={id} {...equalSpaceContainerProps}>
+                {node}
+              </Box>
+            );
           })}
-        </Box>
-        <Box mt="40px">
           {deskItems.map((deskItem) => {
-            return <ItemBox key={deskItem.id} item={deskItem} />;
+            return (
+              <Box key={deskItem.id} {...equalSpaceContainerProps}>
+                <ItemBox item={deskItem} />
+              </Box>
+            );
           })}
         </Box>
-        <Box mt="40px" pb="20px">
+        {/* <Box mt="40px" pb="20px">
           <CartoonRenderedImage user={{ nickname: user.nickname }} />
-        </Box>
+        </Box> */}
       </main>
     </Box>
   );

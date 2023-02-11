@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Link } from '@chakra-ui/react';
 
 import type { NextPage, GetServerSideProps } from 'next';
 
@@ -12,6 +12,7 @@ import DeskStoryImage from '@/components/DeskDetail/DeskStoryImage';
 import ItemBox from '@/components/DeskDetail/ItemBox';
 import CartoonRenderedImage from '@/components/DeskDetail/CartoonRenderedImage';
 import ThanksBox from '@/components/DeskDetail/ThanksBox';
+import LeftIcon from '@/icons/left-icon.svg';
 
 import DeskApi from '@/api/desk';
 
@@ -80,6 +81,25 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
 
   return (
     <Box backgroundColor="#F8F5EF">
+      <Box as="header" position="sticky" top="0">
+        <Flex
+          display={{ base: 'flex', md: 'none' }}
+          alignItems="center"
+          h="50px"
+          p="0 20px"
+          bgColor="#FFFFFF"
+        >
+          <Link
+            href="/desks"
+            display="inline-flex"
+            alignItems="center"
+            w="22px"
+            h="40px"
+          >
+            <LeftIcon />
+          </Link>
+        </Flex>
+      </Box>
       <main>
         <Flex
           p="20px 24px 40px"

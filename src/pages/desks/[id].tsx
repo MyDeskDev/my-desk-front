@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 
 import type { NextPage, GetServerSideProps } from 'next';
 
@@ -16,7 +16,7 @@ import CartoonRenderedImage from '@/components/DeskDetail/CartoonRenderedImage';
 import DeskApi from '@/api/desk';
 
 import type { Desk as IDesk } from '@/api/desk';
-import type { MetaData } from '@/types';
+import type { MetaData, DeskCost } from '@/types';
 
 export const getServerSideProps: GetServerSideProps<{
   desk: IDesk;
@@ -65,17 +65,26 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
   const deskStyleData = {
     roomType,
     deskStyle,
+    cost: 0 as DeskCost,
   };
 
   return (
-    <div>
+    <Box backgroundColor="#F8F5EF">
       <main>
-        <DeskThumbnail src={thumbnailImgUrl} />
-        <UserProfileImage src={user.profileImgUrl} />
-        <Box p="20px 0">
-          <UserSummary user={userSummaryData} />
-        </Box>
-        <DeskTypeContainer desk={deskStyleData} />
+        <Flex
+          p="20px 24px 40px"
+          bgColor="#FFFFFF"
+          alignItems="center"
+          flexDir="column"
+        >
+          <DeskThumbnail src={thumbnailImgUrl} />
+          <Flex mt="20px" w="100%" maxW="460px">
+            <UserSummary user={userSummaryData} desk={deskStyleData} />
+          </Flex>
+        </Flex>
+
+        {/* <UserProfileImage src={user.profileImgUrl} /> */}
+        {/* <DeskTypeContainer desk={deskStyleData} /> */}
         <DeskSummary summary={deskSummary} />
         <Box>
           {deskStories.map((deskStory) => {
@@ -103,7 +112,7 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
           <YoutubeLinkBox />
         </Box> */}
       </main>
-    </div>
+    </Box>
   );
 };
 

@@ -7,7 +7,7 @@ export interface Props {
 
 const DeskThumbnail = (props: Props) => {
   return (
-    <Box h={{ base: '270px', lg: '600px' }}>
+    <Box maxW="460px">
       <Image
         src={props.src}
         alt={props.alt}

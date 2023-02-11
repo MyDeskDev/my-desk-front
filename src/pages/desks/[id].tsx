@@ -84,10 +84,9 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
             <UserSummary user={userSummaryData} desk={deskStyleData} />
           </Flex>
         </Flex>
-
-        {/* <UserProfileImage src={user.profileImgUrl} /> */}
-        {/* <DeskTypeContainer desk={deskStyleData} /> */}
-        <DeskSummary summary={deskSummary} />
+        <Box maxW="768px" m="60px auto" p="0 26px 0 24px">
+          <DeskSummary summary={deskSummary} />
+        </Box>
         <Box>
           {deskStories.map((deskStory) => {
             const { imgUrl, text, id } = deskStory;
@@ -110,9 +109,6 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
         <Box mt="40px" pb="20px">
           <CartoonRenderedImage user={{ nickname: user.nickname }} />
         </Box>
-        {/* <Box mt="20px">
-          <YoutubeLinkBox />
-        </Box> */}
       </main>
     </Box>
   );

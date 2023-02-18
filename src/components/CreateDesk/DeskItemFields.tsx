@@ -57,6 +57,20 @@ const DeskItemFields = () => {
     return handler;
   };
 
+  const getImageInputContainerProps = (isImageSelected: boolean) => {
+    const selectedBeforeProps = {};
+    const selectedAfterProps = {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      opacity: 0,
+    };
+
+    return isImageSelected ? selectedAfterProps : selectedBeforeProps;
+  };
+
   return (
     <>
       {fields.map((field, index) => (
@@ -88,21 +102,33 @@ const DeskItemFields = () => {
             />
           </InputBox>
           <InputBox label="사진" isRequired>
-            <ImageInput
-              {...register(`deskItem.${index}.image`, {
-                onChange: onUploadImage(index),
-              })}
-            />
+            <Box position="relative">
+              <Box
+                {...getImageInputContainerProps(
+                  !!watch(`deskItem.${index}.imageUrl`)
+                )}
+              >
+                <ImageInput
+                  {...register(`deskItem.${index}.image`, {
+                    onChange: onUploadImage(index),
+                  })}
+                />
+              </Box>
+              {watch(`deskItem.${index}.imageUrl`) && (
+                <Flex display="inline-flex" justifyContent="center">
+                  <Image
+                    src={watch(`deskItem.${index}.imageUrl`)}
+                    alt=""
+                    w="150px"
+                    h="150px"
+                    borderRadius="10px"
+                    objectFit="cover"
+                  />
+                </Flex>
+              )}
+            </Box>
           </InputBox>
-          {watch(`deskItem.${index}.imageUrl`) && (
-            <Flex justifyContent="center">
-              <Image
-                src={watch(`deskItem.${index}.imageUrl`)}
-                alt=""
-                maxW="100%"
-              />
-            </Flex>
-          )}
+
           {/* <InputBox label="구매 링크">
             <TextInput
               {...register(`deskItem.${index}.url`)}

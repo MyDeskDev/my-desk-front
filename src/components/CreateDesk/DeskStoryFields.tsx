@@ -63,6 +63,20 @@ const DeskStoryFields = () => {
       : '사진을 업로드 해주세요';
   };
 
+  const getImageInputContainerProps = (isImageSelected: boolean) => {
+    const selectedBeforeProps = {};
+    const selectedAfterProps = {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      opacity: 0,
+    };
+
+    return isImageSelected ? selectedAfterProps : selectedBeforeProps;
+  };
+
   return (
     <>
       {fields.map((item, index) => {
@@ -90,21 +104,32 @@ const DeskStoryFields = () => {
                 isDeletable
                 onDelete={() => onDelete(index)}
               >
-                <ImageInput
-                  {...register(`deskStory.${index}.image`, {
-                    onChange: onUploadImage(index),
-                  })}
-                />
+                <Box position="relative">
+                  <Box
+                    {...getImageInputContainerProps(
+                      !!watch(`deskStory.${index}.imageUrl`)
+                    )}
+                  >
+                    <ImageInput
+                      {...register(`deskStory.${index}.image`, {
+                        onChange: onUploadImage(index),
+                      })}
+                    />
+                  </Box>
+                  {watch(`deskStory.${index}.imageUrl`) && (
+                    <Flex display="inline-flex" justifyContent="center">
+                      <Image
+                        src={watch(`deskStory.${index}.imageUrl`)}
+                        alt=""
+                        w="150px"
+                        h="150px"
+                        borderRadius="10px"
+                        objectFit="cover"
+                      />
+                    </Flex>
+                  )}
+                </Box>
               </InputBox>
-              {watch(`deskStory.${index}.imageUrl`) && (
-                <Flex justifyContent="center">
-                  <Image
-                    src={watch(`deskStory.${index}.imageUrl`)}
-                    alt=""
-                    maxW="100%"
-                  />
-                </Flex>
-              )}
             </Box>
           );
         }

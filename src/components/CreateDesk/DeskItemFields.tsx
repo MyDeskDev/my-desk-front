@@ -109,16 +109,20 @@ const DeskItemFields = () => {
               placeholder="링크를 입력해 주세요"
             />
           </InputBox> */}
-          <Box mt="10px" lineHeight={0}>
-            <DeskItemCheckbox {...register(`deskItem.${index}.isRecommended`)}>
-              추천하는 아이템인가요?
-            </DeskItemCheckbox>
-          </Box>
-          <Box mt="10px" lineHeight={0}>
-            <DeskItemCheckbox {...register(`deskItem.${index}.isFavorite`)}>
-              애장하는 아이템인가요?
-            </DeskItemCheckbox>
-          </Box>
+          <Flex mt="10px" lineHeight={0}>
+            <Box mr="30px">
+              <DeskItemCheckbox
+                {...register(`deskItem.${index}.isRecommended`)}
+              >
+                다른 사용자에게 추천하고 싶어요
+              </DeskItemCheckbox>
+            </Box>
+            <Box mr="30px">
+              <DeskItemCheckbox {...register(`deskItem.${index}.isFavorite`)}>
+                애장하는 아이템이예요
+              </DeskItemCheckbox>
+            </Box>
+          </Flex>
         </Box>
       ))}
       <HStack spacing="4px" mt="20px">

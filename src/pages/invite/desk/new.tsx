@@ -74,7 +74,13 @@ const FormSectionLabel = (props: FormSectionLabelProps) => {
         {props.label}
       </FormLabel>
       {props.helperText && (
-        <Text mt="10px" color="#6C6C6C" fontSize="1.6rem" lineHeight="2.4rem">
+        <Text
+          mt="10px"
+          color="#6C6C6C"
+          fontSize="1.6rem"
+          lineHeight="2.4rem"
+          whiteSpace="pre-wrap"
+        >
           {props.helperText}
         </Text>
       )}
@@ -275,7 +281,7 @@ const InviteCreateDesk: NextPage = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box p="7px 16px 7px 18px">
               <DeskInputSection>
-                <InputBox
+                {/* <InputBox
                   label="프로필"
                   helperText="자신을 나타낼 수 있는 사진,캐릭터,이모지 등"
                   isRequired
@@ -305,28 +311,28 @@ const InviteCreateDesk: NextPage = () => {
                       </Box>
                     )}
                   </Box>
-                </InputBox>
-                <InputBox
+                </InputBox> */}
+                {/* <InputBox
                   label="이름"
                   helperText="서비스에 노출되지 않습니다."
                   isRequired
                 >
                   <TextInput {...register('name')} placeholder="입력" />
-                </InputBox>
+                </InputBox> */}
                 <InputBox
-                  label="닉네임"
-                  helperText="서비스에 보여지는 닉네임 입니다."
+                  label="닉네임이나 이름"
+                  helperText="서비스에 보여지는 이름입니다."
                   isRequired
                 >
                   <TextInput {...register('nickname')} placeholder="입력" />
                 </InputBox>
-                <InputBox
+                {/* <InputBox
                   label="이메일 주소"
                   helperText="책상이야기 승인을 하기 위함이며, 노출은 안됩니다."
                   isRequired
                 >
                   <TextInput {...register('email')} placeholder="입력" />
-                </InputBox>
+                </InputBox> */}
                 <InputBox label="공간 형태" isRequired>
                   <TextInput
                     {...register('roomType')}
@@ -341,7 +347,11 @@ const InviteCreateDesk: NextPage = () => {
                     control={control}
                     name="gender"
                     render={({ field: { onChange, value } }) => (
-                      <SquareRadioGroup onChange={onChange} value={value}>
+                      <SquareRadioGroup
+                        onChange={onChange}
+                        value={value}
+                        maxW={{ base: '100%', md: '339px' }}
+                      >
                         {genderRadios.map(({ label, value }) => {
                           return (
                             <SquareRadio
@@ -362,7 +372,11 @@ const InviteCreateDesk: NextPage = () => {
                     control={control}
                     name="ageGroup"
                     render={({ field: { onChange, value } }) => (
-                      <SquareRadioGroup onChange={onChange} value={value}>
+                      <SquareRadioGroup
+                        onChange={onChange}
+                        value={value}
+                        maxW={{ base: '100%', md: '339px' }}
+                      >
                         {ageRadios.map(({ label, value }) => {
                           return (
                             <SquareRadio key={value} value={value.toString()}>
@@ -396,7 +410,7 @@ const InviteCreateDesk: NextPage = () => {
                     })}
                   </Select>
                 </InputBox>
-                <InputBox label="컨셉스타일" isRequired>
+                <InputBox label="책상 컨셉" isRequired>
                   <Select {...register('deskConcept')} placeholder="선택">
                     {deskStyleOptions.map(({ label, value }) => {
                       return (
@@ -437,9 +451,9 @@ const InviteCreateDesk: NextPage = () => {
                 </InputBox>
               </DeskInputSection>
               <DeskInputSection>
-                <FormSectionLabel label="나의 책상은?" />
+                <FormSectionLabel label="책상이 가지고 있는 이야기를 알려주세요." />
                 <InputBox
-                  label="나의 책상을 한 줄로 요약하면 어떤 책상인가요?"
+                  label="나의 책상이 가지고 있는 이야기를 입력해주세요."
                   isRequired
                 >
                   <TextInput
@@ -448,8 +462,8 @@ const InviteCreateDesk: NextPage = () => {
                   />
                 </InputBox>
                 <InputBox
-                  label="구성 비용"
-                  helperText="데스크톱과 노트북 등 고가 장비 제외하여 선택해 주세요."
+                  label="구성비용"
+                  helperText="정확하지 않아도 되며, 데스크탑과 노트북같은 장비 제외"
                   isRequired
                 >
                   <Select {...register('cost')} placeholder="선택">
@@ -464,13 +478,16 @@ const InviteCreateDesk: NextPage = () => {
                 </InputBox>
               </DeskInputSection>
               <DeskInputSection>
-                <FormSectionLabel label="책상 이야기" />
+                <FormSectionLabel
+                  label="이제 사진과 함께 글을 써볼까요?"
+                  helperText={`나의 책상 중 소개해주고 싶은 부분이 있으면 “텍스트 추가"를 하여 작성해 주세요.\n글과 함께 사진을 추가 한다면 다른 사용자가 보기에 이해하기가 쉬울 거예요.`}
+                />
                 <DeskStoryFields />
               </DeskInputSection>
               <DeskInputSection>
                 <FormSectionLabel
-                  label="아이템 작성하기"
-                  helperText="보여주고 싶은 아이템이 있으면 작성해 주세요."
+                  label="책상에 있는 아이템을 이야기해볼까요?"
+                  helperText={`책상 위에 있는 마우스,키보드, 포스티잇, 심지어 의자, 스피커 등 무엇이든 상관없으니 이야기를 작성해주세요.\n심지어 책상 주변을 꾸몄던 인테리어 소품들도 이야기에 넣으셔도 됩니다.`}
                 />
                 <DeskItemFields />
               </DeskInputSection>

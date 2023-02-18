@@ -58,7 +58,9 @@ const DeskStoryFields = () => {
   }, [fields]);
 
   const getImageInputLabel = (index: number) => {
-    return index === firstImageIndex ? '대표 이미지' : '사진';
+    return index === firstImageIndex
+      ? '대표 이미지를 업로드 해주세요'
+      : '사진을 업로드 해주세요';
   };
 
   return (
@@ -68,7 +70,7 @@ const DeskStoryFields = () => {
           return (
             <InputBox
               key={item.id}
-              label="내용"
+              label="내용을 입력해 주세요."
               isRequired
               isDeletable
               onDelete={() => onDelete(index)}

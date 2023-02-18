@@ -14,7 +14,13 @@ import ActionButton from '@/components/CreateDesk/ActionButton';
 
 const ItemTitle = (props: { children?: React.ReactNode }) => {
   return (
-    <Text as="strong" fontSize="2rem" lineHeight="2rem">
+    <Text
+      as="strong"
+      color="orange.500"
+      fontSize="2rem"
+      fontWeight={700}
+      lineHeight="2rem"
+    >
       {props.children}
     </Text>
   );
@@ -66,16 +72,19 @@ const DeskItemFields = () => {
             <ItemTitle>{`아이템 ${index + 1}`}</ItemTitle>
             <DeleteButton onClick={() => onDelete(index)} />
           </Flex>
-          <InputBox label="어떤 아이템인가요?" isRequired>
+          <InputBox
+            label="어떤 아이템인가요?"
+            helperText="(아이템이 갖고 있는 이야기가 있으면 입력하되, 없으면 아이템명과 사진만 넣어주셔도 됩니다.)"
+          >
             <Textarea
               {...register(`deskItem.${index}.story`)}
-              placeholder="ex: 자주 쓰는 키보드예요"
+              placeholder="ex: 어렸을 때 아버지에게 물려 받은 기계식 키보드 입니다. 사용감이 있긴 하지만 그래도 저는 만족하고 있습니다."
             />
           </InputBox>
           <InputBox label="아이템명" isRequired>
             <TextInput
               {...register(`deskItem.${index}.name`)}
-              placeholder="ex: 애플 매직 키보드"
+              placeholder="ex: 키크론 기계식 키보드"
             />
           </InputBox>
           <InputBox label="사진" isRequired>
@@ -94,12 +103,12 @@ const DeskItemFields = () => {
               />
             </Flex>
           )}
-          <InputBox label="구매 링크">
+          {/* <InputBox label="구매 링크">
             <TextInput
               {...register(`deskItem.${index}.url`)}
               placeholder="링크를 입력해 주세요"
             />
-          </InputBox>
+          </InputBox> */}
           <Box mt="10px" lineHeight={0}>
             <DeskItemCheckbox {...register(`deskItem.${index}.isRecommended`)}>
               추천하는 아이템인가요?

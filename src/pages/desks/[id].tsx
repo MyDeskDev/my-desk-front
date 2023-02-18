@@ -55,6 +55,7 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
     deskSummary,
     deskStories,
     deskItems,
+    cost,
   } = props.desk;
 
   const userSummaryData = {
@@ -68,7 +69,7 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
     id: id,
     roomType,
     deskStyle,
-    cost: 0 as DeskCost,
+    cost,
   };
 
   const equalSpaceContainerProps = {
@@ -80,7 +81,7 @@ const Desk: NextPage<{ desk: IDesk }> = (props) => {
   };
 
   return (
-    <Box backgroundColor="#F8F5EF">
+    <Box backgroundColor="#F8F5EF" minH="100%">
       <Box as="header" position="sticky" top="0">
         <Flex
           display={{ base: 'flex', md: 'none' }}

@@ -326,13 +326,13 @@ const InviteCreateDesk: NextPage = () => {
                 >
                   <TextInput {...register('nickname')} placeholder="입력" />
                 </InputBox>
-                {/* <InputBox
+                <InputBox
                   label="이메일 주소"
                   helperText="책상이야기 승인을 하기 위함이며, 노출은 안됩니다."
                   isRequired
                 >
                   <TextInput {...register('email')} placeholder="입력" />
-                </InputBox> */}
+                </InputBox>
                 <InputBox label="공간 형태" isRequired>
                   <TextInput
                     {...register('roomType')}

@@ -23,20 +23,28 @@ const DeskItemCheckbox = React.forwardRef<HTMLInputElement, Props>(
       useCheckbox(rest);
 
     return (
-      <FormLabel display="inline-flex" margin="0" {...htmlProps}>
+      <FormLabel
+        display="inline-flex"
+        margin="0"
+        alignItems="center"
+        {...htmlProps}
+      >
         <VisuallyHiddenInput {...getInputProps()} ref={ref} />
         <Flex
-          w="20px"
-          h="20px"
-          mr="6px"
-          border="2px solid #000000"
-          borderRadius="4px"
+          w="24px"
+          h="24px"
+          mr="8px"
           alignItems="center"
           justifyContent="center"
           cursor="pointer"
           {...getCheckboxProps()}
+          bgColor={state.isChecked ? '#FF6712' : '#F3F3F3'}
         >
-          {state.isChecked && <CheckIcon />}
+          {
+            <CheckIcon
+              style={{ color: state.isChecked ? '#FFFFFF' : '#E1E1E1' }}
+            />
+          }
         </Flex>
         <Text
           as="span"

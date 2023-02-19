@@ -180,14 +180,14 @@ const UserSummary = (props: Props) => {
           <DetailValueText>{deskStyle}</DetailValueText>
         </SummaryValue>
       </Flex>
-      {/* <Flex>
+      <Flex>
         <SummaryKey>
           <DetailKeyText>구성 비용</DetailKeyText>
         </SummaryKey>
         <SummaryValue>
           <DetailValueText>{cost}</DetailValueText>
         </SummaryValue>
-      </Flex> */}
+      </Flex>
     </Flex>
   );
 };

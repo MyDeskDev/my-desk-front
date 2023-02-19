@@ -25,29 +25,29 @@ export const useDeskStoryFields = () => {
     name: 'deskStory',
   });
 
-  useEffect(() => {
-    const defaultValues: {
-      text: string;
-      image: string | null;
-      imageUrl: string;
-      type: DeskStoryFormType;
-    }[] = [
-      {
-        text: '',
-        image: null,
-        imageUrl: '',
-        type: 'TEXT',
-      },
-      {
-        text: '',
-        image: null,
-        imageUrl: '',
-        type: 'IMAGE',
-      },
-    ];
+  // useEffect(() => {
+  //   const defaultValues: {
+  //     text: string;
+  //     image: string | null;
+  //     imageUrl: string;
+  //     type: DeskStoryFormType;
+  //   }[] = [
+  //     {
+  //       text: '',
+  //       image: null,
+  //       imageUrl: '',
+  //       type: 'TEXT',
+  //     },
+  //     {
+  //       text: '',
+  //       image: null,
+  //       imageUrl: '',
+  //       type: 'IMAGE',
+  //     },
+  //   ];
 
-    replace(defaultValues);
-  }, [replace]);
+  //   replace(defaultValues);
+  // }, [replace]);
 
   return {
     fields,

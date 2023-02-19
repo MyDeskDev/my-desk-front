@@ -20,6 +20,7 @@ const ImageInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
         display="flex"
         alignItems="center"
         justifyContent="center"
+        borderRadius="10px"
         backgroundColor="#F3F3F3"
       >
         <ImageIcon />

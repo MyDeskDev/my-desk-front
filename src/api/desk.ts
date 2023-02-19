@@ -119,8 +119,8 @@ export interface Desk extends Omit<DeskPreview, 'title'> {
 
 // TODO: drived type으로 리팩토링 필요
 export interface CreateDeskData {
-  profileImageUrl: string;
-  name: string;
+  profileImageUrl?: string;
+  name?: string;
   nickname: string;
   email: string;
   roomType: string;

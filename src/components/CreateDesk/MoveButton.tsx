@@ -1,8 +1,9 @@
 import { Button, VisuallyHidden } from '@chakra-ui/react';
+import React from 'react';
 
 import HamburgerIcon from '@/icons/hamburger-icon.svg';
 
-const MoveButton = () => {
+const MoveButton = React.forwardRef<HTMLButtonElement>((_, ref) => {
   return (
     <Button
       display="flex"
@@ -16,11 +17,14 @@ const MoveButton = () => {
       outline="none"
       _focus={{ ouline: 'none' }}
       cursor="move"
+      ref={ref}
     >
       <VisuallyHidden>이동</VisuallyHidden>
       <HamburgerIcon style={{ color: '#575757' }} />
     </Button>
   );
-};
+});
+
+MoveButton.displayName = 'MoveButton';
 
 export default MoveButton;

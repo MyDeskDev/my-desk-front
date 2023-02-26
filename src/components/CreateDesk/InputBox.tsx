@@ -7,9 +7,12 @@ import {
   FormControl,
   RequiredIndicator,
 } from '@chakra-ui/react';
+import { useDrag } from 'react-dnd';
 
 import DeleteButton from '@/components/CreateDesk/DeleteButton';
 import MoveButton from '@/components/CreateDesk/MoveButton';
+
+import { DragTypes } from '@/constants';
 
 interface Props {
   label: string;
@@ -23,8 +26,19 @@ interface Props {
 }
 
 const InputBox = (props: Props) => {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: DragTypes.DESK_STORY,
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
   return (
-    <FormControl isRequired={props.isRequired} p="10px 0">
+    <FormControl
+      isRequired={props.isRequired}
+      p="10px 0"
+      opacity={isDragging ? 0.5 : 1}
+    >
       <Flex h="3rem" alignItems="center" justifyContent="space-between">
         <FormLabel
           htmlFor={props.for}
@@ -41,7 +55,7 @@ const InputBox = (props: Props) => {
         </FormLabel>
         <Flex alignItems="center" gap="8px">
           {props.isDeletable && <DeleteButton onClick={props.onDelete} />}
-          {props.isMovable && <MoveButton />}
+          {props.isMovable && <MoveButton ref={drag} />}
         </Flex>
       </Flex>
       {props.helperText && (

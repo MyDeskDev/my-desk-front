@@ -76,3 +76,7 @@ export const SEO_DEFAULT = {
   description: '당신의 책상 이야기를 들려주세요.',
   image: '/images/open-graph.png',
 };
+
+export const DragTypes = {
+  DESK_STORY: 'deskStory',
+};

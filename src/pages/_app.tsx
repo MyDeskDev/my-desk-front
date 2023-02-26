@@ -4,6 +4,8 @@ import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ChakraProvider } from '@chakra-ui/react';
 import Head from 'next/head';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import theme from '@/styles/theme';
 import Fonts from '@/styles/fonts';
@@ -46,7 +48,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <Fonts />
           <ChakraProvider theme={theme}>
-            <Component {...pageProps} />
+            <DndProvider backend={HTML5Backend}>
+              <Component {...pageProps} />
+            </DndProvider>
           </ChakraProvider>
         </QueryClientProvider>
       </RecoilRoot>

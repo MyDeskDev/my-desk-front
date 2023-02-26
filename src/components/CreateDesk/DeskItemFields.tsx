@@ -11,6 +11,7 @@ import TextInput from '@/components/CreateDesk/TextInput';
 import ImageInput from '@/components/CreateDesk/ImageInput';
 import DeskItemCheckbox from '@/components/CreateDesk/DeskItemCheckbox';
 import ActionButton from '@/components/CreateDesk/ActionButton';
+import MoveButton from '@/components/CreateDesk/MoveButton';
 
 const ItemTitle = (props: { children?: React.ReactNode }) => {
   return (
@@ -84,7 +85,10 @@ const DeskItemFields = () => {
         >
           <Flex justifyContent="space-between">
             <ItemTitle>{`아이템 ${index + 1}`}</ItemTitle>
-            <DeleteButton onClick={() => onDelete(index)} />
+            <Flex alignItems="center" gap="8px">
+              <DeleteButton onClick={() => onDelete(index)} />
+              <MoveButton />
+            </Flex>
           </Flex>
           <InputBox
             label="어떤 아이템인가요?"

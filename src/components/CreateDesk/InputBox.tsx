@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 
 import DeleteButton from '@/components/CreateDesk/DeleteButton';
+import MoveButton from '@/components/CreateDesk/MoveButton';
 
 interface Props {
   label: string;
@@ -17,6 +18,7 @@ interface Props {
   isRequired?: boolean;
   children?: React.ReactNode;
   isDeletable?: boolean;
+  isMovable?: boolean;
   onDelete?: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -37,7 +39,10 @@ const InputBox = (props: Props) => {
           )}
           {props.label}
         </FormLabel>
-        {props.isDeletable && <DeleteButton onClick={props.onDelete} />}
+        <Flex alignItems="center" gap="8px">
+          {props.isDeletable && <DeleteButton onClick={props.onDelete} />}
+          {props.isMovable && <MoveButton />}
+        </Flex>
       </Flex>
       {props.helperText && (
         <FormHelperText mt="6px" color="#A5A5A5" fontSize="1.4rem">

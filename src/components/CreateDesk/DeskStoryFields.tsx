@@ -87,6 +87,7 @@ const DeskStoryFields = () => {
               label="내용을 입력해 주세요."
               isRequired
               isDeletable
+              isMovable
               onDelete={() => onDelete(index)}
             >
               <Textarea
@@ -102,6 +103,7 @@ const DeskStoryFields = () => {
                 label={getImageInputLabel(index)}
                 isRequired
                 isDeletable
+                isMovable
                 onDelete={() => onDelete(index)}
               >
                 <Box position="relative">

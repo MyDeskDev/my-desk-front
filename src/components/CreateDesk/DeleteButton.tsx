@@ -15,15 +15,13 @@ const DeleteButton = (props: {
       h="30px"
       p="0"
       borderRadius="0"
-      backgroundColor="black"
+      backgroundColor="transparent"
       outline="none"
-      _hover={{ backgroundColor: 'black' }}
-      _active={{ backgroundColor: 'black' }}
       _focus={{ ouline: 'none' }}
       onClick={props.onClick}
     >
       <VisuallyHidden>삭제</VisuallyHidden>
-      <TrashCanIcon />
+      <TrashCanIcon style={{ color: '#575757' }} />
     </Button>
   );
 };

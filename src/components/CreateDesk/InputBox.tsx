@@ -26,7 +26,7 @@ interface Props {
 }
 
 const InputBox = (props: Props) => {
-  const [{ isDragging }, drag] = useDrag(() => ({
+  const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     type: DragTypes.DESK_STORY,
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
@@ -38,6 +38,7 @@ const InputBox = (props: Props) => {
       isRequired={props.isRequired}
       p="10px 0"
       opacity={isDragging ? 0.5 : 1}
+      ref={dragPreview}
     >
       <Flex h="3rem" alignItems="center" justifyContent="space-between">
         <FormLabel

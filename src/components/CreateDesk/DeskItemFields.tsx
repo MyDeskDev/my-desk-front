@@ -1,4 +1,6 @@
 import { Box, Flex, HStack, Text, Image } from '@chakra-ui/react';
+import { Controller } from 'react-hook-form';
+
 import type { ChangeEventHandler } from 'react';
 
 import useDeskItemFields from '@/hooks/useDeskItemFields';
@@ -13,8 +15,18 @@ import ActionButton from '@/components/CreateDesk/ActionButton';
 import DeskItemInputBox from '@/components/CreateDesk/DeskItemInputBox';
 
 const DeskItemFields = () => {
-  const { fields, register, watch, append, remove, setValue, move } =
-    useDeskItemFields();
+  const {
+    fields,
+    register,
+    watch,
+    append,
+    remove,
+    move,
+    control,
+    errors,
+    update,
+    trigger,
+  } = useDeskItemFields();
 
   const onDelete = (index: number) => {
     remove(index);
@@ -36,8 +48,12 @@ const DeskItemFields = () => {
 
       try {
         const fileUrl = await mutateAsync(file);
-        setValue(`deskItem.${index}.imageUrl`, fileUrl);
-      } catch (err) {}
+        const currentField = fields[index];
+        update(index, { ...currentField, imageUrl: fileUrl });
+        await trigger([`deskItem.${index}.imageUrl`]);
+      } catch {
+        alert('예기치 못한 오류가 발생했습니다.');
+      }
     };
 
     return handler;
@@ -61,7 +77,7 @@ const DeskItemFields = () => {
     <>
       {fields.map((field, index) => (
         <DeskItemInputBox
-          key={index}
+          key={field.id}
           index={index}
           onDelete={() => onDelete(index)}
           onDrop={move}
@@ -88,12 +104,14 @@ const DeskItemFields = () => {
                   !!watch(`deskItem.${index}.imageUrl`)
                 )}
               >
-                <ImageInput
-                  {...register(`deskItem.${index}.image`, {
-                    onChange: onUploadImage(index),
-                  })}
-                />
+                <ImageInput onChange={onUploadImage(index)} />
               </Box>
+              <Controller
+                control={control}
+                name={`deskItem.${index}.imageUrl`}
+                render={() => <></>}
+                rules={{ required: '필수 항목입니다.' }}
+              />
               {watch(`deskItem.${index}.imageUrl`) && (
                 <Flex display="inline-flex" justifyContent="center">
                   <Image
@@ -107,6 +125,12 @@ const DeskItemFields = () => {
                 </Flex>
               )}
             </Box>
+            {errors.deskItem &&
+            (errors.deskItem[index]?.imageUrl?.message?.length ?? 0) > 0 ? (
+              <Text mt="4px" color="red.500">
+                {errors.deskItem[index]?.imageUrl?.message}
+              </Text>
+            ) : null}
           </InputBox>
 
           {/* <InputBox label="구매 링크">
@@ -137,7 +161,6 @@ const DeskItemFields = () => {
             append({
               name: '',
               story: '',
-              image: null,
               url: '',
               imageUrl: '',
               isFavorite: false,

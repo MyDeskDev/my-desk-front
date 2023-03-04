@@ -3,10 +3,16 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 export type DeskStoryFormType = 'TEXT' | 'IMAGE';
 
 export const useDeskStoryFields = () => {
-  const { control, setValue, register, watch } = useFormContext<{
+  const {
+    control,
+    setValue,
+    register,
+    watch,
+    formState: { errors },
+    trigger,
+  } = useFormContext<{
     deskStory: {
       text: string;
-      image: string | null;
       imageUrl: string;
       type: DeskStoryFormType;
     }[];
@@ -15,7 +21,6 @@ export const useDeskStoryFields = () => {
   const { fields, append, remove, update, move } = useFieldArray<{
     deskStory: {
       text: string;
-      image: string | null;
       imageUrl: string;
       type: DeskStoryFormType;
     }[];
@@ -41,6 +46,9 @@ export const useDeskStoryFields = () => {
     register,
     watch,
     move,
+    errors,
+    trigger,
+    control,
   };
 };
 

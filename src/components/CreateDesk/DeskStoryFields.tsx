@@ -1,5 +1,6 @@
-import { Box, HStack, Flex, Image } from '@chakra-ui/react';
+import { Box, HStack, Flex, Image, Text } from '@chakra-ui/react';
 import React, { useMemo } from 'react';
+import { Controller } from 'react-hook-form';
 
 import type { ChangeEventHandler } from 'react';
 
@@ -13,8 +14,19 @@ import ActionButton from '@/components/CreateDesk/ActionButton';
 import InputBoxDropzone from '@/components/CreateDesk/InputBoxDropzone';
 
 const DeskStoryFields = () => {
-  const { fields, append, remove, register, setValue, watch, move } =
-    useDeskStoryFields();
+  const {
+    fields,
+    append,
+    remove,
+    register,
+    setValue,
+    watch,
+    move,
+    errors,
+    trigger,
+    control,
+    update,
+  } = useDeskStoryFields();
 
   const onDelete = (index: number) => {
     remove(index);
@@ -43,9 +55,10 @@ const DeskStoryFields = () => {
       try {
         const fileUrl = await mutateAsync(file);
         setValue(`deskStory.${index}.imageUrl`, fileUrl);
-      } catch (err) {
-        alert('사진 업로드 실패');
-        console.log(err);
+        console.log(fields);
+        await trigger([`deskStory.${index}.imageUrl`]);
+      } catch {
+        alert('예기치 못한 오류가 발생했습니다.');
       }
     };
 
@@ -83,7 +96,7 @@ const DeskStoryFields = () => {
       {fields.map((item, index) => {
         if (item.type === 'TEXT') {
           return (
-            <InputBoxDropzone index={index} key={index} onDrop={move}>
+            <InputBoxDropzone index={index} key={item.id} onDrop={move}>
               <InputBox
                 label="내용을 입력해 주세요."
                 isRequired
@@ -101,7 +114,7 @@ const DeskStoryFields = () => {
           );
         } else {
           return (
-            <InputBoxDropzone index={index} key={index} onDrop={move}>
+            <InputBoxDropzone index={index} key={item.id} onDrop={move}>
               <InputBox
                 label={getImageInputLabel(index)}
                 isRequired
@@ -116,12 +129,14 @@ const DeskStoryFields = () => {
                       !!watch(`deskStory.${index}.imageUrl`)
                     )}
                   >
-                    <ImageInput
-                      {...register(`deskStory.${index}.image`, {
-                        onChange: onUploadImage(index),
-                      })}
-                    />
+                    <ImageInput onChange={onUploadImage(index)} />
                   </Box>
+                  <Controller
+                    control={control}
+                    name={`deskStory.${index}.imageUrl`}
+                    render={() => <></>}
+                    rules={{ required: '필수 항목입니다.' }}
+                  />
                   {watch(`deskStory.${index}.imageUrl`) && (
                     <Flex display="inline-flex" justifyContent="center">
                       <Image
@@ -135,6 +150,13 @@ const DeskStoryFields = () => {
                     </Flex>
                   )}
                 </Box>
+                {errors.deskStory &&
+                (errors.deskStory[index]?.imageUrl?.message?.length ?? 0) >
+                  0 ? (
+                  <Text mt="4px" color="red.500">
+                    {errors.deskStory[index]?.imageUrl?.message}
+                  </Text>
+                ) : null}
               </InputBox>
             </InputBoxDropzone>
           );
@@ -146,7 +168,6 @@ const DeskStoryFields = () => {
             append({
               type: 'TEXT',
               text: '',
-              image: null,
               imageUrl: '',
             })
           }
@@ -158,7 +179,6 @@ const DeskStoryFields = () => {
             append({
               type: 'IMAGE',
               text: '',
-              image: null,
               imageUrl: '',
             })
           }

@@ -352,10 +352,7 @@ export const Desk = {
   create: async (data: CreateDeskData) => {
     const _data = convertCreateDeskForm(data);
 
-    console.log(_data);
-    const res = await api.post('/api/v1/posts', _data);
-
-    console.log(res);
+    await api.post('/api/v1/posts', _data);
   },
 };
 

@@ -4,28 +4,13 @@ import type { ChangeEventHandler } from 'react';
 import useDeskItemFields from '@/hooks/useDeskItemFields';
 import useFileUploadMutation from '@/hooks/useFileUploadMutation';
 
-import DeleteButton from '@/components/CreateDesk/DeleteButton';
 import InputBox from '@/components/CreateDesk/InputBox';
 import Textarea from '@/components/CreateDesk/Textarea';
 import TextInput from '@/components/CreateDesk/TextInput';
 import ImageInput from '@/components/CreateDesk/ImageInput';
 import DeskItemCheckbox from '@/components/CreateDesk/DeskItemCheckbox';
 import ActionButton from '@/components/CreateDesk/ActionButton';
-import MoveButton from '@/components/CreateDesk/MoveButton';
-
-const ItemTitle = (props: { children?: React.ReactNode }) => {
-  return (
-    <Text
-      as="strong"
-      color="orange.500"
-      fontSize="2rem"
-      fontWeight={700}
-      lineHeight="2rem"
-    >
-      {props.children}
-    </Text>
-  );
-};
+import DeskItemInputBox from '@/components/CreateDesk/DeskItemInputBox';
 
 const DeskItemFields = () => {
   const { fields, register, watch, append, remove, setValue } =
@@ -75,21 +60,11 @@ const DeskItemFields = () => {
   return (
     <>
       {fields.map((field, index) => (
-        <Box
+        <DeskItemInputBox
           key={field.id}
-          sx={{
-            '& + &': {
-              mt: '48px',
-            },
-          }}
+          index={index}
+          onDelete={() => onDelete(index)}
         >
-          <Flex justifyContent="space-between">
-            <ItemTitle>{`아이템 ${index + 1}`}</ItemTitle>
-            <Flex alignItems="center" gap="8px">
-              <DeleteButton onClick={() => onDelete(index)} />
-              <MoveButton />
-            </Flex>
-          </Flex>
           <InputBox
             label="어떤 아이템인가요?"
             helperText="(아이템이 갖고 있는 이야기가 있으면 입력하되, 없으면 아이템명과 사진만 넣어주셔도 됩니다.)"
@@ -153,7 +128,7 @@ const DeskItemFields = () => {
               </DeskItemCheckbox>
             </Box>
           </Flex>
-        </Box>
+        </DeskItemInputBox>
       ))}
       <HStack spacing="4px" mt="20px">
         <ActionButton

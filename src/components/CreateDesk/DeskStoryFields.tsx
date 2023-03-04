@@ -1,5 +1,5 @@
 import { Box, HStack, Flex, Image } from '@chakra-ui/react';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import type { ChangeEventHandler } from 'react';
 
@@ -10,9 +10,10 @@ import InputBox from '@/components/CreateDesk/InputBox';
 import Textarea from '@/components/CreateDesk/Textarea';
 import ImageInput from '@/components/CreateDesk/ImageInput';
 import ActionButton from '@/components/CreateDesk/ActionButton';
+import InputBoxDropzone from '@/components/CreateDesk/InputBoxDropzone';
 
 const DeskStoryFields = () => {
-  const { fields, append, remove, register, setValue, watch } =
+  const { fields, append, remove, register, setValue, watch, move } =
     useDeskStoryFields();
 
   const onDelete = (index: number) => {
@@ -82,29 +83,32 @@ const DeskStoryFields = () => {
       {fields.map((item, index) => {
         if (item.type === 'TEXT') {
           return (
-            <InputBox
-              key={item.id}
-              label="내용을 입력해 주세요."
-              isRequired
-              isDeletable
-              isMovable
-              onDelete={() => onDelete(index)}
-            >
-              <Textarea
-                {...register(`deskStory.${index}.text`)}
-                placeholder="예) 안녕하세요. 저는 마이데스크를 운영하고 있는 기미테디입니다. 저의 책상을 이렇게 소개하는게 쑥스럽네요 ^^"
-              />
-            </InputBox>
+            <InputBoxDropzone index={index} key={index} onDrop={move}>
+              <InputBox
+                label="내용을 입력해 주세요."
+                isRequired
+                isDeletable
+                isMovable
+                onDelete={() => onDelete(index)}
+                index={index}
+              >
+                <Textarea
+                  {...register(`deskStory.${index}.text`)}
+                  placeholder="예) 안녕하세요. 저는 마이데스크를 운영하고 있는 기미테디입니다. 저의 책상을 이렇게 소개하는게 쑥스럽네요 ^^"
+                />
+              </InputBox>
+            </InputBoxDropzone>
           );
         } else {
           return (
-            <Box key={item.id}>
+            <InputBoxDropzone index={index} key={index} onDrop={move}>
               <InputBox
                 label={getImageInputLabel(index)}
                 isRequired
                 isDeletable
                 isMovable
                 onDelete={() => onDelete(index)}
+                index={index}
               >
                 <Box position="relative">
                   <Box
@@ -132,7 +136,7 @@ const DeskStoryFields = () => {
                   )}
                 </Box>
               </InputBox>
-            </Box>
+            </InputBoxDropzone>
           );
         }
       })}

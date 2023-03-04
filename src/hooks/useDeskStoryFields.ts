@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 export type DeskStoryFormType = 'TEXT' | 'IMAGE';
@@ -13,7 +12,7 @@ export const useDeskStoryFields = () => {
     }[];
   }>();
 
-  const { fields, append, remove, update, replace } = useFieldArray<{
+  const { fields, append, remove, update, move } = useFieldArray<{
     deskStory: {
       text: string;
       image: string | null;
@@ -25,38 +24,23 @@ export const useDeskStoryFields = () => {
     name: 'deskStory',
   });
 
-  // useEffect(() => {
-  //   const defaultValues: {
-  //     text: string;
-  //     image: string | null;
-  //     imageUrl: string;
-  //     type: DeskStoryFormType;
-  //   }[] = [
-  //     {
-  //       text: '',
-  //       image: null,
-  //       imageUrl: '',
-  //       type: 'TEXT',
-  //     },
-  //     {
-  //       text: '',
-  //       image: null,
-  //       imageUrl: '',
-  //       type: 'IMAGE',
-  //     },
-  //   ];
-
-  //   replace(defaultValues);
-  // }, [replace]);
+  const watchedDeskStory = watch('deskStory');
+  const controlledFields = fields.map((field, index) => {
+    return {
+      ...field,
+      ...watchedDeskStory[index],
+    };
+  });
 
   return {
-    fields,
+    fields: controlledFields,
     append,
     remove,
     update,
     setValue,
     register,
     watch,
+    move,
   };
 };
 

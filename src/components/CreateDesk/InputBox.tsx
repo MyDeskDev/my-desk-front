@@ -8,6 +8,7 @@ import {
   RequiredIndicator,
 } from '@chakra-ui/react';
 import { useDrag } from 'react-dnd';
+import { v4 as uuidv4 } from 'uuid';
 
 import DeleteButton from '@/components/CreateDesk/DeleteButton';
 import MoveButton from '@/components/CreateDesk/MoveButton';
@@ -23,11 +24,13 @@ interface Props {
   isDeletable?: boolean;
   isMovable?: boolean;
   onDelete?: MouseEventHandler<HTMLButtonElement>;
+  index?: number;
 }
 
 const InputBox = (props: Props) => {
   const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     type: DragTypes.DESK_STORY,
+    item: { index: props.index },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),

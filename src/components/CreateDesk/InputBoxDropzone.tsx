@@ -16,8 +16,6 @@ const InputBoxDropzone = (props: Props) => {
         return;
       }
 
-      console.log(`from: ${item.index}, to: ${props.index}`);
-
       props.onDrop ? props.onDrop(item.index, props.index) : undefined;
     },
   }));

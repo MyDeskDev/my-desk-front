@@ -1,5 +1,6 @@
-import { Box, HStack, Flex, Image } from '@chakra-ui/react';
-import { useMemo } from 'react';
+import { Box, HStack, Flex, Image, Text } from '@chakra-ui/react';
+import React, { useMemo } from 'react';
+import { Controller } from 'react-hook-form';
 
 import type { ChangeEventHandler } from 'react';
 
@@ -10,10 +11,22 @@ import InputBox from '@/components/CreateDesk/InputBox';
 import Textarea from '@/components/CreateDesk/Textarea';
 import ImageInput from '@/components/CreateDesk/ImageInput';
 import ActionButton from '@/components/CreateDesk/ActionButton';
+import InputBoxDropzone from '@/components/CreateDesk/InputBoxDropzone';
 
 const DeskStoryFields = () => {
-  const { fields, append, remove, register, setValue, watch } =
-    useDeskStoryFields();
+  const {
+    fields,
+    append,
+    remove,
+    register,
+    setValue,
+    watch,
+    move,
+    errors,
+    trigger,
+    control,
+    update,
+  } = useDeskStoryFields();
 
   const onDelete = (index: number) => {
     remove(index);
@@ -42,9 +55,10 @@ const DeskStoryFields = () => {
       try {
         const fileUrl = await mutateAsync(file);
         setValue(`deskStory.${index}.imageUrl`, fileUrl);
-      } catch (err) {
-        alert('사진 업로드 실패');
-        console.log(err);
+        console.log(fields);
+        await trigger([`deskStory.${index}.imageUrl`]);
+      } catch {
+        alert('예기치 못한 오류가 발생했습니다.');
       }
     };
 
@@ -82,27 +96,32 @@ const DeskStoryFields = () => {
       {fields.map((item, index) => {
         if (item.type === 'TEXT') {
           return (
-            <InputBox
-              key={item.id}
-              label="내용을 입력해 주세요."
-              isRequired
-              isDeletable
-              onDelete={() => onDelete(index)}
-            >
-              <Textarea
-                {...register(`deskStory.${index}.text`)}
-                placeholder="예) 안녕하세요. 저는 마이데스크를 운영하고 있는 기미테디입니다. 저의 책상을 이렇게 소개하는게 쑥스럽네요 ^^"
-              />
-            </InputBox>
+            <InputBoxDropzone index={index} key={item.id} onDrop={move}>
+              <InputBox
+                label="내용을 입력해 주세요."
+                isRequired
+                isDeletable
+                isMovable
+                onDelete={() => onDelete(index)}
+                index={index}
+              >
+                <Textarea
+                  {...register(`deskStory.${index}.text`)}
+                  placeholder="예) 안녕하세요. 저는 마이데스크를 운영하고 있는 기미테디입니다. 저의 책상을 이렇게 소개하는게 쑥스럽네요 ^^"
+                />
+              </InputBox>
+            </InputBoxDropzone>
           );
         } else {
           return (
-            <Box key={item.id}>
+            <InputBoxDropzone index={index} key={item.id} onDrop={move}>
               <InputBox
                 label={getImageInputLabel(index)}
                 isRequired
                 isDeletable
+                isMovable
                 onDelete={() => onDelete(index)}
+                index={index}
               >
                 <Box position="relative">
                   <Box
@@ -110,12 +129,14 @@ const DeskStoryFields = () => {
                       !!watch(`deskStory.${index}.imageUrl`)
                     )}
                   >
-                    <ImageInput
-                      {...register(`deskStory.${index}.image`, {
-                        onChange: onUploadImage(index),
-                      })}
-                    />
+                    <ImageInput onChange={onUploadImage(index)} />
                   </Box>
+                  <Controller
+                    control={control}
+                    name={`deskStory.${index}.imageUrl`}
+                    render={() => <></>}
+                    rules={{ required: '필수 항목입니다.' }}
+                  />
                   {watch(`deskStory.${index}.imageUrl`) && (
                     <Flex display="inline-flex" justifyContent="center">
                       <Image
@@ -129,8 +150,15 @@ const DeskStoryFields = () => {
                     </Flex>
                   )}
                 </Box>
+                {errors.deskStory &&
+                (errors.deskStory[index]?.imageUrl?.message?.length ?? 0) >
+                  0 ? (
+                  <Text mt="4px" color="red.500">
+                    {errors.deskStory[index]?.imageUrl?.message}
+                  </Text>
+                ) : null}
               </InputBox>
-            </Box>
+            </InputBoxDropzone>
           );
         }
       })}
@@ -140,7 +168,6 @@ const DeskStoryFields = () => {
             append({
               type: 'TEXT',
               text: '',
-              image: null,
               imageUrl: '',
             })
           }
@@ -152,7 +179,6 @@ const DeskStoryFields = () => {
             append({
               type: 'IMAGE',
               text: '',
-              image: null,
               imageUrl: '',
             })
           }

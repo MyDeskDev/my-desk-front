@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 
 export interface DeskItemField {
   name: string;
-  image: string | null;
   url: string;
   story: string;
   imageUrl: string;
@@ -14,20 +13,34 @@ export interface DeskItemField {
 export const useDeskItemFields = () => {
   const name = 'deskItem';
 
-  const { control, register, watch, setValue } = useFormContext<{
+  const {
+    control,
+    register,
+    watch,
+    setValue,
+    formState: { errors },
+    trigger,
+  } = useFormContext<{
     [name]: DeskItemField[];
   }>();
 
-  const { fields, append, remove, update, replace } = useFieldArray({
+  const { fields, append, remove, update, replace, move } = useFieldArray({
     control,
     name,
+  });
+
+  const watchedDeskItems = watch(name);
+  const controlledFields = fields.map((field, index) => {
+    return {
+      ...field,
+      ...watchedDeskItems[index],
+    };
   });
 
   useEffect(() => {
     const defaultValues: DeskItemField[] = [
       {
         name: '',
-        image: null,
         url: '',
         story: '',
         imageUrl: '',
@@ -41,13 +54,17 @@ export const useDeskItemFields = () => {
 
   return {
     name,
-    fields,
+    fields: controlledFields,
     append,
     remove,
     update,
     register,
     watch,
     setValue,
+    move,
+    control,
+    errors,
+    trigger,
   };
 };
 

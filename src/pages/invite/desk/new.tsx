@@ -182,9 +182,7 @@ const deskCostOptions = DESK_COST.map((cost) => {
 const InviteCreateDesk: NextPage = () => {
   const router = useRouter();
 
-  const methods = useForm({
-    mode: 'onSubmit',
-  });
+  const methods = useForm();
 
   const { register, handleSubmit, control, setValue, watch } = methods;
 
@@ -265,8 +263,7 @@ const InviteCreateDesk: NextPage = () => {
       await DeskApi.create(_data);
 
       router.push('/invite/desk/success');
-    } catch (err) {
-      console.log(err);
+    } catch {
       alert('예기치 못한 오류가 발생했습니다.');
     }
   };
@@ -501,7 +498,7 @@ const InviteCreateDesk: NextPage = () => {
           </form>
         </FormProvider>
       </main>
-      <DevTool control={control} />
+      {/* <DevTool control={control} /> */}
     </Box>
   );
 };

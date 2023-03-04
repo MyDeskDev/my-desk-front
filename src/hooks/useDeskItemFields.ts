@@ -18,9 +18,17 @@ export const useDeskItemFields = () => {
     [name]: DeskItemField[];
   }>();
 
-  const { fields, append, remove, update, replace } = useFieldArray({
+  const { fields, append, remove, update, replace, move } = useFieldArray({
     control,
     name,
+  });
+
+  const watchedDeskItems = watch(name);
+  const controlledFields = fields.map((field, index) => {
+    return {
+      ...field,
+      ...watchedDeskItems[index],
+    };
   });
 
   useEffect(() => {
@@ -41,13 +49,14 @@ export const useDeskItemFields = () => {
 
   return {
     name,
-    fields,
+    fields: controlledFields,
     append,
     remove,
     update,
     register,
     watch,
     setValue,
+    move,
   };
 };
 

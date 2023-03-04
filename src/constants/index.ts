@@ -79,4 +79,5 @@ export const SEO_DEFAULT = {
 
 export const DragTypes = {
   DESK_STORY: 'deskStory',
+  DESK_ITEM: 'deskItem',
 };

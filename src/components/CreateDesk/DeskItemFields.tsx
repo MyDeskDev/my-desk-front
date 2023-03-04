@@ -13,7 +13,7 @@ import ActionButton from '@/components/CreateDesk/ActionButton';
 import DeskItemInputBox from '@/components/CreateDesk/DeskItemInputBox';
 
 const DeskItemFields = () => {
-  const { fields, register, watch, append, remove, setValue } =
+  const { fields, register, watch, append, remove, setValue, move } =
     useDeskItemFields();
 
   const onDelete = (index: number) => {
@@ -61,9 +61,10 @@ const DeskItemFields = () => {
     <>
       {fields.map((field, index) => (
         <DeskItemInputBox
-          key={field.id}
+          key={index}
           index={index}
           onDelete={() => onDelete(index)}
+          onDrop={move}
         >
           <InputBox
             label="어떤 아이템인가요?"

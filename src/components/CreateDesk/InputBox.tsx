@@ -7,8 +7,13 @@ import {
   FormControl,
   RequiredIndicator,
 } from '@chakra-ui/react';
+import { useDrag } from 'react-dnd';
+import { v4 as uuidv4 } from 'uuid';
 
 import DeleteButton from '@/components/CreateDesk/DeleteButton';
+import MoveButton from '@/components/CreateDesk/MoveButton';
+
+import { DragTypes } from '@/constants';
 
 interface Props {
   label: string;
@@ -17,12 +22,27 @@ interface Props {
   isRequired?: boolean;
   children?: React.ReactNode;
   isDeletable?: boolean;
+  isMovable?: boolean;
   onDelete?: MouseEventHandler<HTMLButtonElement>;
+  index?: number;
 }
 
 const InputBox = (props: Props) => {
+  const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
+    type: DragTypes.DESK_STORY,
+    item: { index: props.index },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
   return (
-    <FormControl isRequired={props.isRequired} p="10px 0">
+    <FormControl
+      isRequired={props.isRequired}
+      p="10px 0"
+      opacity={isDragging ? 0.5 : 1}
+      ref={dragPreview}
+    >
       <Flex h="3rem" alignItems="center" justifyContent="space-between">
         <FormLabel
           htmlFor={props.for}
@@ -37,7 +57,10 @@ const InputBox = (props: Props) => {
           )}
           {props.label}
         </FormLabel>
-        {props.isDeletable && <DeleteButton onClick={props.onDelete} />}
+        <Flex alignItems="center" gap="8px">
+          {props.isDeletable && <DeleteButton onClick={props.onDelete} />}
+          {props.isMovable && <MoveButton ref={drag} />}
+        </Flex>
       </Flex>
       {props.helperText && (
         <FormHelperText mt="6px" color="#A5A5A5" fontSize="1.4rem">

@@ -1,34 +1,32 @@
 import { Box, Flex, HStack, Text, Image } from '@chakra-ui/react';
+import { Controller } from 'react-hook-form';
+
 import type { ChangeEventHandler } from 'react';
 
 import useDeskItemFields from '@/hooks/useDeskItemFields';
 import useFileUploadMutation from '@/hooks/useFileUploadMutation';
 
-import DeleteButton from '@/components/CreateDesk/DeleteButton';
 import InputBox from '@/components/CreateDesk/InputBox';
 import Textarea from '@/components/CreateDesk/Textarea';
 import TextInput from '@/components/CreateDesk/TextInput';
 import ImageInput from '@/components/CreateDesk/ImageInput';
 import DeskItemCheckbox from '@/components/CreateDesk/DeskItemCheckbox';
 import ActionButton from '@/components/CreateDesk/ActionButton';
-
-const ItemTitle = (props: { children?: React.ReactNode }) => {
-  return (
-    <Text
-      as="strong"
-      color="orange.500"
-      fontSize="2rem"
-      fontWeight={700}
-      lineHeight="2rem"
-    >
-      {props.children}
-    </Text>
-  );
-};
+import DeskItemInputBox from '@/components/CreateDesk/DeskItemInputBox';
 
 const DeskItemFields = () => {
-  const { fields, register, watch, append, remove, setValue } =
-    useDeskItemFields();
+  const {
+    fields,
+    register,
+    watch,
+    append,
+    remove,
+    move,
+    control,
+    errors,
+    update,
+    trigger,
+  } = useDeskItemFields();
 
   const onDelete = (index: number) => {
     remove(index);
@@ -50,8 +48,12 @@ const DeskItemFields = () => {
 
       try {
         const fileUrl = await mutateAsync(file);
-        setValue(`deskItem.${index}.imageUrl`, fileUrl);
-      } catch (err) {}
+        const currentField = fields[index];
+        update(index, { ...currentField, imageUrl: fileUrl });
+        await trigger([`deskItem.${index}.imageUrl`]);
+      } catch {
+        alert('예기치 못한 오류가 발생했습니다.');
+      }
     };
 
     return handler;
@@ -74,18 +76,12 @@ const DeskItemFields = () => {
   return (
     <>
       {fields.map((field, index) => (
-        <Box
+        <DeskItemInputBox
           key={field.id}
-          sx={{
-            '& + &': {
-              mt: '48px',
-            },
-          }}
+          index={index}
+          onDelete={() => onDelete(index)}
+          onDrop={move}
         >
-          <Flex justifyContent="space-between">
-            <ItemTitle>{`아이템 ${index + 1}`}</ItemTitle>
-            <DeleteButton onClick={() => onDelete(index)} />
-          </Flex>
           <InputBox
             label="어떤 아이템인가요?"
             helperText="(아이템이 갖고 있는 이야기가 있으면 입력하되, 없으면 아이템명과 사진만 넣어주셔도 됩니다.)"
@@ -108,12 +104,14 @@ const DeskItemFields = () => {
                   !!watch(`deskItem.${index}.imageUrl`)
                 )}
               >
-                <ImageInput
-                  {...register(`deskItem.${index}.image`, {
-                    onChange: onUploadImage(index),
-                  })}
-                />
+                <ImageInput onChange={onUploadImage(index)} />
               </Box>
+              <Controller
+                control={control}
+                name={`deskItem.${index}.imageUrl`}
+                render={() => <></>}
+                rules={{ required: '필수 항목입니다.' }}
+              />
               {watch(`deskItem.${index}.imageUrl`) && (
                 <Flex display="inline-flex" justifyContent="center">
                   <Image
@@ -127,6 +125,12 @@ const DeskItemFields = () => {
                 </Flex>
               )}
             </Box>
+            {errors.deskItem &&
+            (errors.deskItem[index]?.imageUrl?.message?.length ?? 0) > 0 ? (
+              <Text mt="4px" color="red.500">
+                {errors.deskItem[index]?.imageUrl?.message}
+              </Text>
+            ) : null}
           </InputBox>
 
           {/* <InputBox label="구매 링크">
@@ -149,7 +153,7 @@ const DeskItemFields = () => {
               </DeskItemCheckbox>
             </Box>
           </Flex>
-        </Box>
+        </DeskItemInputBox>
       ))}
       <HStack spacing="4px" mt="20px">
         <ActionButton
@@ -157,7 +161,6 @@ const DeskItemFields = () => {
             append({
               name: '',
               story: '',
-              image: null,
               url: '',
               imageUrl: '',
               isFavorite: false,

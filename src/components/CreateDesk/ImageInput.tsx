@@ -40,6 +40,7 @@ const ImageInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
           multiple={props.multiple}
           accept="image/*"
           name={props.name}
+          required={false}
         />
       </Box>
     </Box>

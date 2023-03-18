@@ -4,6 +4,7 @@ import { Flex, Box } from '@chakra-ui/react';
 import DeskList from '@/components/DeskList/DeskList';
 import BaseContainer from '@/components/layouts/Base/BaseContainer';
 import BaseHeader from '@/components/layouts/Base/BaseHeader';
+import BaseFooter from '@/components/layouts/Base/BaseFooter';
 
 const Desks: NextPage = () => {
   return (
@@ -16,6 +17,7 @@ const Desks: NextPage = () => {
           <DeskList />
         </BaseContainer>
       </Flex>
+      <BaseFooter />
     </Flex>
   );
 };

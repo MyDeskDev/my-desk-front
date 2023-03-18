@@ -2,7 +2,13 @@ import { Skeleton, SkeletonText, Box, Flex } from '@chakra-ui/react';
 
 const DeskCardSkeleton = () => {
   return (
-    <Box width="315px" height="390px" p="18px" bgColor="#fff">
+    <Box
+      minW="315px"
+      w={{ base: '100%', md: '315px' }}
+      p="18px"
+      bgColor="#fff"
+      sx={{ aspectRatio: '5 / 6' }}
+    >
       <Skeleton height="220px" />
       <Flex justifyContent="space-between" gap="4px" height="16px" mt="20px">
         <Skeleton flex="1" height="100%" />

@@ -18,7 +18,7 @@ const DeskList = () => {
   if (isLoading) {
     return (
       <Grid
-        gridTemplateColumns={{ base: '315px', md: 'repeat(2, 315px)' }}
+        gridTemplateColumns={{ base: '100%', md: 'repeat(2, 315px)' }}
         justifyContent="center"
         gap="70px"
       >
@@ -77,7 +77,7 @@ const DeskList = () => {
 
   return (
     <Grid
-      gridTemplateColumns={{ base: '315px', md: 'repeat(2, 315px)' }}
+      gridTemplateColumns={{ base: '100%', md: 'repeat(2, 315px)' }}
       justifyContent="center"
       gap="70px"
     >

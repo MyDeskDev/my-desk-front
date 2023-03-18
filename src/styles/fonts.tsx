@@ -5,6 +5,12 @@ const styles = css`
 
   @font-face {
     font-family: 'Apple SD Gothic Neo';
+    src: url('/fonts/AppleSDGothicNeoL.woff2') format('woff2'),
+      url('/fonts/AppleSDGothicNeoL.woff') format('woff');
+    font-weight: 300;
+  }
+  @font-face {
+    font-family: 'Apple SD Gothic Neo';
     src: url('/fonts/AppleSDGothicNeoR.woff2') format('woff2'),
       url('/fonts/AppleSDGothicNeoR.woff') format('woff');
     font-weight: 400;

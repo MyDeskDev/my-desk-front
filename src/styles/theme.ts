@@ -12,12 +12,14 @@ const theme = extendTheme({
       html: {
         height: '100%',
         fontSize: '62.5%',
+        WebkitTextSizeAdjust: 'none',
       },
       body: {
         height: '100%',
         color: 'black',
         fontSize: '1.4rem',
         lineHeight: 1,
+        WebkitTextSizeAdjust: 'none',
       },
       '#__next': {
         height: '100%',

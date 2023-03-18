@@ -1,4 +1,4 @@
-import { Box, Image, Text, Flex } from '@chakra-ui/react';
+import { Box, Image, Text, Flex, AspectRatio } from '@chakra-ui/react';
 
 import type { DeskPreview } from '@/api/desk';
 
@@ -14,10 +14,13 @@ const DeskCard = (props: Props) => {
   return (
     <Box
       position="relative"
-      w="315px"
-      h="390px"
+      minW="315px"
+      w={{ base: '100%', md: '315px' }}
       p="18px"
       backgroundColor="#fff"
+      sx={{
+        aspectRatio: '5 / 6',
+      }}
     >
       <Box
         position="absolute"
@@ -98,8 +101,8 @@ const DeskCard = (props: Props) => {
           fontWeight={300}
           lineHeight="2rem"
           sx={{
-            '-webkit-line-clamp': '3',
-            '-webkit-box-orient': 'vertical',
+            WebkitLineClamp: '3',
+            WebkitBoxOrient: 'vertical',
           }}
         >
           {desk.title}

@@ -11,7 +11,7 @@ const theme = extendTheme({
     global: {
       html: {
         height: '100%',
-        fontSize: '62.5%',
+        fontSize: '10px',
         WebkitTextSizeAdjust: 'none',
       },
       body: {

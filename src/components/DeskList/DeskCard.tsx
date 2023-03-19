@@ -66,27 +66,13 @@ const DeskCard = (props: Props) => {
         <Text
           as="span"
           display="inline-block"
-          flex="1"
-          color="#383838"
-          fontFamily={antiheroFont}
-          fontSize="1.4rem"
-          lineHeight="1.6rem"
-        >
-          No. {desk.id}
-        </Text>
-        <Text
-          as="span"
-          display="inline-block"
-          flex="0 0 180px"
           overflow="hidden"
-          w="180px"
           color="#4B4B4B"
           fontSize="1.4rem"
           fontWeight={600}
           lineHeight="1.4rem"
           whiteSpace="nowrap"
           textOverflow="ellipsis"
-          textAlign="end"
         >
           {desk.user.nickname ?? '알 수 없음'}
         </Text>

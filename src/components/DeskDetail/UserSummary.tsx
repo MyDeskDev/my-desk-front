@@ -121,11 +121,11 @@ const UserSummary = (props: Props) => {
           <Text
             as="span"
             color="#383838"
-            fontFamily={antiheroFont}
             fontSize="1.6rem"
+            fontWeight={600}
             lineHeight="3rem"
           >
-            NO.{desk.id}
+            닉네임
           </Text>
         </SummaryKey>
         <SummaryValue>
